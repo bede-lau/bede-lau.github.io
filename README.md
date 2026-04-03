@@ -15,7 +15,7 @@ Software Engineer Intern @ Mindhive Sdn. Bhd.
 * **Specializations:** Computer Vision, Machine Learning (PIML), Algorithmic Trading, IoT & Embedded Systems
 
 ### 🚀 Projects
-* 📈 Quantitative portfolio allocation model leveraging Fama-French factors, K-means clustering, and 15 years of S&P 500 data with technical indicators (public repo).
+* 📈 Quantitative portfolio allocation model leveraging Fama-French factors, K-means clustering, and 15 years of S&P 500 data with technical indicators (public repo on my Github).
 
 * 🤖 'One-Prompt to Launch a Business' SaaS platform using a 7-agent AI orchestration system.<br>
   Link: https://olvon-riyf.onrender.com/ (wait ~30 seconds for the app to load)
