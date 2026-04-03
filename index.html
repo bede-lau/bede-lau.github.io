@@ -6,35 +6,39 @@
     <title>Bede Lau - Full-stack Engineer</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Custom scrollbar for image galleries */
+        /* Custom scrollbar for image galleries (styled for light theme) */
         .hide-scroll::-webkit-scrollbar {
             height: 8px;
         }
         .hide-scroll::-webkit-scrollbar-track {
-            background: #1e293b;
+            background: #f1f5f9; /* slate-100 track */
             border-radius: 4px;
         }
         .hide-scroll::-webkit-scrollbar-thumb {
-            background: #475569;
+            background: #e2e8f0; /* slate-200 thumb */
             border-radius: 4px;
         }
         .hide-scroll::-webkit-scrollbar-thumb:hover {
-            background: #64748b;
+            background: #cbd5e1; /* slate-300 thumb hover */
         }
     </style>
 </head>
-<body class="bg-slate-900 text-slate-300 font-sans antialiased selection:bg-teal-500 selection:text-white">
+<body class="bg-white text-slate-700 font-sans antialiased selection:bg-teal-100 selection:text-teal-900">
 
     <div class="max-w-5xl mx-auto px-6 py-16 md:py-24">
         
-        <header class="mb-16 text-center md:text-left">
-            <h1 class="text-4xl md:text-6xl font-bold text-white mb-4 tracking-tight">👨‍💻 Bede Lau</h1>
-            <h2 class="text-xl md:text-2xl text-teal-400 font-medium mb-6">Full-stack Engineer</h2>
-            <p class="text-slate-400 max-w-2xl">
-                Passionate about building scalable systems, computer vision, and machine learning solutions. 
-                <br><br>
-                🎓 <strong>Education:</strong> Cambridge A-Levels @ Taylor's University
-            </p>
+        <header class="mb-16 text-center md:text-left flex flex-col md:flex-row items-center md:items-start gap-8">
+            <img src="assets/img/profile_image.png" alt="Bede Lau Profile Image" class="w-32 h-32 rounded-full border-4 border-slate-200">
+            
+            <div class="flex-1 text-center md:text-left">
+                <h1 class="text-4xl md:text-6xl font-bold text-slate-900 mb-4 tracking-tight">👨‍💻 Bede Lau</h1>
+                <h2 class="text-xl md:text-2xl text-teal-600 font-medium mb-6">Full-stack Engineer</h2>
+                <p class="text-slate-600 max-w-2xl mx-auto md:mx-0">
+                    Passionate about building scalable systems, computer vision, and machine learning solutions. 
+                    <br><br>
+                    🎓 <strong>Education:</strong> Cambridge A-Levels @ Taylor's University
+                </p>
+            </div>
         </header>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
@@ -42,11 +46,11 @@
             <div class="md:col-span-1 space-y-12">
                 
                 <section>
-                    <h3 class="text-2xl font-semibold text-white mb-6 flex items-center gap-2">💼 Work Experience</h3>
-                    <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700/50 hover:border-teal-500/30 transition-colors">
-                        <h4 class="text-lg font-medium text-white">Software Engineer Intern</h4>
-                        <p class="text-teal-400 text-sm mb-4">Mindhive Sdn. Bhd.</p>
-                        <ul class="list-disc list-outside ml-4 space-y-2 text-sm text-slate-400">
+                    <h3 class="text-2xl font-semibold text-slate-900 mb-6 flex items-center gap-2">💼 Work Experience</h3>
+                    <div class="bg-slate-50/50 rounded-xl p-6 border border-slate-200/50 hover:border-teal-500/30 transition-colors">
+                        <h4 class="text-lg font-medium text-slate-900">Software Engineer Intern</h4>
+                        <p class="text-teal-600 text-sm mb-4">Mindhive Sdn. Bhd.</p>
+                        <ul class="list-disc list-outside ml-4 space-y-2 text-sm text-slate-600">
                             <li>Built data migration/ingestion pipelines for unstructured enterprise data into an ERP system for 5 clients.</li>
                             <li>Designed and implemented a scalable Units of Measurement (UOM) architecture in the Frappe framework, enabling consistent data handling and streamlined ERP workflows.</li>
                             <li>Engineered rule-based ERP system enhancements to dynamically apply compliance instructions and pricing adjustments during purchase transactions.</li>
@@ -55,36 +59,36 @@
                 </section>
 
                 <section>
-                    <h3 class="text-2xl font-semibold text-white mb-6 flex items-center gap-2">🛠 Skills</h3>
+                    <h3 class="text-2xl font-semibold text-slate-900 mb-6 flex items-center gap-2">🛠 Skills</h3>
                     <div class="space-y-4">
                         <div>
-                            <span class="block text-sm font-medium text-slate-400 mb-2">Languages</span>
+                            <span class="block text-sm font-medium text-slate-600 mb-2">Languages</span>
                             <div class="flex flex-wrap gap-2">
-                                <span class="px-3 py-1 bg-slate-800 text-teal-300 rounded-full text-xs border border-slate-700">Python</span>
-                                <span class="px-3 py-1 bg-slate-800 text-teal-300 rounded-full text-xs border border-slate-700">TypeScript</span>
-                                <span class="px-3 py-1 bg-slate-800 text-teal-300 rounded-full text-xs border border-slate-700">JavaScript</span>
-                                <span class="px-3 py-1 bg-slate-800 text-teal-300 rounded-full text-xs border border-slate-700">SQL</span>
-                                <span class="px-3 py-1 bg-slate-800 text-teal-300 rounded-full text-xs border border-slate-700">C++</span>
+                                <span class="px-3 py-1 bg-slate-100 text-teal-700 rounded-full text-xs border border-slate-200">Python</span>
+                                <span class="px-3 py-1 bg-slate-100 text-teal-700 rounded-full text-xs border border-slate-200">TypeScript</span>
+                                <span class="px-3 py-1 bg-slate-100 text-teal-700 rounded-full text-xs border border-slate-200">JavaScript</span>
+                                <span class="px-3 py-1 bg-slate-100 text-teal-700 rounded-full text-xs border border-slate-200">SQL</span>
+                                <span class="px-3 py-1 bg-slate-100 text-teal-700 rounded-full text-xs border border-slate-200">C++</span>
                             </div>
                         </div>
                         <div>
-                            <span class="block text-sm font-medium text-slate-400 mb-2">Frameworks & Tools</span>
+                            <span class="block text-sm font-medium text-slate-600 mb-2">Frameworks & Tools</span>
                             <div class="flex flex-wrap gap-2">
-                                <span class="px-3 py-1 bg-slate-800 text-blue-300 rounded-full text-xs border border-slate-700">Frappe</span>
-                                <span class="px-3 py-1 bg-slate-800 text-blue-300 rounded-full text-xs border border-slate-700">ERPNext</span>
-                                <span class="px-3 py-1 bg-slate-800 text-blue-300 rounded-full text-xs border border-slate-700">React</span>
-                                <span class="px-3 py-1 bg-slate-800 text-blue-300 rounded-full text-xs border border-slate-700">Node.js</span>
-                                <span class="px-3 py-1 bg-slate-800 text-blue-300 rounded-full text-xs border border-slate-700">n8n</span>
-                                <span class="px-3 py-1 bg-slate-800 text-blue-300 rounded-full text-xs border border-slate-700">Tailwind CSS</span>
+                                <span class="px-3 py-1 bg-slate-100 text-blue-700 rounded-full text-xs border border-slate-200">Frappe</span>
+                                <span class="px-3 py-1 bg-slate-100 text-blue-700 rounded-full text-xs border border-slate-200">ERPNext</span>
+                                <span class="px-3 py-1 bg-slate-100 text-blue-700 rounded-full text-xs border border-slate-200">React</span>
+                                <span class="px-3 py-1 bg-slate-100 text-blue-700 rounded-full text-xs border border-slate-200">Node.js</span>
+                                <span class="px-3 py-1 bg-slate-100 text-blue-700 rounded-full text-xs border border-slate-200">n8n</span>
+                                <span class="px-3 py-1 bg-slate-100 text-blue-700 rounded-full text-xs border border-slate-200">Tailwind CSS</span>
                             </div>
                         </div>
                         <div>
-                            <span class="block text-sm font-medium text-slate-400 mb-2">Specializations</span>
+                            <span class="block text-sm font-medium text-slate-600 mb-2">Specializations</span>
                             <div class="flex flex-wrap gap-2">
-                                <span class="px-3 py-1 bg-slate-800 text-purple-300 rounded-full text-xs border border-slate-700">Computer Vision</span>
-                                <span class="px-3 py-1 bg-slate-800 text-purple-300 rounded-full text-xs border border-slate-700">Machine Learning (PIML)</span>
-                                <span class="px-3 py-1 bg-slate-800 text-purple-300 rounded-full text-xs border border-slate-700">Algorithmic Trading</span>
-                                <span class="px-3 py-1 bg-slate-800 text-purple-300 rounded-full text-xs border border-slate-700">IoT & Embedded</span>
+                                <span class="px-3 py-1 bg-slate-100 text-purple-700 rounded-full text-xs border border-slate-200">Computer Vision</span>
+                                <span class="px-3 py-1 bg-slate-100 text-purple-700 rounded-full text-xs border border-slate-200">Machine Learning (PIML)</span>
+                                <span class="px-3 py-1 bg-slate-100 text-purple-700 rounded-full text-xs border border-slate-200">Algorithmic Trading</span>
+                                <span class="px-3 py-1 bg-slate-100 text-purple-700 rounded-full text-xs border border-slate-200">IoT & Embedded</span>
                             </div>
                         </div>
                     </div>
@@ -93,69 +97,69 @@
             </div>
 
             <div class="md:col-span-2 space-y-8">
-                <h3 class="text-2xl font-semibold text-white mb-6 flex items-center gap-2">🚀 Featured Projects</h3>
+                <h3 class="text-2xl font-semibold text-slate-900 mb-6 flex items-center gap-2">🚀 Featured Projects</h3>
 
-                <div class="bg-slate-800/40 rounded-xl p-6 border border-slate-700/50 hover:bg-slate-800/80 transition-all duration-300">
-                    <h4 class="text-xl font-medium text-white mb-2 flex items-center gap-2">📈 Quantitative Portfolio Allocation Model</h4>
-                    <p class="text-sm text-slate-400 mb-4">Leveraging Fama-French factors, K-means clustering, and 15 years of S&P 500 data with technical indicators (public repo).</p>
+                <div class="bg-slate-50/40 rounded-xl p-6 border border-slate-200/50 hover:bg-slate-50/80 transition-all duration-300">
+                    <h4 class="text-xl font-medium text-slate-900 mb-2 flex items-center gap-2">📈 Quantitative Portfolio Allocation Model</h4>
+                    <p class="text-sm text-slate-600 mb-4">Leveraging Fama-French factors, K-means clustering, and 15 years of S&P 500 data with technical indicators (public repo on my Github).</p>
                 </div>
 
-                <div class="bg-slate-800/40 rounded-xl p-6 border border-slate-700/50 hover:bg-slate-800/80 transition-all duration-300">
-                    <h4 class="text-xl font-medium text-white mb-2 flex items-center gap-2">🤖 'One-Prompt to Launch a Business'</h4>
-                    <p class="text-sm text-slate-400 mb-4">SaaS platform using a 7-agent AI orchestration system.</p>
-                    <a href="https://olvon-riyf.onrender.com/" target="_blank" class="inline-block mb-4 text-sm text-teal-400 hover:text-teal-300 transition-colors border border-teal-500/30 px-4 py-2 rounded-lg bg-teal-500/10">Launch App &rarr; <span class="text-xs text-slate-500">(wait ~30s)</span></a>
+                <div class="bg-slate-50/40 rounded-xl p-6 border border-slate-200/50 hover:bg-slate-50/80 transition-all duration-300">
+                    <h4 class="text-xl font-medium text-slate-900 mb-2 flex items-center gap-2">🤖 'One-Prompt to Launch a Business'</h4>
+                    <p class="text-sm text-slate-600 mb-4">SaaS platform using a 7-agent AI orchestration system.</p>
+                    <a href="https://olvon-riyf.onrender.com/" target="_blank" class="inline-block mb-4 text-sm text-teal-700 hover:text-teal-600 transition-colors border border-teal-600/30 px-4 py-2 rounded-lg bg-teal-100/10">Launch App &rarr; <span class="text-xs text-slate-500">(wait ~30s)</span></a>
                     
                     <div class="flex gap-4 overflow-x-auto hide-scroll pb-4">
-                        <img src="assets/img/one_prompt_business/business_1.png" alt="Business 1" class="h-48 rounded-lg object-cover border border-slate-700">
-                        <img src="assets/img/one_prompt_business/business_2.png" alt="Business 2" class="h-48 rounded-lg object-cover border border-slate-700">
+                        <img src="assets/img/one_prompt_business/business_1.png" alt="Business 1" class="h-48 rounded-lg object-cover border border-slate-200">
+                        <img src="assets/img/one_prompt_business/business_2.png" alt="Business 2" class="h-48 rounded-lg object-cover border border-slate-200">
                     </div>
                 </div>
 
-                <div class="bg-slate-800/40 rounded-xl p-6 border border-slate-700/50 hover:bg-slate-800/80 transition-all duration-300">
-                    <h4 class="text-xl font-medium text-white mb-2 flex items-center gap-2">👗 Virtual Try-On Web App & 3D Website</h4>
-                    <p class="text-sm text-slate-400 mb-4">Virtual try-on web application built alongside a 3D-animated company website.</p>
-                    <div class="flex gap-3 mb-4">
-                        <a href="https://olvon-webapp.vercel.app/" target="_blank" class="text-sm text-teal-400 hover:text-teal-300 transition-colors border border-teal-500/30 px-4 py-2 rounded-lg bg-teal-500/10">Web App &rarr;</a>
-                        <a href="https://olvon.site/" target="_blank" class="text-sm text-teal-400 hover:text-teal-300 transition-colors border border-teal-500/30 px-4 py-2 rounded-lg bg-teal-500/10">Website &rarr;</a>
+                <div class="bg-slate-50/40 rounded-xl p-6 border border-slate-200/50 hover:bg-slate-50/80 transition-all duration-300">
+                    <h4 class="text-xl font-medium text-slate-900 mb-2 flex items-center gap-2">👗 Virtual Try-On Web App & 3D Website</h4>
+                    <p class="text-sm text-slate-600 mb-4">Virtual try-on web application built alongside a 3D-animated company website.</p>
+                    <div class="flex gap-3 mb-4 flex-wrap">
+                        <a href="https://olvon-webapp.vercel.app/" target="_blank" class="text-sm text-teal-700 hover:text-teal-600 transition-colors border border-teal-600/30 px-4 py-2 rounded-lg bg-teal-100/10">Web App &rarr;</a>
+                        <a href="https://olvon.site/" target="_blank" class="text-sm text-teal-700 hover:text-teal-600 transition-colors border border-teal-600/30 px-4 py-2 rounded-lg bg-teal-100/10">Website &rarr;</a>
                     </div>
                     
                     <div class="flex gap-4 overflow-x-auto hide-scroll pb-4">
-                        <img src="assets/img/olvon_webapp/feed_1.png" alt="Feed" class="h-48 rounded-lg object-cover border border-slate-700">
-                        <img src="assets/img/olvon_webapp/dressing_room.png" alt="Dressing Room" class="h-48 rounded-lg object-cover border border-slate-700">
-                        <img src="assets/img/olvon_website/website_1.png" alt="Website 1" class="h-48 rounded-lg object-cover border border-slate-700">
-                        <img src="assets/img/olvon_website/website_2.png" alt="Website 2" class="h-48 rounded-lg object-cover border border-slate-700">
-                    </div>
-                </div>
-
-                <div class="bg-slate-800/40 rounded-xl p-6 border border-slate-700/50 hover:bg-slate-800/80 transition-all duration-300">
-                    <h4 class="text-xl font-medium text-white mb-2 flex items-center gap-2">📱 Virtual Try-On Mobile E-commerce</h4>
-                    <p class="text-sm text-slate-400 mb-4">Centered on virtual try-on, featuring user onboarding flows, secure Google/email authentication, database integration, and an interactive TikTok-style feed.</p>
-                    
-                    <div class="flex gap-4 overflow-x-auto hide-scroll pb-4">
-                        <img src="assets/img/olvon_mobile/mobile_2.png" alt="Mobile 2" class="h-64 rounded-lg object-cover border border-slate-700">
-                        <img src="assets/img/olvon_mobile/mobile_3.png" alt="Mobile 3" class="h-64 rounded-lg object-cover border border-slate-700">
-                        <img src="assets/img/olvon_mobile/mobile_4.png" alt="Mobile 4" class="h-64 rounded-lg object-cover border border-slate-700">
-                        <img src="assets/img/olvon_mobile/mobile_5.png" alt="Mobile 5" class="h-64 rounded-lg object-cover border border-slate-700">
-                        <img src="assets/img/olvon_mobile/mobile_6.png" alt="Mobile 6" class="h-64 rounded-lg object-cover border border-slate-700">
+                        <img src="assets/img/olvon_webapp/feed_1.png" alt="Feed" class="h-48 rounded-lg object-cover border border-slate-200">
+                        <img src="assets/img/olvon_webapp/dressing_room.png" alt="Dressing Room" class="h-48 rounded-lg object-cover border border-slate-200">
+                        <img src="assets/img/olvon_website/website_1.png" alt="Website 1" class="h-48 rounded-lg object-cover border border-slate-200">
+                        <img src="assets/img/olvon_website/website_2.png" alt="Website 2" class="h-48 rounded-lg object-cover border border-slate-200">
                     </div>
                 </div>
 
-                <div class="bg-slate-800/40 rounded-xl p-6 border border-slate-700/50 hover:bg-slate-800/80 transition-all duration-300">
-                    <h4 class="text-xl font-medium text-white mb-2 flex items-center gap-2">❄️ Automated Water-Cooling System</h4>
-                    <p class="text-sm text-slate-400 mb-4">Designed and built an automated water-cooling system integrating a canister filter, Peltier module, thermoelectric controller, and 12V fan assembly for efficient heat dissipation.</p>
+                <div class="bg-slate-50/40 rounded-xl p-6 border border-slate-200/50 hover:bg-slate-50/80 transition-all duration-300">
+                    <h4 class="text-xl font-medium text-slate-900 mb-2 flex items-center gap-2">📱 Virtual Try-On Mobile E-commerce</h4>
+                    <p class="text-sm text-slate-600 mb-4">Centered on virtual try-on, featuring user onboarding flows, secure Google/email authentication, database integration, and an interactive TikTok-style feed.</p>
                     
                     <div class="flex gap-4 overflow-x-auto hide-scroll pb-4">
-                        <img src="assets/img/cooler/cooler_1.jpeg" alt="Cooler 1" class="h-48 rounded-lg object-cover border border-slate-700">
-                        <img src="assets/img/cooler/cooler_2.jpeg" alt="Cooler 2" class="h-48 rounded-lg object-cover border border-slate-700">
-                        <img src="assets/img/cooler/cooler_3.jpeg" alt="Cooler 3" class="h-48 rounded-lg object-cover border border-slate-700">
-                        <img src="assets/img/cooler/cooler_4.jpeg" alt="Cooler 4" class="h-48 rounded-lg object-cover border border-slate-700">
+                        <img src="assets/img/olvon_mobile/mobile_2.png" alt="Mobile 2" class="h-64 rounded-lg object-cover border border-slate-200">
+                        <img src="assets/img/olvon_mobile/mobile_3.png" alt="Mobile 3" class="h-64 rounded-lg object-cover border border-slate-200">
+                        <img src="assets/img/olvon_mobile/mobile_4.png" alt="Mobile 4" class="h-64 rounded-lg object-cover border border-slate-200">
+                        <img src="assets/img/olvon_mobile/mobile_5.png" alt="Mobile 5" class="h-64 rounded-lg object-cover border border-slate-200">
+                        <img src="assets/img/olvon_mobile/mobile_6.png" alt="Mobile 6" class="h-64 rounded-lg object-cover border border-slate-200">
+                    </div>
+                </div>
+
+                <div class="bg-slate-50/40 rounded-xl p-6 border border-slate-200/50 hover:bg-slate-50/80 transition-all duration-300">
+                    <h4 class="text-xl font-medium text-slate-900 mb-2 flex items-center gap-2">❄️ Automated Water-Cooling System</h4>
+                    <p class="text-sm text-slate-600 mb-4">Built an automated water-cooling system integrating a canister filter, TEC-12706 Peltier module, W1209 thermoelectric controller, and 12V fan assembly for efficient heat dissipation.</p>
+                    
+                    <div class="flex gap-4 overflow-x-auto hide-scroll pb-4">
+                        <img src="assets/img/cooler/cooler_1.jpeg" alt="Cooler 1" class="h-48 rounded-lg object-cover border border-slate-200">
+                        <img src="assets/img/cooler/cooler_2.jpeg" alt="Cooler 2" class="h-48 rounded-lg object-cover border border-slate-200">
+                        <img src="assets/img/cooler/cooler_3.jpeg" alt="Cooler 3" class="h-48 rounded-lg object-cover border border-slate-200">
+                        <img src="assets/img/cooler/cooler_4.jpeg" alt="Cooler 4" class="h-48 rounded-lg object-cover border border-slate-200">
                     </div>
                 </div>
 
             </div>
         </div>
         
-        <footer class="mt-20 border-t border-slate-800 pt-8 text-center text-slate-500 text-sm">
+        <footer class="mt-20 border-t border-slate-200 pt-8 text-center text-slate-500 text-sm">
             <p>© 2026 Bede Lau. All rights reserved.</p>
         </footer>
 
