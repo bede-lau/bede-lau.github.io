@@ -27,4 +27,4 @@ Software Engineer Intern @ Mindhive Sdn. Bhd.
 
 * 📱 Mobile e‑commerce app centered on virtual try‑on, featuring user onboarding flows, secure Google/email authentication, database integration, and an interactive TikTok‑style feed.
 
-* ❄️ Designed and built an automated water‑cooling system integrating a canister filter, Peltier module, thermoelectric controller, and 12V fan assembly for efficient heat dissipation.
+* ❄️ Built an automated water‑cooling system integrating a canister filter, TEC-12706 Peltier module, W1209 thermoelectric controller, and 12V fan assembly for efficient heat dissipation.
