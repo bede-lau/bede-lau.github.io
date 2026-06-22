@@ -1,178 +1,539 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bede Lau - Full-stack Engineer</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        /* Custom scrollbar for image galleries (styled for light theme) */
-        .hide-scroll::-webkit-scrollbar {
-            height: 8px;
-        }
-        .hide-scroll::-webkit-scrollbar-track {
-            background: #f1f5f9; /* slate-100 track */
-            border-radius: 4px;
-        }
-        .hide-scroll::-webkit-scrollbar-thumb {
-            background: #e2e8f0; /* slate-200 thumb */
-            border-radius: 4px;
-        }
-        .hide-scroll::-webkit-scrollbar-thumb:hover {
-            background: #cbd5e1; /* slate-300 thumb hover */
-        }
-    </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bede Lau</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    color-scheme:dark;
+    --void:#05070f; --sapphire:#27407f; --royal:#3a63c9; --azure:#5b86e0;
+    --ice:#aec6ff; --platinum:#e9efff; --ink:#eaf0ff; --muted:#8493b8;
+    --line:rgba(120,150,220,0.14); --panel:rgba(13,20,42,0.58); --panel-2:rgba(12,17,36,0.80);
+    --modal-tail:rgba(9,14,32,0.97); --section-tail:rgba(12,17,36,0.40); --nav-link:rgba(234,240,255,0.78);
+    --modal-copy:#c9d4f2; --modal-heading:#eef3ff; --hero-strong:#f3f6ff; --shadow:rgba(2,4,12,0.52); --grain-opacity:0.04;
+  }
+  body[data-theme="light"] {
+    color-scheme:light;
+    --void:#f4f7ff; --sapphire:#c9d7ff; --royal:#345bc4; --azure:#416ed7;
+    --ice:#5d7ed9; --platinum:#111d3a; --ink:#14203d; --muted:#586683;
+    --line:rgba(52,91,196,0.18); --panel:rgba(251,253,255,0.74); --panel-2:rgba(235,241,255,0.88);
+    --modal-tail:rgba(241,245,255,0.98); --section-tail:rgba(225,234,255,0.52); --nav-link:rgba(20,32,61,0.76);
+    --modal-copy:#34415f; --modal-heading:#0e1832; --hero-strong:#0e1832; --shadow:rgba(42,64,112,0.18); --grain-opacity:0.028;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { font-family:"Inter",system-ui,sans-serif; background:var(--void); color:var(--ink); overflow-x:hidden; -webkit-font-smoothing:antialiased; }
+
+  .bg-wash { position:fixed; inset:0; z-index:0; pointer-events:none;
+    background: radial-gradient(1000px 680px at 74% 22%, rgba(58,99,201,0.20), transparent 60%),
+                radial-gradient(1200px 760px at 16% 80%, rgba(39,64,127,0.30), transparent 64%),
+                linear-gradient(165deg,var(--void) 0%,#070b1a 50%,#0a1124 100%);
+    animation:washDrift 22s ease-in-out infinite alternate; }
+  @keyframes washDrift { 0%{transform:scale(1);} 100%{transform:scale(1.06);} }
+
+  body[data-theme="light"] .bg-wash {
+    background:radial-gradient(1000px 680px at 74% 22%, rgba(91,134,224,0.22), transparent 62%),
+               radial-gradient(920px 640px at 12% 82%, rgba(174,198,255,0.36), transparent 62%),
+               linear-gradient(165deg,#f7f9ff 0%,#edf3ff 54%,#e4ecff 100%);
+  }
+  body[data-theme="light"] .sphere-title { color:rgba(35,55,104,0.42); text-shadow:0 1px 0 rgba(255,255,255,0.9),0 12px 28px rgba(65,110,215,0.22); }
+  body[data-theme="light"] .planet-label { background:rgba(250,252,255,0.76); }
+  body[data-theme="light"] .planet-preview { background:linear-gradient(165deg,rgba(255,255,255,0.92),rgba(235,241,255,0.88)); }
+  body[data-theme="light"] nav.scrolled { background:linear-gradient(160deg,rgba(255,255,255,0.86),rgba(237,243,255,0.74)); border-color:rgba(65,110,215,0.2); }
+  body[data-theme="light"] .modal-backdrop { background:rgba(232,238,252,0.66); }
+  body[data-theme="light"] .modal { background:linear-gradient(160deg,rgba(255,255,255,0.98),rgba(241,245,255,0.98)); }
+  body[data-theme="light"] .link-primary { color:#f7f9ff; background:linear-gradient(135deg,#345bc4,#6689e5); }
+  body[data-theme="light"] .link-ghost { background:rgba(65,110,215,0.08); }
+
+  .grain { position:fixed; inset:0; z-index:1; pointer-events:none; opacity:var(--grain-opacity);
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+
+  #scene { position:fixed; inset:0; z-index:3; display:block; }
+
+  .sphere-title { position:fixed; z-index:2; pointer-events:none; left:0; top:0;
+    transform:perspective(900px) translate(-50%,-50%); white-space:nowrap; text-transform:uppercase;
+    font-family:"Space Grotesk",sans-serif; font-weight:700; letter-spacing:0.1em;
+    font-size:clamp(13px,1.7vw,20px); color:rgba(190,210,255,0.55);
+    text-shadow:0 1px 0 rgba(58,99,201,0.45),0 2px 0 rgba(58,99,201,0.35),
+      0 3px 0 rgba(39,64,127,0.3),0 4px 0 rgba(39,64,127,0.25),
+      0 6px 10px rgba(5,7,15,0.6),0 0 34px rgba(91,134,224,0.45);
+    animation:sphereTitleFloat 7s ease-in-out infinite; }
+  @keyframes sphereTitleFloat {
+    0%,100% { transform:perspective(900px) translate(-50%,-50%) translateY(0) rotateX(10deg); }
+    50% { transform:perspective(900px) translate(-50%,-50%) translateY(-9px) rotateX(-8deg); } }
+  @media (prefers-reduced-motion:reduce) { .sphere-title { animation:none; } }
+
+  .planet-label { position:fixed; z-index:4; pointer-events:none; transform:translate(-50%,-160%);
+    font-family:"JetBrains Mono",monospace; font-size:11.5px; letter-spacing:0.04em; color:var(--ice);
+    white-space:nowrap; padding:5px 11px; border-radius:999px; background:rgba(10,16,36,0.6);
+    border:1px solid var(--line); backdrop-filter:blur(6px); opacity:0; transition:opacity 0.2s; }
+  .planet-label.show { opacity:0.55; }
+  .planet-label.hot { opacity:1; transform:translate(-50%,-185%); border-color:rgba(174,198,255,0.5);
+    animation:labelPop 0.45s cubic-bezier(.2,.8,.2,1) forwards; }
+  @keyframes labelPop { 0%{transform:translate(-50%,-160%) scale(0.85);} 60%{transform:translate(-50%,-192%) scale(1.1);} 100%{transform:translate(-50%,-185%) scale(1);} }
+
+  .planet-preview { position:fixed; z-index:5; pointer-events:none; width:240px;
+    left:0; top:0; transform:translate(-50%,-50%) scale(0.92); opacity:0;
+    background:linear-gradient(165deg,var(--panel),var(--panel-2));
+    border:1px solid rgba(174,198,255,0.22); border-radius:16px; overflow:hidden;
+    box-shadow:0 24px 70px var(--shadow), inset 0 1px 0 rgba(255,255,255,0.10);
+    backdrop-filter:blur(18px) saturate(160%); transition:opacity 0.25s, transform 0.25s; }
+  .planet-preview.show { opacity:1; transform:translate(-50%,-50%) scale(1); animation:previewPop 0.4s cubic-bezier(.2,.8,.2,1); }
+  .planet-preview img { display:block; width:100%; height:120px; object-fit:cover; border-radius:16px 16px 0 0; }
+  .planet-preview .pp-body { padding:13px 16px 15px; }
+  .planet-preview .pp-idx { font-family:"JetBrains Mono",monospace; font-size:10px; color:var(--azure); letter-spacing:0.06em; }
+  .planet-preview .pp-title { font-family:"Space Grotesk",sans-serif; font-size:15px; font-weight:600; color:var(--platinum); margin-top:3px; line-height:1.3; }
+  .planet-preview .pp-desc { font-size:12px; color:var(--muted); margin-top:6px; line-height:1.5; display:-webkit-box; -webkit-line-clamp:3; line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
+  @keyframes previewPop { 0%{transform:translate(-50%,-50%) scale(0.85);} 60%{transform:translate(-50%,-50%) scale(1.04);} 100%{transform:translate(-50%,-50%) scale(1);} }
+  @media (max-width:720px) { .planet-preview { width:84vw; max-width:280px; } .planet-preview img { height:96px; } }
+
+  .btn-github, .btn-projects { font-family:"Space Grotesk",sans-serif; font-weight:600; font-size:14px; color:var(--ink); text-decoration:none;
+    padding:10px 18px; border-radius:999px; display:inline-flex; align-items:center; gap:9px;
+    background:rgba(255,255,255,0.07); border:1px solid rgba(174,198,255,0.24); transition:transform 0.2s,background 0.2s,border-color 0.2s; }
+  .btn-projects { cursor:pointer; color:var(--ice); background:rgba(91,134,224,0.09); }
+  .btn-github:hover, .btn-projects:hover { transform:translateY(-2px); background:rgba(174,198,255,0.14); border-color:rgba(174,198,255,0.4); }
+  .btn-github svg { width:16px; height:16px; }
+  .hero-intro { display:flex; align-items:center; gap:22px; margin-bottom:30px; pointer-events:auto;
+    opacity:0; transform:translateY(14px); animation:rise 0.8s 0s forwards cubic-bezier(.2,.7,.2,1); }
+  .hero-actions { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+
+  .hero { position:relative; z-index:10; pointer-events:none; min-height:86vh; display:flex; flex-direction:column; justify-content:center;
+    padding:clamp(20px,4vh,48px) clamp(20px,5vw,72px) 0; max-width:610px; transform:translate(28px, 8px); }
+  .hero-pic { width:124px; height:124px; border-radius:50%; object-fit:cover;
+    border:2px solid rgba(174,198,255,0.48); box-shadow:0 0 34px rgba(91,134,224,0.38), 0 14px 36px rgba(0,0,0,0.36); }
+  .eyebrow { font-family:"JetBrains Mono",monospace; font-size:12.5px; letter-spacing:0.18em; text-transform:uppercase; color:var(--azure);
+    margin-bottom:22px; display:inline-flex; align-items:center; gap:10px; opacity:0; transform:translateY(14px); animation:rise 0.8s 0.1s forwards cubic-bezier(.2,.7,.2,1); }
+  .eyebrow::before { content:""; width:30px; height:1px; background:linear-gradient(90deg,var(--ice),transparent); }
+  h1 { font-family:"Space Grotesk",sans-serif; font-weight:700; font-size:clamp(46px,8.5vw,104px); line-height:0.95; letter-spacing:-0.03em; margin-bottom:18px;
+    opacity:0; transform:translateY(22px); animation:rise 0.9s 0.22s forwards cubic-bezier(.2,.7,.2,1); }
+  h1 .grad { color:var(--hero-strong); text-shadow:0 0 32px rgba(91,134,224,0.22); }
+  .lede { font-size:clamp(15px,1.7vw,17px); line-height:1.65; color:var(--hero-strong); max-width:62ch;
+    opacity:0; transform:translateY(18px); animation:rise 0.9s 0.46s forwards cubic-bezier(.2,.7,.2,1); }
+
+  @keyframes rise { to { opacity:1; transform:translateY(0); } }
+  @keyframes fade { to { opacity:1; } }
+
+  .project-list-backdrop { position:fixed; inset:0; z-index:90; display:none; align-items:center; justify-content:center;
+    background:rgba(4,7,15,0.58); backdrop-filter:blur(10px); padding:24px; }
+  .project-list-backdrop.open { display:flex; animation:fade 0.24s forwards; }
+  .project-list { width:min(520px,100%); border-radius:22px; padding:28px;
+    background:linear-gradient(160deg,var(--panel),var(--modal-tail)); border:1px solid var(--line);
+    box-shadow:0 32px 100px var(--shadow); position:relative; }
+  .project-list h2 { font-family:"JetBrains Mono",monospace; font-size:12px; letter-spacing:0.18em; text-transform:uppercase;
+    color:var(--azure); margin-bottom:18px; font-weight:500; }
+  .project-list-items { display:grid; gap:10px; }
+  .project-list-items button { width:100%; border:1px solid rgba(174,198,255,0.16); border-radius:14px; padding:14px 16px;
+    background:rgba(255,255,255,0.035); color:var(--modal-heading); text-align:left; cursor:pointer;
+    font-family:"Space Grotesk",sans-serif; font-size:16px; font-weight:600; transition:transform 0.2s, border-color 0.2s, background 0.2s; }
+  .project-list-items button:hover { transform:translateX(4px); border-color:rgba(174,198,255,0.44); background:rgba(91,134,224,0.12); }
+  .project-list-close { position:absolute; top:16px; right:16px; background:rgba(5,8,18,0.5); border:1px solid var(--line); color:var(--ink);
+    width:34px; height:34px; border-radius:50%; cursor:pointer; font-size:18px; line-height:1; }
+
+  .modal-backdrop { position:fixed; inset:0; z-index:100; display:none; align-items:center; justify-content:center;
+    background:rgba(4,7,15,0.66); backdrop-filter:blur(10px); padding:24px; }
+  .modal-backdrop.open { display:flex; animation:fade 0.3s forwards; }
+  .modal { width:min(880px,100%); max-height:86vh; overflow:hidden; border-radius:20px;
+    background:linear-gradient(160deg,var(--panel),var(--modal-tail)); border:1px solid var(--line);
+    box-shadow:0 40px 120px var(--shadow); display:grid; grid-template-columns:1.1fr 1fr; align-items:start; position:relative;
+    transform:translateY(16px) scale(0.98); animation:pop 0.4s forwards cubic-bezier(.2,.8,.2,1); }
+  .modal.text-only { width:min(620px,100%); grid-template-columns:1fr; }
+  .modal.text-only .modal-cover { display:none; }
+  .modal.text-only .modal-body { min-height:310px; justify-content:center; align-items:center; text-align:center; padding:54px clamp(28px,6vw,70px); }
+  .modal.text-only .modal-body p { max-width:44ch; }
+  .modal.text-only .modal-links { justify-content:center; margin-top:8px; }
+  @keyframes pop { to { transform:translateY(0) scale(1); } }
+  .modal-cover { position:relative; min-height:320px; max-height:86vh; overflow:hidden; background:var(--void); display:flex; align-items:center; justify-content:center; }
+  .modal-cover img { display:block; max-width:100%; max-height:86vh; width:auto; height:auto; object-fit:contain; }
+  .modal-body { padding:32px; display:flex; flex-direction:column; overflow-y:auto; }
+  .modal-body .idx { font-family:"JetBrains Mono",monospace; font-size:11px; letter-spacing:0.16em; color:var(--azure); margin-bottom:12px; }
+  .modal-body h2 { font-family:"Space Grotesk",sans-serif; font-weight:600; font-size:27px; line-height:1.1; letter-spacing:-0.02em; margin-bottom:16px; color:var(--modal-heading); }
+  .modal-body p { font-size:14.5px; line-height:1.75; color:var(--modal-copy); margin-bottom:20px; }
+  .tags { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:18px; }
+  .tags span { font-family:"JetBrains Mono",monospace; font-size:11px; color:var(--ice); padding:5px 11px; border-radius:7px; background:rgba(91,134,224,0.1); border:1px solid var(--line); }
+  .thumbs { display:flex; gap:8px; margin-bottom:22px; flex-wrap:wrap; }
+  .thumbs img { width:56px; height:42px; object-fit:cover; border-radius:7px; border:1px solid var(--line); cursor:pointer; opacity:0.6; transition:opacity 0.2s,border-color 0.2s; }
+  .thumbs img:hover, .thumbs img.active { opacity:1; border-color:var(--ice); }
+  .modal-links { display:flex; flex-wrap:wrap; gap:12px; margin-top:auto; }
+  .modal-links a { font-family:"Space Grotesk",sans-serif; font-weight:600; font-size:13.5px; text-decoration:none; padding:11px 20px; border-radius:10px; display:inline-flex; align-items:center; gap:8px; }
+  .link-primary { color:#08122c; background:linear-gradient(135deg,var(--azure),var(--ice)); }
+  .link-ghost { color:var(--ink); background:rgba(255,255,255,0.05); border:1px solid var(--line); }
+  .modal-close { position:absolute; top:16px; right:18px; z-index:2; background:rgba(5,8,18,0.5); border:1px solid var(--line); color:var(--ink);
+    width:34px; height:34px; border-radius:50%; cursor:pointer; font-size:18px; line-height:1; }
+  .modal-close:hover { background:rgba(91,134,224,0.2); }
+
+  .info-section { position:relative; z-index:10; scroll-margin-top:80px; max-width:680px;
+    margin:140px auto 36px; padding:42px clamp(28px,5vw,56px); border-radius:24px;
+    background:linear-gradient(165deg,var(--panel),var(--section-tail));
+    border:1px solid rgba(255,255,255,0.09);
+    box-shadow:0 24px 70px var(--shadow), inset 0 1px 0 rgba(255,255,255,0.10);
+    backdrop-filter:blur(22px) saturate(160%); -webkit-backdrop-filter:blur(22px) saturate(160%); }
+  .info-label { font-family:"JetBrains Mono",monospace; font-size:11.5px; letter-spacing:0.18em; text-transform:uppercase; color:var(--azure);
+    display:inline-flex; align-items:center; gap:10px; margin-bottom:22px; }
+  .info-label::before { content:""; width:30px; height:1px; background:linear-gradient(90deg,var(--ice),transparent); }
+  .info-role { font-family:"Space Grotesk",sans-serif; font-weight:600; font-size:clamp(20px,2.6vw,26px); color:var(--hero-strong); margin-bottom:22px; letter-spacing:-0.01em; }
+  .info-role span { color:var(--muted); font-weight:500; }
+  .info-list { list-style:none; display:flex; flex-direction:column; gap:14px; }
+  .info-list li { font-size:14.5px; line-height:1.7; color:var(--hero-strong); padding-left:22px; position:relative; }
+  .info-list li::before { content:""; position:absolute; left:0; top:8px; width:7px; height:7px; border-radius:50%; background:var(--azure); box-shadow:0 0 8px var(--azure); }
+  .skill-group { margin-bottom:26px; }
+  .skill-group:last-child { margin-bottom:0; }
+  .skill-cat { display:block; font-family:"JetBrains Mono",monospace; font-size:11.5px; letter-spacing:0.06em; color:var(--muted); margin-bottom:10px; }
+
+  @media (max-width:820px) { .modal { grid-template-columns:1fr; max-height:90vh; } .modal-cover { min-height:200px; } }
+  @media (max-width:720px) {
+    .hero { max-width:100%; min-height:82vh; justify-content:flex-start; padding-top:12vh; transform:translate(0, 8px); }
+    .hero-intro { align-items:flex-start; flex-direction:column; gap:14px; margin-bottom:24px; }
+    .hero-pic { width:108px; height:108px; }
+    .info-section { margin-top:104px; }
+  }
+  @media (prefers-reduced-motion:reduce) {
+    .bg-wash { animation:none !important; }
+    .eyebrow,h1,.lede,.hero-intro { opacity:1 !important; transform:none !important; animation:none !important; }
+  }
+</style>
 </head>
-<body class="bg-white text-slate-700 font-sans antialiased selection:bg-teal-100 selection:text-teal-900">
+<body>
+  <div class="bg-wash"></div>
+  <canvas id="scene"></canvas>
+  <div class="sphere-title" id="sphereTitle">My Projects</div>
+  <div class="grain"></div>
 
-    <div class="max-w-5xl mx-auto px-6 py-16 md:py-24">
-        
-        <header class="mb-16 text-center md:text-left flex flex-col md:flex-row items-center md:items-start gap-8">
-            <img src="assets/headshot_circle.jpeg" alt="Bede Lau Profile Image" class="w-32 h-32 rounded-full border-4 border-slate-200">
-            
-            <div class="flex-1 text-center md:text-left">
-                <h1 class="text-4xl md:text-6xl font-bold text-slate-900 mb-4 tracking-tight">Bede Lau</h1>
-                <h2 class="text-xl md:text-2xl text-teal-600 font-medium mb-6">Full-stack Engineer</h2>
-                <p class="text-slate-600 max-w-2xl mx-auto md:mx-0">
-                    Passionate about building scalable systems, computer vision, and machine learning solutions. 
-                    <br><br>
-                    🎓 <strong>Education:</strong> Cambridge A-Levels @ Taylor's University
-                </p>
-                <div class="mt-6 flex justify-center md:justify-start">
-                    <a href="https://github.com/bede-lau" target="_blank" class="inline-flex items-center gap-2 px-5 py-2.5 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors text-sm font-medium shadow-sm">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
-                            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
-                        </svg>
-                        GitHub Profile
-                    </a>
-                </div>
-            </div>
-        </header>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
-            
-            <div class="md:col-span-1 space-y-12">
-                
-                <section>
-                    <h3 class="text-2xl font-semibold text-slate-900 mb-6 flex items-center gap-2">💼 Work Experience</h3>
-                    <div class="bg-slate-50/50 rounded-xl p-6 border border-slate-200/50 hover:border-teal-500/30 transition-colors">
-                        <h4 class="text-lg font-medium text-slate-900">Software Engineer Intern</h4>
-                        <p class="text-teal-600 text-sm mb-4">Mindhive Sdn. Bhd.</p>
-                        <ul class="list-disc list-outside ml-4 space-y-2 text-sm text-slate-600">
-                            <li>Built data migration/ingestion pipelines for unstructured enterprise data into an ERP system for 5 clients.</li>
-                            <li>Designed and implemented a scalable Units of Measurement (UOM) architecture in the Frappe framework, enabling consistent data handling and streamlined ERP workflows.</li>
-                            <li>Engineered rule-based ERP system enhancements to dynamically apply compliance instructions and pricing adjustments during purchase transactions.</li>
-                        </ul>
-                    </div>
-                </section>
-
-                <section>
-                    <h3 class="text-2xl font-semibold text-slate-900 mb-6 flex items-center gap-2">🛠 Skills</h3>
-                    <div class="space-y-4">
-                        <div>
-                            <span class="block text-sm font-medium text-slate-600 mb-2">Languages</span>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="px-3 py-1 bg-slate-100 text-teal-700 rounded-full text-xs border border-slate-200">Python</span>
-                                <span class="px-3 py-1 bg-slate-100 text-teal-700 rounded-full text-xs border border-slate-200">TypeScript</span>
-                                <span class="px-3 py-1 bg-slate-100 text-teal-700 rounded-full text-xs border border-slate-200">JavaScript</span>
-                                <span class="px-3 py-1 bg-slate-100 text-teal-700 rounded-full text-xs border border-slate-200">SQL</span>
-                                <span class="px-3 py-1 bg-slate-100 text-teal-700 rounded-full text-xs border border-slate-200">C++</span>
-                            </div>
-                        </div>
-                        <div>
-                            <span class="block text-sm font-medium text-slate-600 mb-2">Frameworks & Tools</span>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="px-3 py-1 bg-slate-100 text-blue-700 rounded-full text-xs border border-slate-200">Frappe</span>
-                                <span class="px-3 py-1 bg-slate-100 text-blue-700 rounded-full text-xs border border-slate-200">ERPNext</span>
-                                <span class="px-3 py-1 bg-slate-100 text-blue-700 rounded-full text-xs border border-slate-200">React</span>
-                                <span class="px-3 py-1 bg-slate-100 text-blue-700 rounded-full text-xs border border-slate-200">Node.js</span>
-                                <span class="px-3 py-1 bg-slate-100 text-blue-700 rounded-full text-xs border border-slate-200">n8n</span>
-                                <span class="px-3 py-1 bg-slate-100 text-blue-700 rounded-full text-xs border border-slate-200">Tailwind CSS</span>
-                            </div>
-                        </div>
-                        <div>
-                            <span class="block text-sm font-medium text-slate-600 mb-2">Specializations</span>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="px-3 py-1 bg-slate-100 text-purple-700 rounded-full text-xs border border-slate-200">Computer Vision</span>
-                                <span class="px-3 py-1 bg-slate-100 text-purple-700 rounded-full text-xs border border-slate-200">Machine Learning (PIML)</span>
-                                <span class="px-3 py-1 bg-slate-100 text-purple-700 rounded-full text-xs border border-slate-200">Algorithmic Trading</span>
-                                <span class="px-3 py-1 bg-slate-100 text-purple-700 rounded-full text-xs border border-slate-200">IoT & Embedded</span>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-            </div>
-
-            <div class="md:col-span-2 space-y-8">
-                <h3 class="text-2xl font-semibold text-slate-900 mb-6 flex items-center gap-2">🚀 Featured Projects</h3>
-
-                <div class="bg-slate-50/40 rounded-xl p-6 border border-slate-200/50 hover:bg-slate-50/80 transition-all duration-300">
-                    <h4 class="text-xl font-medium text-slate-900 mb-2 flex items-center gap-2">📈 Quantitative Portfolio Allocation Model</h4>
-                    <p class="text-sm text-slate-600 mb-4">Leveraging Fama-French factors, K-means clustering, and 15 years of S&P 500 data with technical indicators (public repo on my Github).</p>
-                    <a href="https://github.com/bede-lau/Algorithmic_Trading_Strategies" target="_blank" class="inline-block text-sm text-teal-700 hover:text-teal-600 transition-colors border border-teal-600/30 px-4 py-2 rounded-lg bg-teal-100/10">View Repository &rarr;</a>
-                </div>
-
-                <div class="bg-slate-50/40 rounded-xl p-6 border border-slate-200/50 hover:bg-slate-50/80 transition-all duration-300">
-                    <h4 class="text-xl font-medium text-slate-900 mb-2 flex items-center gap-2">🤖 'One-Prompt to Launch a Business'</h4>
-                    <p class="text-sm text-slate-600 mb-4">SaaS platform using a 7-agent AI orchestration system.</p>
-                    <a href="https://olvon-riyf.onrender.com/" target="_blank" class="inline-block mb-4 text-sm text-teal-700 hover:text-teal-600 transition-colors border border-teal-600/30 px-4 py-2 rounded-lg bg-teal-100/10">Launch App &rarr; <span class="text-xs text-slate-500">(wait ~30s)</span></a>
-                    
-                    <div class="flex gap-4 overflow-x-auto hide-scroll pb-4">
-                        <img src="assets/img/one_prompt_business/business_1.png" alt="Business 1" class="h-48 rounded-lg object-cover border border-slate-200">
-                        <img src="assets/img/one_prompt_business/business_2.png" alt="Business 2" class="h-48 rounded-lg object-cover border border-slate-200">
-                    </div>
-                </div>
-
-                <div class="bg-slate-50/40 rounded-xl p-6 border border-slate-200/50 hover:bg-slate-50/80 transition-all duration-300">
-                    <h4 class="text-xl font-medium text-slate-900 mb-2 flex items-center gap-2">👗 Virtual Try-On Web App & 3D Website</h4>
-                    <p class="text-sm text-slate-600 mb-4">Virtual try-on web application built alongside a 3D-animated company website.</p>
-                    <div class="flex gap-3 mb-4 flex-wrap">
-                        <a href="https://olvon-webapp.vercel.app/" target="_blank" class="text-sm text-teal-700 hover:text-teal-600 transition-colors border border-teal-600/30 px-4 py-2 rounded-lg bg-teal-100/10">Web App &rarr;</a>
-                        <a href="https://olvon.site/" target="_blank" class="text-sm text-teal-700 hover:text-teal-600 transition-colors border border-teal-600/30 px-4 py-2 rounded-lg bg-teal-100/10">Website &rarr;</a>
-                    </div>
-                    
-                    <div class="flex gap-4 overflow-x-auto hide-scroll pb-4">
-                        <img src="assets/img/olvon_webapp/feed_1.png" alt="Feed" class="h-48 rounded-lg object-cover border border-slate-200">
-                        <img src="assets/img/olvon_webapp/dressing_room.png" alt="Dressing Room" class="h-48 rounded-lg object-cover border border-slate-200">
-                        <img src="assets/img/olvon_website/website_1.png" alt="Website 1" class="h-48 rounded-lg object-cover border border-slate-200">
-                        <img src="assets/img/olvon_website/website_2.png" alt="Website 2" class="h-48 rounded-lg object-cover border border-slate-200">
-                    </div>
-                </div>
-
-                <div class="bg-slate-50/40 rounded-xl p-6 border border-slate-200/50 hover:bg-slate-50/80 transition-all duration-300">
-                    <h4 class="text-xl font-medium text-slate-900 mb-2 flex items-center gap-2">📱 Virtual Try-On Mobile E-commerce</h4>
-                    <p class="text-sm text-slate-600 mb-4">Centered on virtual try-on, featuring user onboarding flows, secure Google/email authentication, database integration, and an interactive TikTok-style feed.</p>
-                    
-                    <div class="flex gap-4 overflow-x-auto hide-scroll pb-4">
-                        <img src="assets/img/olvon_mobile/mobile_2.png" alt="Mobile 2" class="h-64 rounded-lg object-cover border border-slate-200">
-                        <img src="assets/img/olvon_mobile/mobile_3.png" alt="Mobile 3" class="h-64 rounded-lg object-cover border border-slate-200">
-                        <img src="assets/img/olvon_mobile/mobile_4.png" alt="Mobile 4" class="h-64 rounded-lg object-cover border border-slate-200">
-                        <img src="assets/img/olvon_mobile/mobile_5.png" alt="Mobile 5" class="h-64 rounded-lg object-cover border border-slate-200">
-                        <img src="assets/img/olvon_mobile/mobile_6.png" alt="Mobile 6" class="h-64 rounded-lg object-cover border border-slate-200">
-                    </div>
-                </div>
-
-                <div class="bg-slate-50/40 rounded-xl p-6 border border-slate-200/50 hover:bg-slate-50/80 transition-all duration-300">
-                    <h4 class="text-xl font-medium text-slate-900 mb-2 flex items-center gap-2">❄️ Automated Water-Cooling System</h4>
-                    <p class="text-sm text-slate-600 mb-4">Built an automated water-cooling system integrating a canister filter, TEC-12706 Peltier module, W1209 thermoelectric controller, and 12V fan assembly for efficient heat dissipation.</p>
-                    
-                    <div class="flex gap-4 overflow-x-auto hide-scroll pb-4">
-                        <img src="assets/img/cooler/cooler_1.jpeg" alt="Cooler 1" class="h-48 rounded-lg object-cover border border-slate-200">
-                        <img src="assets/img/cooler/cooler_2.jpeg" alt="Cooler 2" class="h-48 rounded-lg object-cover border border-slate-200">
-                        <img src="assets/img/cooler/cooler_3.jpeg" alt="Cooler 3" class="h-48 rounded-lg object-cover border border-slate-200">
-                        <img src="assets/img/cooler/cooler_4.jpeg" alt="Cooler 4" class="h-48 rounded-lg object-cover border border-slate-200">
-                    </div>
-                </div>
-
-            </div>
-        </div>
-        
-        <footer class="mt-20 border-t border-slate-200 pt-8 text-center text-slate-500 text-sm">
-            <p>© 2026 Bede Lau. All rights reserved.</p>
-        </footer>
-
+  <header class="hero" id="top">
+    <div class="hero-intro">
+      <img class="hero-pic" src="assets/headshot_circle.jpeg" alt="Bede Lau" />
+      <div class="hero-actions">
+        <a class="btn-github" href="https://github.com/bede-lau" target="_blank" rel="noopener">
+          <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+          GitHub
+        </a>
+        <button class="btn-projects" id="projectListButton" type="button">Project List</button>
+      </div>
     </div>
+    <span class="eyebrow">Cambridge A-Levels · Taylor's University</span>
+    <h1><span class="grad">Bede Lau</span></h1>
+    <p class="lede">I build full-stack systems across computer vision, machine learning, and quantitative finance, from multi-agent AI platforms to ERP data pipelines and embedded hardware.</p>
+  </header>
 
+  <section class="info-section" id="work">
+    <span class="info-label">Work</span>
+    <h3 class="info-role">Software Engineer Intern <span>· Mindhive Sdn. Bhd.</span></h3>
+    <ul class="info-list">
+      <li>Built data migration/ingestion pipelines for unstructured enterprise data into an ERP system for 5 clients.</li>
+      <li>Designed and implemented a scalable Units of Measurement (UOM) architecture in the Frappe framework, enabling consistent data handling and streamlined ERP workflows.</li>
+      <li>Engineered rule-based ERP system enhancements to dynamically apply compliance instructions and pricing adjustments during purchase transactions.</li>
+    </ul>
+  </section>
+
+  <section class="info-section" id="skills">
+    <span class="info-label">Skills</span>
+    <div class="skill-group">
+      <span class="skill-cat">Languages</span>
+      <div class="tags"><span>Python</span><span>TypeScript</span><span>JavaScript</span><span>SQL</span><span>C++</span></div>
+    </div>
+    <div class="skill-group">
+      <span class="skill-cat">Frameworks &amp; Tools</span>
+      <div class="tags"><span>Frappe</span><span>ERPNext</span><span>React</span><span>Node.js</span><span>n8n</span><span>Tailwind CSS</span></div>
+    </div>
+    <div class="skill-group">
+      <span class="skill-cat">Specializations</span>
+      <div class="tags"><span>Computer Vision</span><span>Machine Learning (PIML)</span><span>Algorithmic Trading</span><span>IoT &amp; Embedded</span></div>
+    </div>
+  </section>
+
+  <div class="project-list-backdrop" id="projectListBackdrop" aria-hidden="true">
+    <div class="project-list" role="dialog" aria-modal="true" aria-labelledby="projectListTitle">
+      <button class="project-list-close" id="projectListClose" aria-label="Close project list">&times;</button>
+      <h2 id="projectListTitle">Project List</h2>
+      <div class="project-list-items" id="projectListItems"></div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="backdrop">
+    <div class="modal" id="modal">
+      <button class="modal-close" id="close" aria-label="Close">×</button>
+      <div class="modal-cover" id="cover"></div>
+      <div class="modal-body" id="mbody"></div>
+    </div>
+  </div>
+
+  <script>
+  const PROJECTS = [
+    { idx:"01", title:"Quantitative Portfolio Allocation Model", hue:[120,160,235],
+      desc:"A quantitative portfolio allocation model leveraging Fama-French factors, K-means clustering, and 15 years of S&P 500 data with technical indicators.",
+      links:[{label:"View repo",url:"https://github.com/bede-lau/Algorithmic_Trading_Strategies",primary:true}],
+      images:[],
+      icon:'<path d="M4 28 L14 16 L20 22 L30 8" fill="none" stroke="#aec6ff" stroke-width="2"/><circle cx="14" cy="16" r="2.5" fill="#aec6ff"/><circle cx="20" cy="22" r="2.5" fill="#aec6ff"/><circle cx="30" cy="8" r="2.5" fill="#aec6ff"/>' },
+    { idx:"02", title:"One-Prompt to Launch a Business", hue:[140,175,240],
+      desc:"A SaaS platform that turns a single prompt into a launched business using a 7-agent AI orchestration system. (Live demo may take ~30 seconds to wake up.)",
+      links:[{label:"Live demo",url:"https://olvon-riyf.onrender.com/",primary:true}],
+      images:["assets/img/one_prompt_business/business_1.png","assets/img/one_prompt_business/business_2.png"],
+      icon:'<circle cx="18" cy="18" r="4" fill="#aec6ff"/><circle cx="6" cy="10" r="2.5" fill="#aec6ff"/><circle cx="30" cy="10" r="2.5" fill="#aec6ff"/><circle cx="6" cy="26" r="2.5" fill="#aec6ff"/><circle cx="30" cy="26" r="2.5" fill="#aec6ff"/><g stroke="#aec6ff" stroke-width="1.4" opacity="0.7"><line x1="14.5" y1="15.5" x2="7.5" y2="11"/><line x1="21.5" y1="15.5" x2="28.5" y2="11"/><line x1="14.5" y1="20.5" x2="7.5" y2="25"/><line x1="21.5" y1="20.5" x2="28.5" y2="25"/></g>' },
+    { idx:"03", title:"Olvon: Virtual Try-On Web App", hue:[160,190,245],
+      desc:"A virtual try-on web application built alongside a 3D-animated company website under the Olvon brand.",
+      links:[{label:"Web app",url:"https://olvon-webapp.vercel.app/",primary:true},{label:"Website",url:"https://olvon.site/",primary:false}],
+      images:["assets/img/olvon_webapp/feed_1.png","assets/img/olvon_webapp/dressing_room.png","assets/img/olvon_website/website_1.png","assets/img/olvon_website/website_2.png"],
+      icon:'<rect x="11" y="6" width="14" height="24" rx="3" fill="none" stroke="#aec6ff" stroke-width="2"/><circle cx="18" cy="13" r="3" fill="#aec6ff"/><path d="M13 26 C15 21, 21 21, 23 26" fill="none" stroke="#aec6ff" stroke-width="1.6"/>' },
+    { idx:"04", title:"Virtual Try-On Mobile App", hue:[150,180,245],
+      desc:"A mobile e-commerce app centered on virtual try-on, featuring user onboarding flows, secure Google/email authentication, database integration, and an interactive TikTok-style feed.",
+      links:[],
+      images:["assets/img/olvon_mobile/mobile_2.png","assets/img/olvon_mobile/mobile_3.png","assets/img/olvon_mobile/mobile_4.png","assets/img/olvon_mobile/mobile_5.png","assets/img/olvon_mobile/mobile_6.png"],
+      icon:'<rect x="12" y="5" width="12" height="26" rx="3" fill="none" stroke="#aec6ff" stroke-width="2"/><line x1="16" y1="28" x2="20" y2="28" stroke="#aec6ff" stroke-width="2"/><path d="M18 11 l3 4 -3 4 -3 -4 z" fill="#aec6ff"/>' },
+    { idx:"05", title:"Automated Water-Cooling System", hue:[175,200,250],
+      desc:"An automated water-cooling system integrating a canister filter, TEC-12706 Peltier module, W1209 thermoelectric controller, and 12V fan assembly for efficient heat dissipation.",
+      links:[],
+      images:["assets/img/cooler/cooler_1.jpeg","assets/img/cooler/cooler_2.jpeg","assets/img/cooler/cooler_3.jpeg","assets/img/cooler/cooler_4.jpeg"],
+      icon:'<circle cx="18" cy="18" r="11" fill="none" stroke="#aec6ff" stroke-width="2"/><g stroke="#aec6ff" stroke-width="2"><line x1="18" y1="18" x2="18" y2="9"/><line x1="18" y1="18" x2="25" y2="22"/><line x1="18" y1="18" x2="12" y2="23"/></g><circle cx="18" cy="18" r="2" fill="#aec6ff"/>' },
+    { idx:"06", title:"SitePilot: Telegram AI Ops Agent", hue:[130,170,245],
+      desc:"A Telegram AI operations agent for solar site inspections and procurement. It turns messages into AI-generated inspection reports, invoice drafts, vendor RFQs, quote comparisons, and purchase-order approvals.",
+      links:[{label:"Demo Video",url:"https://x.com/bdislau_/status/2068692101286797731",primary:true},{label:"View repo",url:"https://github.com/bede-lau/SitePilot",primary:false}],
+      images:["assets/img/sitepilot/sitepilot_1.png","assets/img/sitepilot/sitepilot_2.png","assets/img/sitepilot/sitepilot_3.png","assets/img/sitepilot/sitepilot_4.png","assets/img/sitepilot/sitepilot_5.png"],
+      icon:'<rect x="7" y="7" width="22" height="22" rx="5" fill="none" stroke="#aec6ff" stroke-width="2"/><path d="M11 20 L16 15 L20 19 L26 12" fill="none" stroke="#aec6ff" stroke-width="1.8"/><circle cx="12" cy="24" r="1.8" fill="#aec6ff"/><circle cx="18" cy="24" r="1.8" fill="#aec6ff"/><circle cx="24" cy="24" r="1.8" fill="#aec6ff"/>' },
+  ];
+
+  const reduce = matchMedia('(prefers-reduced-motion:reduce)').matches;
+  const theme = 'dark';
+  const palettes = {
+    dark:{ star:'#aec6ff', dot:'#eef3ff', glowBase:[233,239,255], pointA:[39,64,127], pointB:[91,134,224], pointC:[174,198,255] },
+    light:{ star:'#6f89d8', dot:'#345bc4', glowBase:[255,255,252], pointA:[198,212,255], pointB:[91,134,224], pointC:[38,65,142] }
+  };
+
+  const cv = document.getElementById('scene');
+  const sphereTitle = document.getElementById('sphereTitle');
+  const ctx = cv.getContext('2d');
+  let W = 0, H = 0, dpr = 1, cx = 0, cy = 0, SCALE = 1;
+  const D = 14, R = 5.6;
+
+  // globe points
+  const N = innerWidth < 720 ? 2400 : 3800;
+  const pts = [];
+  const golden = Math.PI * (3 - Math.sqrt(5));
+  for (let i = 0; i < N; i++) {
+    const y = 1 - (i/(N-1))*2, r = Math.sqrt(1-y*y), t = golden*i, j = 0.9 + Math.random()*0.2;
+    const m = (y+1)/2;
+    pts.push({ x:Math.cos(t)*r*R*j, y:y*R*j, z:Math.sin(t)*r*R*j, m });
+  }
+
+  // project planets
+  const PHI = [1.1,1.95,0.78,2.25,1.45,1.82], TH = [0.5,2.05,3.65,4.7,5.7,0.95];
+  const planets = PROJECTS.map((d, i) => {
+    const phi = PHI[i], th = TH[i], pr = R + 0.35;
+    const el = document.createElement('div'); el.className = 'planet-label'; el.textContent = d.title;
+    document.body.appendChild(el);
+    const pv = document.createElement('div'); pv.className = 'planet-preview';
+    pv.innerHTML = (d.images.length ? `<img src="${d.images[0]}" alt="${d.title} preview" loading="lazy" />` : '')
+      + `<div class="pp-body"><span class="pp-idx">${d.idx}</span><div class="pp-title">${d.title}</div>`
+      + (d.images.length ? `<div class="pp-desc">${d.desc}</div>` : '') + `</div>`;
+    document.body.appendChild(pv);
+    return { x:Math.sin(phi)*Math.cos(th)*pr, y:Math.cos(phi)*pr, z:Math.sin(phi)*Math.sin(th)*pr, th, data:d, el, pv, sx:0, sy:0, front:false };
+  });
+
+  // screen-space starfield
+  const stars = Array.from({length: innerWidth<720?70:120}, () => ({ x:Math.random(), y:Math.random(), r:Math.random()*1.3+0.3, p:Math.random()*Math.PI*2 }));
+
+  let mx = -9e9, my = -9e9, hover = -1;
+  let dragging = false, lastX = 0, lastY = 0, moved = 0, downT = 0;
+  let rotY = 0.3, rotX = -0.15, tRotY = 0.3, tRotX = -0.15, spin = reduce ? 0 : 0.0016;
+
+  // periodic randomized pop-up: highlights a random node for a moment, independent of hover/rotation
+  let spotlightIndex = -1;
+  function scheduleSpotlight() {
+    setTimeout(() => {
+      let next = spotlightIndex;
+      if (planets.length > 1) { while (next === spotlightIndex) next = Math.floor(Math.random() * planets.length); }
+      else next = 0;
+      spotlightIndex = next;
+      setTimeout(() => { if (spotlightIndex === next) spotlightIndex = -1; }, 5000);
+      scheduleSpotlight();
+    }, 12000 + Math.random() * 6000);
+  }
+  if (!reduce) scheduleSpotlight();
+
+  function resize() {
+    dpr = Math.min(devicePixelRatio || 1, 2);
+    W = innerWidth; H = innerHeight;
+    cv.width = W*dpr; cv.height = H*dpr; cv.style.width = W+'px'; cv.style.height = H+'px';
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    cx = W < 720 ? W*0.55 : W*0.69; cy = W < 720 ? H*0.46 : H*0.5;
+    SCALE = Math.min(W,H) * (W < 720 ? 0.047 : 0.05);
+    sphereTitle.style.left = cx+'px'; sphereTitle.style.top = cy+'px';
+  }
+  addEventListener('resize', resize); resize();
+
+  cv.style.touchAction = 'none'; cv.style.cursor = 'grab';
+  cv.addEventListener('pointerdown', e => {
+    dragging = true; lastX = e.clientX; lastY = e.clientY; moved = 0; downT = performance.now();
+    cv.setPointerCapture(e.pointerId);
+  });
+  addEventListener('pointermove', e => {
+    mx = e.clientX; my = e.clientY;
+    if (dragging) {
+      const MAX_STEP = 60;
+      const dx = Math.max(-MAX_STEP, Math.min(MAX_STEP, e.clientX-lastX));
+      const dy = Math.max(-MAX_STEP, Math.min(MAX_STEP, e.clientY-lastY));
+      tRotY += dx*0.005; tRotX = Math.max(-0.7, Math.min(0.7, tRotX + dy*0.005));
+      moved += Math.abs(dx)+Math.abs(dy); lastX = e.clientX; lastY = e.clientY;
+    }
+  });
+  function endDrag(e) {
+    const click = moved < 6 && performance.now()-downT < 350;
+    dragging = false;
+    if (e && e.pointerId !== undefined && cv.hasPointerCapture(e.pointerId)) cv.releasePointerCapture(e.pointerId);
+    if (click && hover >= 0) openModal(planets[hover].data);
+  }
+  addEventListener('pointerup', endDrag);
+  addEventListener('pointercancel', endDrag);
+
+  let breathe = 0;
+  function loop() {
+    breathe += 0.01;
+    if (!dragging && !reduce) tRotY += spin;
+    rotY += (tRotY-rotY)*0.07; rotX += (tRotX-rotX)*0.07;
+    const sy = Math.sin(rotY), cyr = Math.cos(rotY), sx = Math.sin(rotX), cxr = Math.cos(rotX);
+    const sc = SCALE * (reduce ? 1 : 1 + Math.sin(breathe*0.6)*0.012);
+    const pal = palettes[theme];
+
+    ctx.clearRect(0,0,W,H);
+
+    // starfield
+    for (const s of stars) {
+      const a = reduce ? 0.5 : 0.35 + Math.sin(breathe*1.3 + s.p)*0.3;
+      ctx.globalAlpha = Math.max(0, a); ctx.fillStyle = pal.star;
+      ctx.fillRect(s.x*W, s.y*H, s.r, s.r);
+    }
+
+    // globe (additive glow)
+    ctx.globalCompositeOperation = 'lighter';
+    for (const p of pts) {
+      const x1 = p.x*cyr + p.z*sy, z1 = -p.x*sy + p.z*cyr;
+      const y2 = p.y*cxr - z1*sx, z2 = p.y*sx + z1*cxr;
+      const f = D/(D - z2);
+      const px = cx + x1*f*sc, py = cy - y2*f*sc;
+      const depth = (z2/R + 1)/2;
+      ctx.globalAlpha = 0.18 + depth*0.6;
+      const a = p.m < 0.5 ? p.m*2 : (p.m-0.5)*2;
+      const from = p.m < 0.5 ? pal.pointA : pal.pointB;
+      const to = p.m < 0.5 ? pal.pointB : pal.pointC;
+      ctx.fillStyle = `rgb(${(from[0]+(to[0]-from[0])*a)|0},${(from[1]+(to[1]-from[1])*a)|0},${(from[2]+(to[2]-from[2])*a)|0})`;
+      const s = 0.9 + f*0.7;
+      ctx.fillRect(px, py, s, s);
+    }
+    ctx.globalCompositeOperation = 'source-over';
+
+    // planets
+    hover = -1; let best = 1e9;
+    for (let i = 0; i < planets.length; i++) {
+      const p = planets[i];
+      const x1 = p.x*cyr + p.z*sy, z1 = -p.x*sy + p.z*cyr;
+      const y2 = p.y*cxr - z1*sx, z2 = p.y*sx + z1*cxr;
+      const f = D/(D - z2);
+      p.sx = cx + x1*f*sc; p.sy = cy - y2*f*sc; p.front = z2 > -0.5; p.depth = z2;
+      if (p.front) {
+        const d = Math.hypot(mx-p.sx, my-p.sy);
+        if (d < 30 && d < best) { best = d; hover = i; }
+      }
+    }
+    cv.style.cursor = hover >= 0 ? 'pointer' : 'grab';
+
+    for (let i = 0; i < planets.length; i++) {
+      const p = planets[i], hot = i === hover || i === spotlightIndex;
+      const x1 = p.x*cyr + p.z*sy, z1 = -p.x*sy + p.z*cyr, z2 = p.y*sx + z1*cxr;
+      const vis = Math.max(0.12, (z2/R + 1)/2);
+      const pulse = reduce ? 1 : 1 + Math.sin(breathe*1.6 + i)*0.14;
+      const gr = (hot ? 26 : 17) * pulse;
+      ctx.globalCompositeOperation = 'lighter';
+      const [rr,gg,bb] = p.data.hue;
+      const grad = ctx.createRadialGradient(p.sx, p.sy, 0, p.sx, p.sy, gr);
+      grad.addColorStop(0, `rgba(${pal.glowBase[0]},${pal.glowBase[1]},${pal.glowBase[2]},${0.95*vis})`);
+      grad.addColorStop(0.35, `rgba(${rr},${gg},${bb},${0.8*vis})`);
+      grad.addColorStop(1, `rgba(${rr},${gg},${bb},0)`);
+      ctx.globalAlpha = 1; ctx.fillStyle = grad;
+      ctx.beginPath(); ctx.arc(p.sx, p.sy, gr, 0, 7); ctx.fill();
+      ctx.globalCompositeOperation = 'source-over';
+      ctx.globalAlpha = vis; ctx.fillStyle = pal.dot;
+      ctx.beginPath(); ctx.arc(p.sx, p.sy, hot ? 4 : 2.6, 0, 7); ctx.fill();
+
+      const e = p.el;
+      const previewActive = p.front && (i === hover || i === spotlightIndex);
+      if (p.front && !previewActive) { e.style.left = p.sx+'px'; e.style.top = p.sy+'px'; e.className = 'planet-label show'; }
+      else e.className = 'planet-label';
+
+      if (previewActive) { p.pv.style.left = p.sx+'px'; p.pv.style.top = p.sy+'px'; }
+      p.pv.className = 'planet-preview' + (previewActive ? ' show' : '');
+    }
+    ctx.globalAlpha = 1;
+    requestAnimationFrame(loop);
+  }
+  loop();
+
+  const projectListButton = document.getElementById('projectListButton');
+  const projectListBackdrop = document.getElementById('projectListBackdrop');
+  const projectListClose = document.getElementById('projectListClose');
+  const projectListItems = document.getElementById('projectListItems');
+  projectListItems.innerHTML = PROJECTS.map((project, index) => `<button type="button" data-project-index="${index}">${project.title}</button>`).join('');
+  function openProjectList() { projectListBackdrop.classList.add('open'); projectListBackdrop.setAttribute('aria-hidden','false'); }
+  function closeProjectList() { projectListBackdrop.classList.remove('open'); projectListBackdrop.setAttribute('aria-hidden','true'); }
+  projectListButton.addEventListener('click', openProjectList);
+  projectListClose.addEventListener('click', closeProjectList);
+  projectListBackdrop.addEventListener('click', e => { if (e.target === projectListBackdrop) closeProjectList(); });
+  projectListItems.addEventListener('click', e => {
+    const item = e.target.closest('[data-project-index]');
+    if (!item) return;
+    closeProjectList();
+    openModal(PROJECTS[+item.dataset.projectIndex]);
+  });
+
+  const backdrop = document.getElementById('backdrop'), modal = document.getElementById('modal'), cover = document.getElementById('cover'), mbody = document.getElementById('mbody');
+  let activeProject = null, activeImageIndex = 0;
+  function openModal(d) {
+    activeProject = d; activeImageIndex = 0;
+    modal.classList.toggle('text-only', !d.images.length);
+    function fitCover(src, index = activeImageIndex) {
+      activeImageIndex = index;
+      const img = new Image();
+      img.id = 'coverImg'; img.alt = d.title + ' preview'; img.src = src;
+      cover.innerHTML = ''; cover.appendChild(img);
+      mbody.querySelectorAll('.thumbs img').forEach((o, i) => o.classList.toggle('active', i === activeImageIndex));
+    }
+    if (d.images.length) {
+      cover.style.minHeight = '';
+      fitCover(d.images[0], 0);
+    } else {
+      cover.innerHTML = '';
+    }
+    let links = d.links.map(l => `<a class="${l.primary?'link-primary':'link-ghost'}" href="${l.url}" target="_blank" rel="noopener">${l.label} ↗</a>`).join('');
+    let thumbs = '';
+    if (d.images.length > 1) {
+      thumbs = `<div class="thumbs">` + d.images.map((src,i)=>`<img src="${src}" data-i="${i}" class="${i===0?'active':''}" alt="${d.title} thumbnail ${i+1}" />`).join('') + `</div>`;
+    }
+    mbody.innerHTML = `<div class="idx">PROJECT ${d.idx}</div><h2>${d.title}</h2><p>${d.desc}</p>`+
+      `${thumbs}<div class="modal-links">${links}</div>`;
+    if (d.images.length > 1) {
+      mbody.querySelectorAll('.thumbs img').forEach(t => t.addEventListener('click', () => {
+        fitCover(d.images[+t.dataset.i], +t.dataset.i);
+      }));
+    }
+    backdrop.classList.add('open');
+  }
+  function closeModal() { backdrop.classList.remove('open'); modal.classList.remove('text-only'); activeProject = null; activeImageIndex = 0; }
+  function stepModalImage(delta) {
+    if (!activeProject || !activeProject.images.length || !backdrop.classList.contains('open')) return;
+    activeImageIndex = (activeImageIndex + delta + activeProject.images.length) % activeProject.images.length;
+    const img = new Image();
+    img.id = 'coverImg'; img.alt = activeProject.title + ' preview'; img.src = activeProject.images[activeImageIndex];
+    cover.innerHTML = ''; cover.appendChild(img);
+    mbody.querySelectorAll('.thumbs img').forEach((o, i) => o.classList.toggle('active', i === activeImageIndex));
+  }
+  document.getElementById('close').addEventListener('click', closeModal);
+  backdrop.addEventListener('click', e => { if (e.target === backdrop) closeModal(); });
+  addEventListener('keydown', e => {
+    if (e.key === 'Escape') { closeModal(); closeProjectList(); }
+    if (e.key === 'ArrowRight') { e.preventDefault(); stepModalImage(1); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); stepModalImage(-1); }
+  });
+  </script>
 </body>
 </html>

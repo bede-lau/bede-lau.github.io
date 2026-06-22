@@ -1,0 +1,15 @@
+﻿# Local agent/runtime state
+.omx/
+.omc/
+skills/
+screenshots/
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Temporary logs/cache
+*.log
+.cache/
