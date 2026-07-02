@@ -2,7 +2,6 @@
 .omx/
 .omc/
 skills/
-screenshots/
 
 # OS/editor noise
 .DS_Store
