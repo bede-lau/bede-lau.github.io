@@ -69,7 +69,7 @@
 
   .planet-label { position:fixed; z-index:4; pointer-events:none; transform:translate(-50%,-160%);
     font-family:"JetBrains Mono",monospace; font-size:11.5px; letter-spacing:0.04em; color:var(--ice);
-    white-space:nowrap; padding:5px 11px; border-radius:999px; background:rgba(10,16,36,0.6);
+    white-space:nowrap; max-width:min(82vw,360px); overflow:hidden; text-overflow:ellipsis; padding:5px 11px; border-radius:999px; background:rgba(10,16,36,0.6);
     border:1px solid var(--line); backdrop-filter:blur(6px); opacity:0; transition:opacity 0.2s; }
   .planet-label.show { opacity:0.55; }
   .planet-label.hot { opacity:1; transform:translate(-50%,-185%); border-color:rgba(174,198,255,0.5);
@@ -127,14 +127,16 @@
   .project-list-backdrop.open { display:flex; animation:fade 0.24s forwards; }
   .project-list { width:min(520px,100%); border-radius:22px; padding:28px;
     background:linear-gradient(160deg,var(--panel),var(--modal-tail)); border:1px solid var(--line);
-    box-shadow:0 32px 100px var(--shadow); position:relative; }
+    box-shadow:0 32px 100px var(--shadow); position:relative; max-height:min(720px,calc(100vh - 48px)); overflow-y:auto; }
   .project-list h2 { font-family:"JetBrains Mono",monospace; font-size:12px; letter-spacing:0.18em; text-transform:uppercase;
     color:var(--azure); margin-bottom:18px; font-weight:500; }
   .project-list-items { display:grid; gap:10px; }
   .project-list-items button { width:100%; border:1px solid rgba(174,198,255,0.16); border-radius:14px; padding:14px 16px;
     background:rgba(255,255,255,0.035); color:var(--modal-heading); text-align:left; cursor:pointer;
-    font-family:"Space Grotesk",sans-serif; font-size:16px; font-weight:600; transition:transform 0.2s, border-color 0.2s, background 0.2s; }
+    font-family:"Space Grotesk",sans-serif; font-size:16px; font-weight:600; transition:transform 0.2s, border-color 0.2s, background 0.2s;
+    display:grid; grid-template-columns:32px 1fr; align-items:center; gap:12px; }
   .project-list-items button:hover { transform:translateX(4px); border-color:rgba(174,198,255,0.44); background:rgba(91,134,224,0.12); }
+  .project-list-index { font-family:"JetBrains Mono",monospace; font-size:11px; font-weight:500; letter-spacing:0.08em; color:var(--azure); }
   .project-list-close { position:absolute; top:16px; right:16px; background:rgba(5,8,18,0.5); border:1px solid var(--line); color:var(--ink);
     width:34px; height:34px; border-radius:50%; cursor:pointer; font-size:18px; line-height:1; }
 
@@ -298,6 +300,21 @@
       links:[{label:"Demo Video",url:"https://x.com/bdislau_/status/2068692101286797731",primary:true},{label:"View repo",url:"https://github.com/bede-lau/SitePilot",primary:false}],
       images:["assets/img/sitepilot/sitepilot_1.png","assets/img/sitepilot/sitepilot_2.png","assets/img/sitepilot/sitepilot_3.png","assets/img/sitepilot/sitepilot_4.png","assets/img/sitepilot/sitepilot_5.png"],
       icon:'<rect x="7" y="7" width="22" height="22" rx="5" fill="none" stroke="#aec6ff" stroke-width="2"/><path d="M11 20 L16 15 L20 19 L26 12" fill="none" stroke="#aec6ff" stroke-width="1.8"/><circle cx="12" cy="24" r="1.8" fill="#aec6ff"/><circle cx="18" cy="24" r="1.8" fill="#aec6ff"/><circle cx="24" cy="24" r="1.8" fill="#aec6ff"/>' },
+    { idx:"07", title:"Mini-Doc: Audit-Ready Document Intelligence", hue:[105,160,255],
+      desc:"A local document intelligence app built with FastAPI, Next.js, and RAG to parse PDFs, answer questions with page-level citations, and generate compliance reports.",
+      links:[{label:"Demo video",url:"https://drive.google.com/file/d/18eWRwotbx96IEXOf9whBC4phcTqSm8Wa/view?usp=drive_link",primary:true},{label:"View repo",url:"https://github.com/bede-lau/Mini-Doc",primary:false}],
+      images:["assets/img/mini_doc/doc1.png","assets/img/mini_doc/doc2.png","assets/img/mini_doc/doc3.png"],
+      icon:'<rect x="9" y="5" width="18" height="26" rx="3" fill="none" stroke="#aec6ff" stroke-width="2"/><path d="M14 12 H22 M14 17 H22 M14 22 H19" fill="none" stroke="#aec6ff" stroke-width="1.7" stroke-linecap="round"/><path d="M19 26 L21.5 28.5 L26 23.5" fill="none" stroke="#aec6ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>' },
+    { idx:"08", title:"AquaBro: Fault-Tolerant Aquaculture Monitoring", hue:[70,190,225],
+      desc:"A multi-agent aquaculture monitoring system built with FastAPI, React, and PostgreSQL to validate sensor data, detect water-quality risks, and manage alerts and hardware from a live dashboard.",
+      links:[{label:"Demo video",url:"https://drive.google.com/file/d/1f4TTddwHZW1kMrrnafA2QWoeEsFALPfw/view?usp=sharing",primary:true},{label:"View repo",url:"https://github.com/bede-lau/AquaBro",primary:false}],
+      images:["assets/img/aquabro/aqua1.png","assets/img/aquabro/aqua2.png","assets/img/aquabro/image.png"],
+      icon:'<path d="M5 18 C10 10, 20 9, 27 16 C29 18, 31 18, 33 15 C32 21, 29 23, 26 21 C18 27, 10 25, 5 18 Z" fill="none" stroke="#aec6ff" stroke-width="1.8" stroke-linejoin="round"/><circle cx="13" cy="16" r="1.6" fill="#aec6ff"/><path d="M18 13 C20 16, 20 20, 18 23" fill="none" stroke="#aec6ff" stroke-width="1.4"/>' },
+    { idx:"09", title:"Aura Desk Lamp", hue:[190,120,245],
+      desc:"An ESP32-powered desk lamp with three button-controlled modes: LDR Light Mode shifts between purple and amber based on room brightness, Manual Color Mode cycles through fixed colors, and Breathing Mode creates a slow pulsing animation.",
+      links:[{label:"Demo video",url:"https://www.instagram.com/p/DaqFlJ5KTko/",primary:true}],
+      images:["assets/img/aura_desk_lamp/aura1.png","assets/img/aura_desk_lamp/aura2.jpeg","assets/img/aura_desk_lamp/aura3.jpeg"],
+      icon:'<path d="M12 15 H24 L28 25 H8 Z" fill="none" stroke="#aec6ff" stroke-width="1.8" stroke-linejoin="round"/><path d="M18 15 V8 M13 8 H23" fill="none" stroke="#aec6ff" stroke-width="2" stroke-linecap="round"/><path d="M13 28 H23" fill="none" stroke="#aec6ff" stroke-width="2" stroke-linecap="round"/><path d="M12 26 C14 22, 22 22, 24 26" fill="none" stroke="#aec6ff" stroke-width="1.4" opacity="0.8"/>' },
   ];
 
   const reduce = matchMedia('(prefers-reduced-motion:reduce)').matches;
@@ -324,7 +341,7 @@
   }
 
   // project planets
-  const PHI = [1.1,1.95,0.78,2.25,1.45,1.82], TH = [0.5,2.05,3.65,4.7,5.7,0.95];
+  const PHI = [1.1,1.95,0.78,2.25,1.45,1.82,2.68,1.25,0.55], TH = [0.5,2.05,3.65,4.7,5.7,0.95,2.85,4.05,1.65];
   const planets = PROJECTS.map((d, i) => {
     const phi = PHI[i], th = TH[i], pr = R + 0.35;
     const el = document.createElement('div'); el.className = 'planet-label'; el.textContent = d.title;
@@ -479,7 +496,7 @@
   const projectListBackdrop = document.getElementById('projectListBackdrop');
   const projectListClose = document.getElementById('projectListClose');
   const projectListItems = document.getElementById('projectListItems');
-  projectListItems.innerHTML = PROJECTS.map((project, index) => `<button type="button" data-project-index="${index}">${project.title}</button>`).join('');
+  projectListItems.innerHTML = PROJECTS.map((project, index) => `<button type="button" data-project-index="${index}"><span class="project-list-index">${project.idx}</span><span>${project.title}</span></button>`).join('');
   function openProjectList() { projectListBackdrop.classList.add('open'); projectListBackdrop.setAttribute('aria-hidden','false'); }
   function closeProjectList() { projectListBackdrop.classList.remove('open'); projectListBackdrop.setAttribute('aria-hidden','true'); }
   projectListButton.addEventListener('click', openProjectList);
