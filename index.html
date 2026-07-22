@@ -125,17 +125,38 @@
   .project-list-backdrop { position:fixed; inset:0; z-index:90; display:none; align-items:center; justify-content:center;
     background:rgba(4,7,15,0.58); backdrop-filter:blur(10px); padding:24px; }
   .project-list-backdrop.open { display:flex; animation:fade 0.24s forwards; }
-  .project-list { width:min(520px,100%); border-radius:22px; padding:28px;
+  .project-list { width:min(640px,100%); border-radius:22px; padding:28px;
     background:linear-gradient(160deg,var(--panel),var(--modal-tail)); border:1px solid var(--line);
     box-shadow:0 32px 100px var(--shadow); position:relative; max-height:min(720px,calc(100vh - 48px)); overflow-y:auto; }
   .project-list h2 { font-family:"JetBrains Mono",monospace; font-size:12px; letter-spacing:0.18em; text-transform:uppercase;
     color:var(--azure); margin-bottom:18px; font-weight:500; }
-  .project-list-items { display:grid; gap:10px; }
-  .project-list-items button { width:100%; border:1px solid rgba(174,198,255,0.16); border-radius:14px; padding:14px 16px;
+  .project-list-items { display:grid; grid-template-columns:1fr 1fr; gap:28px; }
+  .project-list-col-head { display:flex; align-items:center; gap:10px; margin-bottom:14px; padding-bottom:10px;
+    border-bottom:1px solid var(--line); }
+  .project-list-cat { font-family:"JetBrains Mono",monospace; font-size:11px; letter-spacing:0.18em; text-transform:uppercase;
+    color:var(--azure); font-weight:500; }
+  .project-list-count { font-family:"JetBrains Mono",monospace; font-size:10px; letter-spacing:0.08em; color:var(--ink); opacity:0.7; }
+  .project-list-col-items { display:grid; gap:10px; }
+  .project-list-col-items button { width:100%; border:1px solid rgba(174,198,255,0.16); border-radius:14px; padding:14px 16px;
     background:rgba(255,255,255,0.035); color:var(--modal-heading); text-align:left; cursor:pointer;
-    font-family:"Space Grotesk",sans-serif; font-size:16px; font-weight:600; transition:transform 0.2s, border-color 0.2s, background 0.2s;
-    display:grid; grid-template-columns:32px 1fr; align-items:center; gap:12px; }
-  .project-list-items button:hover { transform:translateX(4px); border-color:rgba(174,198,255,0.44); background:rgba(91,134,224,0.12); }
+    font-family:"Space Grotesk",sans-serif; font-size:15px; font-weight:600; transition:transform 0.2s, border-color 0.2s, background 0.2s;
+    display:grid; grid-template-columns:30px 1fr auto; align-items:center; gap:12px; }
+  .project-list-col-items button:hover { transform:translateX(4px); border-color:rgba(174,198,255,0.44); background:rgba(91,134,224,0.12); }
+  .project-list-col-items button.win { border-color:rgba(255,196,99,0.42); background:linear-gradient(100deg,rgba(255,196,99,0.10),rgba(255,255,255,0.035) 60%); }
+  .project-list-col-items button.win:hover { border-color:rgba(255,196,99,0.7); background:linear-gradient(100deg,rgba(255,196,99,0.18),rgba(91,134,224,0.12) 70%); }
+  .project-list-trophy { display:inline-flex; align-items:center; justify-content:center; width:26px; height:26px; flex:none;
+    border-radius:50%; color:#ffd485; background:linear-gradient(135deg,rgba(255,196,99,0.20),rgba(255,170,80,0.06));
+    border:1px solid rgba(255,196,99,0.36); box-shadow:0 0 12px rgba(255,170,80,0.18); }
+  .project-list-trophy svg { width:14px; height:14px; }
+  .project-list-win { font-family:"JetBrains Mono",monospace; font-size:9px; font-weight:500; letter-spacing:0.12em; text-transform:uppercase;
+    display:inline-flex; align-items:center; gap:5px; color:#ffd485;
+    background:linear-gradient(135deg,rgba(255,196,99,0.16),rgba(255,170,80,0.08));
+    border:1px solid rgba(255,196,99,0.32); border-radius:999px; padding:2px 8px 2px 6px; }
+  .project-list-win svg { width:10px; height:10px; }
+  .project-list-legend { margin-top:22px; padding-top:16px; border-top:1px solid var(--line); display:flex; align-items:center;
+    gap:9px; flex-wrap:wrap; font-family:"JetBrains Mono",monospace; font-size:10.5px; letter-spacing:0.04em; color:var(--muted); }
+  .project-list-legend .project-list-win { font-size:9px; padding:2px 8px 2px 6px; }
+  @media (max-width:560px) { .project-list-items { grid-template-columns:1fr; gap:24px; } }
   .project-list-index { font-family:"JetBrains Mono",monospace; font-size:11px; font-weight:500; letter-spacing:0.08em; color:var(--azure); }
   .project-list-close { position:absolute; top:16px; right:16px; background:rgba(5,8,18,0.5); border:1px solid var(--line); color:var(--ink);
     width:34px; height:34px; border-radius:50%; cursor:pointer; font-size:18px; line-height:1; }
@@ -145,7 +166,7 @@
   .modal-backdrop.open { display:flex; animation:fade 0.3s forwards; }
   .modal { width:min(880px,100%); max-height:86vh; overflow:hidden; border-radius:20px;
     background:linear-gradient(160deg,var(--panel),var(--modal-tail)); border:1px solid var(--line);
-    box-shadow:0 40px 120px var(--shadow); display:grid; grid-template-columns:1.1fr 1fr; align-items:start; position:relative;
+    box-shadow:0 40px 120px var(--shadow); display:grid; grid-template-columns:1.1fr 1fr; align-items:center; position:relative;
     transform:translateY(16px) scale(0.98); animation:pop 0.4s forwards cubic-bezier(.2,.8,.2,1); }
   .modal.text-only { width:min(620px,100%); grid-template-columns:1fr; }
   .modal.text-only .modal-cover { display:none; }
@@ -153,8 +174,13 @@
   .modal.text-only .modal-body p { max-width:44ch; }
   .modal.text-only .modal-links { justify-content:center; margin-top:8px; }
   @keyframes pop { to { transform:translateY(0) scale(1); } }
-  .modal-cover { position:relative; min-height:320px; max-height:86vh; overflow:hidden; background:var(--void); display:flex; align-items:center; justify-content:center; }
-  .modal-cover img { display:block; max-width:100%; max-height:86vh; width:auto; height:auto; object-fit:contain; }
+  .modal-cover { position:relative; min-height:120px; max-height:86vh; overflow:hidden; background:var(--void); display:flex; align-items:center; justify-content:center; padding:2px; }
+  .modal-cover img { display:block; max-width:100%; max-height:58vh; width:auto; height:auto; object-fit:contain; }
+  .cover-nav { position:absolute; top:50%; transform:translateY(-50%); width:38px; height:38px; border-radius:50%;
+    border:1px solid rgba(174,198,255,0.3); background:rgba(8,12,28,0.55); color:var(--ice); font-size:15px; cursor:pointer;
+    display:flex; align-items:center; justify-content:center; backdrop-filter:blur(6px); transition:background .2s; z-index:2; }
+  .cover-nav:hover { background:rgba(91,134,224,0.55); }
+  .cover-nav.prev { left:12px; } .cover-nav.next { right:12px; }
   .modal-body { padding:32px; display:flex; flex-direction:column; overflow-y:auto; }
   .modal-body .idx { font-family:"JetBrains Mono",monospace; font-size:11px; letter-spacing:0.16em; color:var(--azure); margin-bottom:12px; }
   .modal-body h2 { font-family:"Space Grotesk",sans-serif; font-weight:600; font-size:27px; line-height:1.1; letter-spacing:-0.02em; margin-bottom:16px; color:var(--modal-heading); }
@@ -256,7 +282,20 @@
     <div class="project-list" role="dialog" aria-modal="true" aria-labelledby="projectListTitle">
       <button class="project-list-close" id="projectListClose" aria-label="Close project list">&times;</button>
       <h2 id="projectListTitle">Project List</h2>
-      <div class="project-list-items" id="projectListItems"></div>
+      <div class="project-list-items" id="projectListItems">
+        <div class="project-list-col">
+          <div class="project-list-col-head"><span class="project-list-cat">Software</span><span class="project-list-count" id="swCount"></span></div>
+          <div class="project-list-col-items" id="projectListSoftware"></div>
+        </div>
+        <div class="project-list-col">
+          <div class="project-list-col-head"><span class="project-list-cat">Hardware</span><span class="project-list-count" id="hwCount"></span></div>
+          <div class="project-list-col-items" id="projectListHardware"></div>
+        </div>
+      </div>
+      <div class="project-list-legend">
+        <span class="project-list-win"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9a6 6 0 0 0 12 0V4H6v5Z" stroke="#ffd485" stroke-width="1.8"/><path d="M9 4V2M15 4V2M6 6H3v1a3 3 0 0 0 3 3M18 6h3v1a3 3 0 0 1-3 3M9 21h6M12 15v6" stroke="#ffd485" stroke-width="1.8" stroke-linecap="round"/></svg>Hackathon Win</span>
+        <span>Tagged projects won a hackathon.</span>
+      </div>
     </div>
   </div>
 
@@ -270,47 +309,52 @@
 
   <script>
   const PROJECTS = [
-    { idx:"01", title:"Quantitative Portfolio Allocation Model", hue:[120,160,235],
+    { idx:"01", title:"PasarAI: Voice-First Margin Copilot", hue:[205,140,245], win:true,
+      desc:"A multilingual, voice-first daily margin copilot for Malaysian food businesses. It turns Telegram text, voice, and receipts into a merchant-confirmed ledger, then surfaces traceable gross-margin insights and read-only price or volume scenarios.",
+      links:[{label:"Demo Video",url:"https://www.loom.com/share/70c7234b4b104fed9018b8f2cce67773",primary:true},{label:"View repo",url:"https://github.com/bede-lau/PasarAI",primary:false}],
+      images:["assets/img/pasarai/pasarai_1.png","assets/img/pasarai/pasarai_2.png","assets/img/pasarai/pasarai_3.png","assets/img/pasarai/pasarai_4.png"],
+      icon:'<rect x="6" y="19" width="6" height="9" rx="1.5" fill="none" stroke="#aec6ff" stroke-width="1.8"/><rect x="15" y="13" width="6" height="15" rx="1.5" fill="none" stroke="#aec6ff" stroke-width="1.8"/><rect x="24" y="8" width="6" height="20" rx="1.5" fill="none" stroke="#aec6ff" stroke-width="1.8"/><path d="M6 14 C10 8, 16 8, 18 12" fill="none" stroke="#aec6ff" stroke-width="1.6" stroke-linecap="round"/><path d="M16 9 v3 h3" fill="none" stroke="#aec6ff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>' },
+    { idx:"02", title:"Quantitative Portfolio Allocation Model", hue:[120,160,235],
       desc:"A quantitative portfolio allocation model leveraging Fama-French factors, K-means clustering, and 15 years of S&P 500 data with technical indicators.",
       links:[{label:"View repo",url:"https://github.com/bede-lau/Algorithmic_Trading_Strategies",primary:true}],
       images:[],
       icon:'<path d="M4 28 L14 16 L20 22 L30 8" fill="none" stroke="#aec6ff" stroke-width="2"/><circle cx="14" cy="16" r="2.5" fill="#aec6ff"/><circle cx="20" cy="22" r="2.5" fill="#aec6ff"/><circle cx="30" cy="8" r="2.5" fill="#aec6ff"/>' },
-    { idx:"02", title:"One-Prompt to Launch a Business", hue:[140,175,240],
+    { idx:"03", title:"One-Prompt to Launch a Business", hue:[140,175,240],
       desc:"A SaaS platform that turns a single prompt into a launched business using a 7-agent AI orchestration system. (Live demo may take ~30 seconds to wake up.)",
       links:[{label:"Live demo",url:"https://olvon-riyf.onrender.com/",primary:true}],
       images:["assets/img/one_prompt_business/business_1.png","assets/img/one_prompt_business/business_2.png"],
       icon:'<circle cx="18" cy="18" r="4" fill="#aec6ff"/><circle cx="6" cy="10" r="2.5" fill="#aec6ff"/><circle cx="30" cy="10" r="2.5" fill="#aec6ff"/><circle cx="6" cy="26" r="2.5" fill="#aec6ff"/><circle cx="30" cy="26" r="2.5" fill="#aec6ff"/><g stroke="#aec6ff" stroke-width="1.4" opacity="0.7"><line x1="14.5" y1="15.5" x2="7.5" y2="11"/><line x1="21.5" y1="15.5" x2="28.5" y2="11"/><line x1="14.5" y1="20.5" x2="7.5" y2="25"/><line x1="21.5" y1="20.5" x2="28.5" y2="25"/></g>' },
-    { idx:"03", title:"Olvon: Virtual Try-On Web App", hue:[160,190,245],
+    { idx:"04", title:"Olvon: Virtual Try-On Web App", hue:[160,190,245],
       desc:"A virtual try-on web application built alongside a 3D-animated company website under the Olvon brand.",
       links:[{label:"Web app",url:"https://olvon-webapp.vercel.app/",primary:true},{label:"Website",url:"https://olvon.site/",primary:false}],
       images:["assets/img/olvon_webapp/feed_1.png","assets/img/olvon_webapp/dressing_room.png","assets/img/olvon_website/website_1.png","assets/img/olvon_website/website_2.png"],
       icon:'<rect x="11" y="6" width="14" height="24" rx="3" fill="none" stroke="#aec6ff" stroke-width="2"/><circle cx="18" cy="13" r="3" fill="#aec6ff"/><path d="M13 26 C15 21, 21 21, 23 26" fill="none" stroke="#aec6ff" stroke-width="1.6"/>' },
-    { idx:"04", title:"Virtual Try-On Mobile App", hue:[150,180,245],
+    { idx:"05", title:"Virtual Try-On Mobile App", hue:[150,180,245],
       desc:"A mobile e-commerce app centered on virtual try-on, featuring user onboarding flows, secure Google/email authentication, database integration, and an interactive TikTok-style feed.",
       links:[],
       images:["assets/img/olvon_mobile/mobile_2.png","assets/img/olvon_mobile/mobile_3.png","assets/img/olvon_mobile/mobile_4.png","assets/img/olvon_mobile/mobile_5.png","assets/img/olvon_mobile/mobile_6.png"],
       icon:'<rect x="12" y="5" width="12" height="26" rx="3" fill="none" stroke="#aec6ff" stroke-width="2"/><line x1="16" y1="28" x2="20" y2="28" stroke="#aec6ff" stroke-width="2"/><path d="M18 11 l3 4 -3 4 -3 -4 z" fill="#aec6ff"/>' },
-    { idx:"05", title:"Automated Water-Cooling System", hue:[175,200,250],
+    { idx:"06", title:"Automated Water-Cooling System", hue:[175,200,250], cat:"hw",
       desc:"An automated water-cooling system integrating a canister filter, TEC-12706 Peltier module, W1209 thermoelectric controller, and 12V fan assembly for efficient heat dissipation.",
       links:[],
       images:["assets/img/cooler/cooler_1.jpeg","assets/img/cooler/cooler_2.jpeg","assets/img/cooler/cooler_3.jpeg","assets/img/cooler/cooler_4.jpeg"],
       icon:'<circle cx="18" cy="18" r="11" fill="none" stroke="#aec6ff" stroke-width="2"/><g stroke="#aec6ff" stroke-width="2"><line x1="18" y1="18" x2="18" y2="9"/><line x1="18" y1="18" x2="25" y2="22"/><line x1="18" y1="18" x2="12" y2="23"/></g><circle cx="18" cy="18" r="2" fill="#aec6ff"/>' },
-    { idx:"06", title:"SitePilot: Telegram AI Ops Agent", hue:[130,170,245],
+    { idx:"07", title:"SitePilot: Telegram AI Ops Agent", hue:[130,170,245], win:true,
       desc:"A Telegram AI operations agent for solar site inspections and procurement. It turns messages into AI-generated inspection reports, invoice drafts, vendor RFQs, quote comparisons, and purchase-order approvals.",
       links:[{label:"Demo Video",url:"https://x.com/bdislau_/status/2068692101286797731",primary:true},{label:"View repo",url:"https://github.com/bede-lau/SitePilot",primary:false}],
       images:["assets/img/sitepilot/sitepilot_1.png","assets/img/sitepilot/sitepilot_2.png","assets/img/sitepilot/sitepilot_3.png","assets/img/sitepilot/sitepilot_4.png","assets/img/sitepilot/sitepilot_5.png"],
       icon:'<rect x="7" y="7" width="22" height="22" rx="5" fill="none" stroke="#aec6ff" stroke-width="2"/><path d="M11 20 L16 15 L20 19 L26 12" fill="none" stroke="#aec6ff" stroke-width="1.8"/><circle cx="12" cy="24" r="1.8" fill="#aec6ff"/><circle cx="18" cy="24" r="1.8" fill="#aec6ff"/><circle cx="24" cy="24" r="1.8" fill="#aec6ff"/>' },
-    { idx:"07", title:"Mini-Doc: Audit-Ready Document Intelligence", hue:[105,160,255],
+    { idx:"08", title:"Mini-Doc: Audit-Ready Document Intelligence", hue:[105,160,255],
       desc:"A local document intelligence app built with FastAPI, Next.js, and RAG to parse PDFs, answer questions with page-level citations, and generate compliance reports.",
       links:[{label:"Demo video",url:"https://drive.google.com/file/d/18eWRwotbx96IEXOf9whBC4phcTqSm8Wa/view?usp=drive_link",primary:true},{label:"View repo",url:"https://github.com/bede-lau/Mini-Doc",primary:false}],
       images:["assets/img/mini_doc/doc1.png","assets/img/mini_doc/doc2.png","assets/img/mini_doc/doc3.png"],
       icon:'<rect x="9" y="5" width="18" height="26" rx="3" fill="none" stroke="#aec6ff" stroke-width="2"/><path d="M14 12 H22 M14 17 H22 M14 22 H19" fill="none" stroke="#aec6ff" stroke-width="1.7" stroke-linecap="round"/><path d="M19 26 L21.5 28.5 L26 23.5" fill="none" stroke="#aec6ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>' },
-    { idx:"08", title:"AquaBro: Fault-Tolerant Aquaculture Monitoring", hue:[70,190,225],
+    { idx:"09", title:"AquaBro: Fault-Tolerant Aquaculture Monitoring", hue:[70,190,225],
       desc:"A multi-agent aquaculture monitoring system built with FastAPI, React, and PostgreSQL to validate sensor data, detect water-quality risks, and manage alerts and hardware from a live dashboard.",
       links:[{label:"Demo video",url:"https://drive.google.com/file/d/1f4TTddwHZW1kMrrnafA2QWoeEsFALPfw/view?usp=sharing",primary:true},{label:"View repo",url:"https://github.com/bede-lau/AquaBro",primary:false}],
       images:["assets/img/aquabro/aqua1.png","assets/img/aquabro/aqua2.png","assets/img/aquabro/image.png"],
       icon:'<path d="M5 18 C10 10, 20 9, 27 16 C29 18, 31 18, 33 15 C32 21, 29 23, 26 21 C18 27, 10 25, 5 18 Z" fill="none" stroke="#aec6ff" stroke-width="1.8" stroke-linejoin="round"/><circle cx="13" cy="16" r="1.6" fill="#aec6ff"/><path d="M18 13 C20 16, 20 20, 18 23" fill="none" stroke="#aec6ff" stroke-width="1.4"/>' },
-    { idx:"09", title:"Aura Desk Lamp", hue:[190,120,245],
+    { idx:"10", title:"Aura Desk Lamp", hue:[190,120,245], cat:"hw",
       desc:"An ESP32-powered desk lamp with three button-controlled modes: LDR Light Mode shifts between purple and amber based on room brightness, Manual Color Mode cycles through fixed colors, and Breathing Mode creates a slow pulsing animation.",
       links:[{label:"Demo video",url:"https://www.instagram.com/p/DaqFlJ5KTko/",primary:true}],
       images:["assets/img/aura_desk_lamp/aura1.png","assets/img/aura_desk_lamp/aura2.jpeg","assets/img/aura_desk_lamp/aura3.jpeg"],
@@ -341,7 +385,7 @@
   }
 
   // project planets
-  const PHI = [1.1,1.95,0.78,2.25,1.45,1.82,2.68,1.25,0.55], TH = [0.5,2.05,3.65,4.7,5.7,0.95,2.85,4.05,1.65];
+  const PHI = [1.1,1.95,0.78,2.25,1.45,1.82,2.68,1.25,0.55,2.0], TH = [0.5,2.05,3.65,4.7,5.7,0.95,2.85,4.05,1.65,3.3];
   const planets = PROJECTS.map((d, i) => {
     const phi = PHI[i], th = TH[i], pr = R + 0.35;
     const el = document.createElement('div'); el.className = 'planet-label'; el.textContent = d.title;
@@ -496,7 +540,17 @@
   const projectListBackdrop = document.getElementById('projectListBackdrop');
   const projectListClose = document.getElementById('projectListClose');
   const projectListItems = document.getElementById('projectListItems');
-  projectListItems.innerHTML = PROJECTS.map((project, index) => `<button type="button" data-project-index="${index}"><span class="project-list-index">${project.idx}</span><span>${project.title}</span></button>`).join('');
+  // Group projects by category and number within each category (01..N for that category).
+  // data-project-index keeps the original PROJECTS index so the correct project opens.
+  const renderCat = (cat) => PROJECTS.map((p, index) => ({ p, index }))
+    .filter(x => (x.p.cat || 'sw') === cat)
+    .map((x, n) => `<button type="button" data-project-index="${x.index}"${x.p.win ? ' class="win"' : ''}><span class="project-list-index">${String(n + 1).padStart(2, '0')}</span><span>${x.p.title}</span>${x.p.win ? '<span class="project-list-trophy" title="Hackathon Win"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9a6 6 0 0 0 12 0V4H6v5Z" stroke="currentColor" stroke-width="1.8"/><path d="M9 4V2M15 4V2M6 6H3v1a3 3 0 0 0 3 3M18 6h3v1a3 3 0 0 1-3 3M9 21h6M12 15v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>' : ''}</button>`).join('');
+  const swList = PROJECTS.filter(p => (p.cat || 'sw') === 'sw');
+  const hwList = PROJECTS.filter(p => p.cat === 'hw');
+  document.getElementById('projectListSoftware').innerHTML = renderCat('sw');
+  document.getElementById('projectListHardware').innerHTML = renderCat('hw');
+  document.getElementById('swCount').textContent = String(swList.length).padStart(2, '0') + ' projects';
+  document.getElementById('hwCount').textContent = String(hwList.length).padStart(2, '0') + ' projects';
   function openProjectList() { projectListBackdrop.classList.add('open'); projectListBackdrop.setAttribute('aria-hidden','false'); }
   function closeProjectList() { projectListBackdrop.classList.remove('open'); projectListBackdrop.setAttribute('aria-hidden','true'); }
   projectListButton.addEventListener('click', openProjectList);
@@ -506,23 +560,31 @@
     const item = e.target.closest('[data-project-index]');
     if (!item) return;
     closeProjectList();
-    openModal(PROJECTS[+item.dataset.projectIndex]);
+    openModal(PROJECTS[+item.dataset.projectIndex], true);
   });
 
   const backdrop = document.getElementById('backdrop'), modal = document.getElementById('modal'), cover = document.getElementById('cover'), mbody = document.getElementById('mbody');
-  let activeProject = null, activeImageIndex = 0;
-  function openModal(d) {
+  let activeProject = null, activeImageIndex = 0, modalFromList = false;
+  function openModal(d, fromList = false) {
+    modalFromList = !!fromList;
     activeProject = d; activeImageIndex = 0;
     modal.classList.toggle('text-only', !d.images.length);
     function fitCover(src, index = activeImageIndex) {
       activeImageIndex = index;
       const img = new Image();
       img.id = 'coverImg'; img.alt = d.title + ' preview'; img.src = src;
-      cover.innerHTML = ''; cover.appendChild(img);
+      const old = cover.querySelector('#coverImg');
+      if (old) old.replaceWith(img); else cover.appendChild(img);
       mbody.querySelectorAll('.thumbs img').forEach((o, i) => o.classList.toggle('active', i === activeImageIndex));
     }
     if (d.images.length) {
       cover.style.minHeight = '';
+      cover.innerHTML = '';
+      if (d.images.length > 1) {
+        const prev = document.createElement('button'); prev.className = 'cover-nav prev'; prev.innerHTML = '&#10094;'; prev.setAttribute('aria-label','Previous image'); prev.addEventListener('click', () => stepModalImage(-1));
+        const next = document.createElement('button'); next.className = 'cover-nav next'; next.innerHTML = '&#10095;'; next.setAttribute('aria-label','Next image'); next.addEventListener('click', () => stepModalImage(1));
+        cover.appendChild(prev); cover.appendChild(next);
+      }
       fitCover(d.images[0], 0);
     } else {
       cover.innerHTML = '';
@@ -541,13 +603,17 @@
     }
     backdrop.classList.add('open');
   }
-  function closeModal() { backdrop.classList.remove('open'); modal.classList.remove('text-only'); activeProject = null; activeImageIndex = 0; }
+  function closeModal() {
+    backdrop.classList.remove('open'); modal.classList.remove('text-only'); activeProject = null; activeImageIndex = 0;
+    if (modalFromList) { modalFromList = false; openProjectList(); }
+  }
   function stepModalImage(delta) {
     if (!activeProject || !activeProject.images.length || !backdrop.classList.contains('open')) return;
     activeImageIndex = (activeImageIndex + delta + activeProject.images.length) % activeProject.images.length;
     const img = new Image();
     img.id = 'coverImg'; img.alt = activeProject.title + ' preview'; img.src = activeProject.images[activeImageIndex];
-    cover.innerHTML = ''; cover.appendChild(img);
+    const old = cover.querySelector('#coverImg');
+    if (old) old.replaceWith(img); else cover.appendChild(img);
     mbody.querySelectorAll('.thumbs img').forEach((o, i) => o.classList.toggle('active', i === activeImageIndex));
   }
   document.getElementById('close').addEventListener('click', closeModal);
