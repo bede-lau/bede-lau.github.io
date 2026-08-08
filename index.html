@@ -125,12 +125,12 @@
   .project-list-backdrop { position:fixed; inset:0; z-index:90; display:none; align-items:center; justify-content:center;
     background:rgba(4,7,15,0.58); backdrop-filter:blur(10px); padding:24px; }
   .project-list-backdrop.open { display:flex; animation:fade 0.24s forwards; }
-  .project-list { width:min(640px,100%); border-radius:22px; padding:28px;
+  .project-list { width:min(960px,100%); border-radius:22px; padding:28px;
     background:linear-gradient(160deg,var(--panel),var(--modal-tail)); border:1px solid var(--line);
     box-shadow:0 32px 100px var(--shadow); position:relative; max-height:min(720px,calc(100vh - 48px)); overflow-y:auto; }
   .project-list h2 { font-family:"JetBrains Mono",monospace; font-size:12px; letter-spacing:0.18em; text-transform:uppercase;
     color:var(--azure); margin-bottom:18px; font-weight:500; }
-  .project-list-items { display:grid; grid-template-columns:1fr 1fr; gap:28px; }
+  .project-list-items { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:28px; }
   .project-list-col-head { display:flex; align-items:center; gap:10px; margin-bottom:14px; padding-bottom:10px;
     border-bottom:1px solid var(--line); }
   .project-list-cat { font-family:"JetBrains Mono",monospace; font-size:11px; letter-spacing:0.18em; text-transform:uppercase;
@@ -156,6 +156,7 @@
   .project-list-legend { margin-top:22px; padding-top:16px; border-top:1px solid var(--line); display:flex; align-items:center;
     gap:9px; flex-wrap:wrap; font-family:"JetBrains Mono",monospace; font-size:10.5px; letter-spacing:0.04em; color:var(--muted); }
   .project-list-legend .project-list-win { font-size:9px; padding:2px 8px 2px 6px; }
+  @media (max-width:860px) { .project-list-items { grid-template-columns:1fr 1fr; } }
   @media (max-width:560px) { .project-list-items { grid-template-columns:1fr; gap:24px; } }
   .project-list-index { font-family:"JetBrains Mono",monospace; font-size:11px; font-weight:500; letter-spacing:0.08em; color:var(--azure); }
   .project-list-close { position:absolute; top:16px; right:16px; background:rgba(5,8,18,0.5); border:1px solid var(--line); color:var(--ink);
@@ -247,7 +248,7 @@
         <button class="btn-projects" id="projectListButton" type="button">Project List</button>
       </div>
     </div>
-    <span class="eyebrow">Electrical Engineering MEng · King's College London</span>
+    <!-- <span class="eyebrow">Electrical Engineering MEng · King's College London</span> -->
     <h1><span class="grad">Bede Lau</span></h1>
     <p class="lede">I build full-stack systems across computer vision, machine learning, and quantitative finance, from multi-agent AI platforms to ERP data pipelines and embedded hardware.</p>
   </header>
@@ -291,6 +292,10 @@
           <div class="project-list-col-head"><span class="project-list-cat">Hardware</span><span class="project-list-count" id="hwCount"></span></div>
           <div class="project-list-col-items" id="projectListHardware"></div>
         </div>
+        <div class="project-list-col">
+          <div class="project-list-col-head"><span class="project-list-cat">Design</span><span class="project-list-count" id="designCount"></span></div>
+          <div class="project-list-col-items" id="projectListDesign"></div>
+        </div>
       </div>
       <div class="project-list-legend">
         <span class="project-list-win"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9a6 6 0 0 0 12 0V4H6v5Z" stroke="#ffd485" stroke-width="1.8"/><path d="M9 4V2M15 4V2M6 6H3v1a3 3 0 0 0 3 3M18 6h3v1a3 3 0 0 1-3 3M9 21h6M12 15v6" stroke="#ffd485" stroke-width="1.8" stroke-linecap="round"/></svg>Hackathon Win</span>
@@ -324,41 +329,61 @@
       links:[{label:"Live demo",url:"https://olvon-riyf.onrender.com/",primary:true}],
       images:["assets/img/one_prompt_business/business_1.png","assets/img/one_prompt_business/business_2.png"],
       icon:'<circle cx="18" cy="18" r="4" fill="#aec6ff"/><circle cx="6" cy="10" r="2.5" fill="#aec6ff"/><circle cx="30" cy="10" r="2.5" fill="#aec6ff"/><circle cx="6" cy="26" r="2.5" fill="#aec6ff"/><circle cx="30" cy="26" r="2.5" fill="#aec6ff"/><g stroke="#aec6ff" stroke-width="1.4" opacity="0.7"><line x1="14.5" y1="15.5" x2="7.5" y2="11"/><line x1="21.5" y1="15.5" x2="28.5" y2="11"/><line x1="14.5" y1="20.5" x2="7.5" y2="25"/><line x1="21.5" y1="20.5" x2="28.5" y2="25"/></g>' },
-    { idx:"04", title:"Olvon: Virtual Try-On Web App", hue:[160,190,245],
+    { idx:"01", title:"Olvon: Virtual Try-On Web App", hue:[160,190,245], cat:"design",
       desc:"A virtual try-on web application built alongside a 3D-animated company website under the Olvon brand.",
       links:[{label:"Web app",url:"https://olvon-webapp.vercel.app/",primary:true},{label:"Website",url:"https://olvon.site/",primary:false}],
       images:["assets/img/olvon_webapp/feed_1.png","assets/img/olvon_webapp/dressing_room.png","assets/img/olvon_website/website_1.png","assets/img/olvon_website/website_2.png"],
       icon:'<rect x="11" y="6" width="14" height="24" rx="3" fill="none" stroke="#aec6ff" stroke-width="2"/><circle cx="18" cy="13" r="3" fill="#aec6ff"/><path d="M13 26 C15 21, 21 21, 23 26" fill="none" stroke="#aec6ff" stroke-width="1.6"/>' },
-    { idx:"05", title:"Virtual Try-On Mobile App", hue:[150,180,245],
+    { idx:"02", title:"Virtual Try-On Mobile App", hue:[150,180,245], cat:"design",
       desc:"A mobile e-commerce app centered on virtual try-on, featuring user onboarding flows, secure Google/email authentication, database integration, and an interactive TikTok-style feed.",
       links:[],
       images:["assets/img/olvon_mobile/mobile_2.png","assets/img/olvon_mobile/mobile_3.png","assets/img/olvon_mobile/mobile_4.png","assets/img/olvon_mobile/mobile_5.png","assets/img/olvon_mobile/mobile_6.png"],
       icon:'<rect x="12" y="5" width="12" height="26" rx="3" fill="none" stroke="#aec6ff" stroke-width="2"/><line x1="16" y1="28" x2="20" y2="28" stroke="#aec6ff" stroke-width="2"/><path d="M18 11 l3 4 -3 4 -3 -4 z" fill="#aec6ff"/>' },
-    { idx:"06", title:"Automated Water-Cooling System", hue:[175,200,250], cat:"hw",
+    { idx:"01", title:"Automated Water-Cooling System", hue:[175,200,250], cat:"hw",
       desc:"An automated water-cooling system integrating a canister filter, TEC-12706 Peltier module, W1209 thermoelectric controller, and 12V fan assembly for efficient heat dissipation.",
       links:[],
       images:["assets/img/cooler/cooler_1.jpeg","assets/img/cooler/cooler_2.jpeg","assets/img/cooler/cooler_3.jpeg","assets/img/cooler/cooler_4.jpeg"],
       icon:'<circle cx="18" cy="18" r="11" fill="none" stroke="#aec6ff" stroke-width="2"/><g stroke="#aec6ff" stroke-width="2"><line x1="18" y1="18" x2="18" y2="9"/><line x1="18" y1="18" x2="25" y2="22"/><line x1="18" y1="18" x2="12" y2="23"/></g><circle cx="18" cy="18" r="2" fill="#aec6ff"/>' },
-    { idx:"07", title:"SitePilot: Telegram AI Ops Agent", hue:[130,170,245], win:true,
+    { idx:"04", title:"SitePilot: Telegram AI Ops Agent", hue:[130,170,245], win:true,
       desc:"A Telegram AI operations agent for solar site inspections and procurement. It turns messages into AI-generated inspection reports, invoice drafts, vendor RFQs, quote comparisons, and purchase-order approvals.",
       links:[{label:"Demo Video",url:"https://x.com/bdislau_/status/2068692101286797731",primary:true},{label:"View repo",url:"https://github.com/bede-lau/SitePilot",primary:false}],
       images:["assets/img/sitepilot/sitepilot_1.png","assets/img/sitepilot/sitepilot_2.png","assets/img/sitepilot/sitepilot_3.png","assets/img/sitepilot/sitepilot_4.png","assets/img/sitepilot/sitepilot_5.png"],
       icon:'<rect x="7" y="7" width="22" height="22" rx="5" fill="none" stroke="#aec6ff" stroke-width="2"/><path d="M11 20 L16 15 L20 19 L26 12" fill="none" stroke="#aec6ff" stroke-width="1.8"/><circle cx="12" cy="24" r="1.8" fill="#aec6ff"/><circle cx="18" cy="24" r="1.8" fill="#aec6ff"/><circle cx="24" cy="24" r="1.8" fill="#aec6ff"/>' },
-    { idx:"08", title:"Mini-Doc: Audit-Ready Document Intelligence", hue:[105,160,255],
+    { idx:"05", title:"Mini-Doc: Audit-Ready Document Intelligence", hue:[105,160,255],
       desc:"A local document intelligence app built with FastAPI, Next.js, and RAG to parse PDFs, answer questions with page-level citations, and generate compliance reports.",
       links:[{label:"Demo video",url:"https://drive.google.com/file/d/18eWRwotbx96IEXOf9whBC4phcTqSm8Wa/view?usp=drive_link",primary:true},{label:"View repo",url:"https://github.com/bede-lau/Mini-Doc",primary:false}],
       images:["assets/img/mini_doc/doc1.png","assets/img/mini_doc/doc2.png","assets/img/mini_doc/doc3.png"],
       icon:'<rect x="9" y="5" width="18" height="26" rx="3" fill="none" stroke="#aec6ff" stroke-width="2"/><path d="M14 12 H22 M14 17 H22 M14 22 H19" fill="none" stroke="#aec6ff" stroke-width="1.7" stroke-linecap="round"/><path d="M19 26 L21.5 28.5 L26 23.5" fill="none" stroke="#aec6ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>' },
-    { idx:"09", title:"AquaBro: Fault-Tolerant Aquaculture Monitoring", hue:[70,190,225],
+    { idx:"06", title:"AquaBro: Fault-Tolerant Aquaculture Monitoring", hue:[70,190,225],
       desc:"A multi-agent aquaculture monitoring system built with FastAPI, React, and PostgreSQL to validate sensor data, detect water-quality risks, and manage alerts and hardware from a live dashboard.",
       links:[{label:"Demo video",url:"https://drive.google.com/file/d/1f4TTddwHZW1kMrrnafA2QWoeEsFALPfw/view?usp=sharing",primary:true},{label:"View repo",url:"https://github.com/bede-lau/AquaBro",primary:false}],
       images:["assets/img/aquabro/aqua1.png","assets/img/aquabro/aqua2.png","assets/img/aquabro/image.png"],
       icon:'<path d="M5 18 C10 10, 20 9, 27 16 C29 18, 31 18, 33 15 C32 21, 29 23, 26 21 C18 27, 10 25, 5 18 Z" fill="none" stroke="#aec6ff" stroke-width="1.8" stroke-linejoin="round"/><circle cx="13" cy="16" r="1.6" fill="#aec6ff"/><path d="M18 13 C20 16, 20 20, 18 23" fill="none" stroke="#aec6ff" stroke-width="1.4"/>' },
-    { idx:"10", title:"Aura Desk Lamp", hue:[190,120,245], cat:"hw",
+    { idx:"02", title:"Aura Desk Lamp", hue:[190,120,245], cat:"hw",
       desc:"An ESP32-powered desk lamp with three button-controlled modes: LDR Light Mode shifts between purple and amber based on room brightness, Manual Color Mode cycles through fixed colors, and Breathing Mode creates a slow pulsing animation.",
       links:[{label:"Demo video",url:"https://www.instagram.com/p/DaqFlJ5KTko/",primary:true}],
       images:["assets/img/aura_desk_lamp/aura1.png","assets/img/aura_desk_lamp/aura2.jpeg","assets/img/aura_desk_lamp/aura3.jpeg"],
       icon:'<path d="M12 15 H24 L28 25 H8 Z" fill="none" stroke="#aec6ff" stroke-width="1.8" stroke-linejoin="round"/><path d="M18 15 V8 M13 8 H23" fill="none" stroke="#aec6ff" stroke-width="2" stroke-linecap="round"/><path d="M13 28 H23" fill="none" stroke="#aec6ff" stroke-width="2" stroke-linecap="round"/><path d="M12 26 C14 22, 22 22, 24 26" fill="none" stroke="#aec6ff" stroke-width="1.4" opacity="0.8"/>' },
+    { idx:"07", title:"RockedIn", hue:[175,145,235], win:true,
+      desc:"LinkedIn for rocks.",
+      links:[{label:"Live demo",url:"https://rockedin.onrender.com/",primary:true},{label:"View repo",url:"https://github.com/bede-lau/rockedin",primary:false}],
+      images:["assets/img/rockedin/rockedin_1.png","assets/img/rockedin/rockedin_2.png","assets/img/rockedin/rockedin_3.png"],
+      icon:'<path d="M9 27 L6 17 L13 7 L25 8 L31 18 L26 28 Z" fill="none" stroke="#aec6ff" stroke-width="1.8" stroke-linejoin="round"/><path d="M13 7 L17 18 L31 18 M6 17 L17 18 L26 28 M25 8 L17 18" fill="none" stroke="#aec6ff" stroke-width="1.5" stroke-linejoin="round"/>' },
+    { idx:"08", title:"AccessPath: Autonomous Critical-Journey QA Workspace", hue:[80,190,225],
+      desc:"An autonomous critical-journey QA workspace for web applications, with accessibility as its flagship specialist. It connects a staging URL, source snapshot, and plain-English objective into a Proof Thread of observed behavior, scoped repair, and verified evidence.",
+      links:[{label:"Demo video",url:"https://x.com/bdislau_/status/2083934108426592286?s=20",primary:true},{label:"View repo",url:"https://github.com/bede-lau/AccessPath",primary:false}],
+      images:["assets/img/accesspath/accesspath_1.png","assets/img/accesspath/accesspath_2.png","assets/img/accesspath/accesspath_3.png","assets/img/accesspath/accesspath_4.png"],
+      icon:'<path d="M8 9 H28 M8 18 H21 M8 27 H17" fill="none" stroke="#aec6ff" stroke-width="1.9" stroke-linecap="round"/><circle cx="27" cy="24" r="5" fill="none" stroke="#aec6ff" stroke-width="1.8"/><path d="M23.5 24 L26 26.5 L30.5 21.5" fill="none" stroke="#aec6ff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>' },
+    { idx:"03", title:"Jarvis V1", hue:[185,165,235], cat:"hw",
+      desc:"An ESP32-based voice companion with an animated OLED face, microphone, speaker, wake word, privacy controls, memory, weather, timers, and volume commands.",
+      links:[{label:"Demo video",url:"https://www.instagram.com/p/Dbe76-XKOJo/",primary:true}],
+      images:["assets/img/jarvis_v1/jarvis_v1_pic.jpeg"],
+      icon:'<rect x="7" y="9" width="22" height="19" rx="5" fill="none" stroke="#aec6ff" stroke-width="1.8"/><circle cx="14" cy="18" r="1.7" fill="#aec6ff"/><circle cx="22" cy="18" r="1.7" fill="#aec6ff"/><path d="M13 23 H23 M18 9 V5 M14 5 H22" fill="none" stroke="#aec6ff" stroke-width="1.7" stroke-linecap="round"/>' },
+    { idx:"09", title:"CareAxiom: Medical Desert Planner", hue:[115,195,215], win:true,
+      desc:"An evidence-grounded Medical Desert Planner for identifying underserved healthcare areas and guiding intervention decisions.",
+      links:[{label:"Demo video",url:"https://www.loom.com/share/3ae835153ef94de6b92f9c75393cd331",primary:true},{label:"View repo",url:"https://github.com/bede-lau/CareAxiom",primary:false}],
+      images:["assets/img/careaxiom/careaxiom_1.png","assets/img/careaxiom/careaxiom_2.png"],
+      icon:'<path d="M18 31 C24 24 28 20 28 14 A10 10 0 1 0 8 14 C8 20 12 24 18 31 Z" fill="none" stroke="#aec6ff" stroke-width="1.8" stroke-linejoin="round"/><path d="M18 10 V18 M14 14 H22" fill="none" stroke="#aec6ff" stroke-width="1.8" stroke-linecap="round"/>' },
   ];
 
   const reduce = matchMedia('(prefers-reduced-motion:reduce)').matches;
@@ -385,7 +410,7 @@
   }
 
   // project planets
-  const PHI = [1.1,1.95,0.78,2.25,1.45,1.82,2.68,1.25,0.55,2.0], TH = [0.5,2.05,3.65,4.7,5.7,0.95,2.85,4.05,1.65,3.3];
+  const PHI = [1.1,1.95,0.78,2.25,1.45,1.82,2.68,1.25,0.55,2.0,0.92,2.42,1.58,1.32], TH = [0.5,2.05,3.65,4.7,5.7,0.95,2.85,4.05,1.65,3.3,5.15,1.32,4.55,3.0];
   const planets = PROJECTS.map((d, i) => {
     const phi = PHI[i], th = TH[i], pr = R + 0.35;
     const el = document.createElement('div'); el.className = 'planet-label'; el.textContent = d.title;
@@ -540,17 +565,22 @@
   const projectListBackdrop = document.getElementById('projectListBackdrop');
   const projectListClose = document.getElementById('projectListClose');
   const projectListItems = document.getElementById('projectListItems');
-  // Group projects by category and number within each category (01..N for that category).
+  // Projects display section-local indexes in the same order as their category list.
   // data-project-index keeps the original PROJECTS index so the correct project opens.
-  const renderCat = (cat) => PROJECTS.map((p, index) => ({ p, index }))
-    .filter(x => (x.p.cat || 'sw') === cat)
-    .map((x, n) => `<button type="button" data-project-index="${x.index}"${x.p.win ? ' class="win"' : ''}><span class="project-list-index">${String(n + 1).padStart(2, '0')}</span><span>${x.p.title}</span>${x.p.win ? '<span class="project-list-trophy" title="Hackathon Win"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9a6 6 0 0 0 12 0V4H6v5Z" stroke="currentColor" stroke-width="1.8"/><path d="M9 4V2M15 4V2M6 6H3v1a3 3 0 0 0 3 3M18 6h3v1a3 3 0 0 1-3 3M9 21h6M12 15v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>' : ''}</button>`).join('');
+  const renderCat = (cat) => {
+    const projects = PROJECTS.map((p, index) => ({ p, index }))
+      .filter(x => (x.p.cat || 'sw') === cat);
+    return projects.map(x => `<button type="button" data-project-index="${x.index}"${x.p.win ? ' class="win"' : ''}><span class="project-list-index">${String(x.p.idx).padStart(2, '0')}</span><span>${x.p.title}</span>${x.p.win ? '<span class="project-list-trophy" title="Hackathon Win"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9a6 6 0 0 0 12 0V4H6v5Z" stroke="currentColor" stroke-width="1.8"/><path d="M9 4V2M15 4V2M6 6H3v1a3 3 0 0 0 3 3M18 6h3v1a3 3 0 0 1-3 3M9 21h6M12 15v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>' : ''}</button>`).join('');
+  };
   const swList = PROJECTS.filter(p => (p.cat || 'sw') === 'sw');
   const hwList = PROJECTS.filter(p => p.cat === 'hw');
+  const designList = PROJECTS.filter(p => p.cat === 'design');
   document.getElementById('projectListSoftware').innerHTML = renderCat('sw');
   document.getElementById('projectListHardware').innerHTML = renderCat('hw');
+  document.getElementById('projectListDesign').innerHTML = renderCat('design');
   document.getElementById('swCount').textContent = String(swList.length).padStart(2, '0') + ' projects';
   document.getElementById('hwCount').textContent = String(hwList.length).padStart(2, '0') + ' projects';
+  document.getElementById('designCount').textContent = String(designList.length).padStart(2, '0') + ' projects';
   function openProjectList() { projectListBackdrop.classList.add('open'); projectListBackdrop.setAttribute('aria-hidden','false'); }
   function closeProjectList() { projectListBackdrop.classList.remove('open'); projectListBackdrop.setAttribute('aria-hidden','true'); }
   projectListButton.addEventListener('click', openProjectList);
