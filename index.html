@@ -189,8 +189,10 @@
   .tags { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:18px; }
   .tags span { font-family:"JetBrains Mono",monospace; font-size:11px; color:var(--ice); padding:5px 11px; border-radius:7px; background:rgba(91,134,224,0.1); border:1px solid var(--line); }
   .thumbs { display:flex; gap:8px; margin-bottom:22px; flex-wrap:wrap; }
-  .thumbs img { width:56px; height:42px; object-fit:cover; border-radius:7px; border:1px solid var(--line); cursor:pointer; opacity:0.6; transition:opacity 0.2s,border-color 0.2s; }
-  .thumbs img:hover, .thumbs img.active { opacity:1; border-color:var(--ice); }
+  .thumbs img, .thumbs .thumb-video { width:56px; height:42px; object-fit:cover; border-radius:7px; border:1px solid var(--line); cursor:pointer; opacity:0.6; transition:opacity 0.2s,border-color 0.2s; }
+  .thumbs img:hover, .thumbs img.active, .thumbs .thumb-video:hover, .thumbs .thumb-video.active { opacity:1; border-color:var(--ice); }
+  .thumbs .thumb-video { display:flex; align-items:center; justify-content:center; background:rgba(91,134,224,0.15); color:var(--ice); }
+  .thumbs .thumb-video svg { width:18px; height:18px; fill:currentColor; }
   .modal-links { display:flex; flex-wrap:wrap; gap:12px; margin-top:auto; }
   .modal-links a { font-family:"Space Grotesk",sans-serif; font-weight:600; font-size:13.5px; text-decoration:none; padding:11px 20px; border-radius:10px; display:inline-flex; align-items:center; gap:8px; }
   .link-primary { color:#08122c; background:linear-gradient(135deg,var(--azure),var(--ice)); }
@@ -217,13 +219,82 @@
   .skill-group:last-child { margin-bottom:0; }
   .skill-cat { display:block; font-family:"JetBrains Mono",monospace; font-size:11.5px; letter-spacing:0.06em; color:var(--muted); margin-bottom:10px; }
 
-  @media (max-width:820px) { .modal { grid-template-columns:1fr; max-height:90vh; } .modal-cover { min-height:200px; } }
+  .modal-video-container { position:relative; width:100%; height:100%; min-height:260px; max-height:86vh; display:flex; flex-direction:column; justify-content:center; align-items:center; background:#000; overflow:hidden; border-radius:18px 0 0 18px; }
+  .modal-video { width:100%; height:100%; max-height:52vh; object-fit:contain; display:block; cursor:pointer; background:#000; }
+  
+  .video-unmute-badge { position:absolute; top:14px; left:14px; z-index:4; display:inline-flex; align-items:center; gap:7px;
+    background:rgba(8,14,32,0.88); border:1px solid rgba(174,198,255,0.35); color:var(--platinum); padding:6px 13px;
+    border-radius:999px; font-family:"JetBrains Mono",monospace; font-size:11px; cursor:pointer; backdrop-filter:blur(8px);
+    transition:background .2s, transform .2s; }
+  .video-unmute-badge:hover { background:rgba(91,134,224,0.45); transform:scale(1.03); }
+  .video-unmute-badge svg { width:13px; height:13px; fill:currentColor; }
+
+  .video-controls { width:100%; background:linear-gradient(0deg, rgba(5,8,18,0.96) 0%, rgba(5,8,18,0.72) 75%, transparent 100%);
+    padding:8px 14px 10px; display:flex; flex-direction:column; gap:8px; z-index:3; }
+  
+  .video-progress-wrap { position:relative; width:100%; height:8px; background:rgba(255,255,255,0.16); border-radius:4px; cursor:pointer; display:flex; align-items:center; }
+  .video-progress-bar { position:absolute; left:0; top:0; bottom:0; width:0%; background:linear-gradient(90deg, var(--azure), var(--ice)); border-radius:4px; pointer-events:none; }
+  .video-progress-buffered { position:absolute; left:0; top:0; bottom:0; width:0%; background:rgba(255,255,255,0.24); border-radius:4px; pointer-events:none; }
+  .video-progress-playhead { position:absolute; left:0%; top:50%; width:12px; height:12px; border-radius:50%; background:#fff; box-shadow:0 0 8px rgba(91,134,224,0.8); transform:translate(-50%, -50%) scale(0); transition:transform 0.15s; pointer-events:none; }
+  .video-progress-wrap:hover .video-progress-playhead { transform:translate(-50%, -50%) scale(1); }
+  
+  .video-timestamp-marker { position:absolute; top:-2px; bottom:-2px; width:2px; background:rgba(255,212,133,0.85); z-index:2; pointer-events:none; border-radius:1px; }
+
+  .video-seek-tooltip { position:absolute; bottom:16px; transform:translateX(-50%); font-family:"JetBrains Mono",monospace; font-size:10px; padding:2px 6px; border-radius:4px; background:rgba(9,14,32,0.9); color:var(--platinum); border:1px solid var(--line); pointer-events:none; opacity:0; transition:opacity .15s; white-space:nowrap; }
+  .video-progress-wrap:hover .video-seek-tooltip { opacity:1; }
+
+  .video-controls-row { display:flex; align-items:center; justify-content:space-between; gap:10px; }
+  .video-controls-left, .video-controls-right { display:flex; align-items:center; gap:8px; }
+
+  .video-btn { background:none; border:none; color:var(--platinum); cursor:pointer; padding:4px; display:inline-flex; align-items:center; justify-content:center; border-radius:6px; transition:color .2s, background .2s; }
+  .video-btn:hover { color:var(--ice); background:rgba(255,255,255,0.08); }
+  .video-btn svg { width:17px; height:17px; fill:currentColor; }
+
+  .video-time { font-family:"JetBrains Mono",monospace; font-size:11px; color:var(--muted); letter-spacing:0.04em; }
+
+  .video-speed-wrap { position:relative; }
+  .video-speed-btn { font-family:"JetBrains Mono",monospace; font-size:11px; font-weight:600; padding:3px 8px; border-radius:6px; background:rgba(91,134,224,0.15); border:1px solid var(--line); color:var(--ice); }
+  .video-speed-btn:hover { background:rgba(91,134,224,0.3); border-color:var(--azure); }
+  .video-speed-menu { position:absolute; bottom:calc(100% + 8px); right:0; background:rgba(9,14,32,0.96); border:1px solid var(--line); border-radius:10px; padding:4px; display:none; flex-direction:column; gap:2px; box-shadow:0 8px 24px var(--shadow); backdrop-filter:blur(12px); z-index:10; }
+  .video-speed-menu.open { display:flex; }
+  .video-speed-menu button { font-family:"JetBrains Mono",monospace; font-size:11px; color:var(--modal-copy); background:none; border:none; padding:5px 12px; border-radius:6px; cursor:pointer; text-align:left; transition:background .15s, color .15s; }
+  .video-speed-menu button:hover, .video-speed-menu button.active { background:rgba(91,134,224,0.22); color:var(--ice); }
+
+  .video-timestamps-bar { width:100%; padding:8px 14px 10px; display:flex; align-items:center; gap:8px; overflow-x:auto; background:rgba(8,12,28,0.92); border-top:1px solid var(--line); scrollbar-width:thin; }
+  .video-ts-title { font-family:"JetBrains Mono",monospace; font-size:10px; text-transform:uppercase; letter-spacing:0.08em; color:var(--azure); flex:none; }
+  .video-ts-list { display:flex; align-items:center; gap:6px; flex-wrap:nowrap; }
+  .video-ts-chip { font-family:"JetBrains Mono",monospace; font-size:10.5px; padding:3px 9px; border-radius:999px; background:rgba(255,255,255,0.05); border:1px solid var(--line); color:var(--modal-copy); cursor:pointer; white-space:nowrap; transition:all .2s; display:inline-flex; align-items:center; gap:5px; }
+  .video-ts-chip:hover { background:rgba(91,134,224,0.18); border-color:var(--ice); color:var(--platinum); transform:translateY(-1px); }
+  .video-ts-chip.active { background:linear-gradient(135deg, rgba(58,99,201,0.35), rgba(91,134,224,0.25)); border-color:var(--azure); color:var(--ice); font-weight:600; box-shadow:0 0 10px rgba(91,134,224,0.25); }
+  .video-ts-chip .ts-time { color:var(--azure); font-size:10px; }
+  .video-ts-chip.active .ts-time { color:#ffd485; }
+
+  .pp-video-badge { width:100%; height:120px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; background:radial-gradient(circle at center, rgba(58,99,201,0.35) 0%, rgba(5,7,15,0.85) 100%); color:var(--ice); font-family:"JetBrains Mono",monospace; font-size:11px; letter-spacing:0.06em; border-radius:16px 16px 0 0; }
+  .pp-video-badge svg { width:28px; height:28px; fill:var(--azure); filter:drop-shadow(0 0 8px var(--azure)); }
+
+  body[data-theme="light"] .video-controls { background:linear-gradient(0deg, rgba(235,241,255,0.95) 0%, rgba(235,241,255,0.75) 75%, transparent 100%); }
+  body[data-theme="light"] .video-timestamps-bar { background:rgba(240,245,255,0.92); border-color:var(--line); }
+  body[data-theme="light"] .video-btn { color:var(--modal-heading); }
+  body[data-theme="light"] .video-ts-chip { background:rgba(65,110,215,0.08); color:var(--modal-copy); }
+  body[data-theme="light"] .video-ts-chip.active { background:rgba(65,110,215,0.18); color:var(--royal); border-color:var(--royal); }
+  body[data-theme="light"] .video-speed-menu { background:rgba(255,255,255,0.95); }
+  body[data-theme="light"] .video-speed-btn { color:var(--royal); background:rgba(65,110,215,0.12); }
+
+  @media (max-width:820px) {
+    .modal { grid-template-columns:1fr; max-height:90vh; }
+    .modal-cover { min-height:200px; }
+    .modal-video-container { border-radius:18px 18px 0 0; }
+  }
   @media (max-width:720px) {
     .hero { max-width:100%; min-height:82vh; justify-content:flex-start; padding:5vh 22px 0; transform:translate(0, 8px);
       background:linear-gradient(180deg, rgba(5,7,15,0.55) 0%, rgba(5,7,15,0.18) 60%, rgba(5,7,15,0) 100%); }
     .hero-intro { align-items:flex-start; flex-direction:column; gap:14px; margin-bottom:24px; }
     .hero-pic { width:108px; height:108px; }
     .info-section { margin:150px 18px 40px; }
+    .pp-video-badge { height:66px; }
+    .pp-video-badge svg { width:20px; height:20px; }
+    .video-timestamps-bar { padding:6px 10px; }
+    .video-ts-chip { font-size:10px; padding:3px 7px; }
   }
   @media (prefers-reduced-motion:reduce) {
     .bg-wash { animation:none !important; }
@@ -394,6 +465,33 @@
       links:[{label:"Website",url:"https://autosubmitproduct.com/",primary:true}],
       images:["assets/img/autosubmitproduct/autosubmitproduct_1.png","assets/img/autosubmitproduct/autosubmitproduct_2.png","assets/img/autosubmitproduct/autosubmitproduct_3.png"],
       icon:'<rect x="7" y="6" width="22" height="24" rx="4" fill="none" stroke="#aec6ff" stroke-width="1.8"/><path d="M12 12 H24 M12 17 H24 M12 22 H19" stroke="#aec6ff" stroke-width="1.6" stroke-linecap="round"/><circle cx="23" cy="22" r="3.5" fill="none" stroke="#aec6ff" stroke-width="1.6"/><path d="M21.5 22 L22.5 23 L24.5 21" fill="none" stroke="#aec6ff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>' },
+    { idx:"04", title:"Dum-E", hue:[170,140,245], cat:"hw",
+      desc:"A joystick-controlled robotic arm built with an ESP32 DevKit, two analog joysticks, and four SG90 servos. The servos control the arm’s base rotation, shoulder, elbow, and clamp, allowing the user to move the arm and open or close the gripper manually.",
+      links:[{label:"Demo video",url:"https://www.instagram.com/p/Dc1Sy42KIjM/",primary:true}],
+      images:["assets/img/dum_e/dum_e_1.jpeg","assets/img/dum_e/dum_e_2.jpeg","assets/img/dum_e/dum_e_3.jpeg"],
+      icon:'<path d="M7 27 H29 M18 27 V20 M14 20 H22" fill="none" stroke="#aec6ff" stroke-width="2" stroke-linecap="round"/><circle cx="18" cy="17" r="3" fill="none" stroke="#aec6ff" stroke-width="1.8"/><path d="M18 14 L12 8 L8 12" fill="none" stroke="#aec6ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 8 L22 5 L26 8" fill="none" stroke="#aec6ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M26 8 L24 12 M28 10 L27 13" fill="none" stroke="#aec6ff" stroke-width="1.6" stroke-linecap="round"/>' },
+    { idx:"05", title:"Infrared Sensor Car", hue:[150,165,240], cat:"hw",
+      desc:"A Raspberry Pi Pico–controlled two-wheel robot that uses two IR sensors to follow black tape, correct its direction, and execute programmed 90° left and right turns.",
+      links:[{label:"Demo video",url:"https://www.instagram.com/p/DdcyAwyk8Wf/",primary:true}],
+      images:["assets/img/infrared_sensor_car/infrared_car_1.jpeg","assets/img/infrared_sensor_car/infrared_car_2.jpeg","assets/img/infrared_sensor_car/infrared_car_3.jpeg","assets/img/infrared_sensor_car/infrared_car_4.jpeg"],
+      icon:'<rect x="8" y="10" width="20" height="13" rx="3" fill="none" stroke="#aec6ff" stroke-width="1.8"/><circle cx="12" cy="24" r="3" fill="none" stroke="#aec6ff" stroke-width="1.8"/><circle cx="24" cy="24" r="3" fill="none" stroke="#aec6ff" stroke-width="1.8"/><path d="M13 10 V6 M23 10 V6" fill="none" stroke="#aec6ff" stroke-width="1.8" stroke-linecap="round"/><circle cx="13" cy="5" r="1.5" fill="#aec6ff"/><circle cx="23" cy="5" r="1.5" fill="#aec6ff"/><path d="M15 16 H21" stroke="#aec6ff" stroke-width="1.6" stroke-linecap="round"/>' },
+    { idx:"05", title:"Matter.", hue:[125,185,250], cat:"design", win:true,
+      desc:"Matter Lab is an interactive 3D studio for exploring how metamaterials are designed, built, and used in real-world applications.",
+      links:[{label:"Demo video",url:"https://drive.google.com/file/d/1xZW_jI9nOOsrNuoVA2XPthWZJG-qCea_/view?usp=sharing",primary:true},{label:"Live demo",url:"https://matter-lab.bedelau-2025.chatgpt.site/",primary:false}],
+      video:"assets/img/matter/matter_demo.mp4",
+      timestamps:[
+        { time: 0, label: "0:00 Intro" },
+        { time: 2.5, label: "0:02 Metamaterial Design" },
+        { time: 5.0, label: "0:05 3D Simulation" },
+        { time: 7.5, label: "0:08 Real-world Applications" }
+      ],
+      images:[],
+      icon:'<rect x="7" y="7" width="13" height="13" rx="2" fill="none" stroke="#aec6ff" stroke-width="1.8"/><rect x="16" y="16" width="13" height="13" rx="2" fill="none" stroke="#aec6ff" stroke-width="1.8"/><line x1="14" y1="20" x2="20" y2="14" stroke="#aec6ff" stroke-width="1.6" stroke-dasharray="2 2"/><line x1="7" y1="7" x2="16" y2="16" stroke="#aec6ff" stroke-width="1.6"/><line x1="20" y1="7" x2="29" y2="16" stroke="#aec6ff" stroke-width="1.6"/><line x1="7" y1="20" x2="16" y2="29" stroke="#aec6ff" stroke-width="1.6"/><line x1="20" y1="20" x2="29" y2="29" stroke="#aec6ff" stroke-width="1.6"/>' },
+    { idx:"10", title:"CanvasCraft", hue:[100,170,245], win:true,
+      desc:"CanvasCraft is an AI-assisted product-prototyping studio that transforms rough canvas sketches, notes, and wireframes into three distinct, live, and interactive frontend prototype branches.",
+      links:[{label:"Demo video",url:"https://drive.google.com/file/d/1td3Ll6jzmtjNgJOszk-uiGFnJSDL8Mk3/view?usp=sharing",primary:true}],
+      images:["assets/img/canvascraft/canvascraft_1.jpeg","assets/img/canvascraft/canvascraft_2.jpeg","assets/img/canvascraft/canvascraft_3.jpeg"],
+      icon:'<rect x="5" y="6" width="13" height="13" rx="2.5" fill="none" stroke="#aec6ff" stroke-width="1.8"/><path d="M8 11 H15 M8 14 H12" stroke="#aec6ff" stroke-width="1.6" stroke-linecap="round"/><path d="M18 12.5 H23 C25 12.5 25 8 27 8 H29 M23 12.5 H29 M23 12.5 C25 12.5 25 17 27 17 H29" fill="none" stroke="#aec6ff" stroke-width="1.7" stroke-linecap="round"/><circle cx="29" cy="8" r="1.5" fill="#aec6ff"/><circle cx="29" cy="12.5" r="1.5" fill="#aec6ff"/><circle cx="29" cy="17" r="1.5" fill="#aec6ff"/>' },
   ];
 
   const reduce = matchMedia('(prefers-reduced-motion:reduce)').matches;
@@ -420,15 +518,17 @@
   }
 
   // project planets
-  const PHI = [1.1,1.95,0.78,2.25,1.45,1.82,2.68,1.25,0.55,2.0,0.92,2.42,1.58,1.32,2.37,1.33], TH = [0.5,2.05,3.65,4.7,5.7,0.95,2.85,4.05,1.65,3.3,5.15,1.32,4.55,3.0,6.11,1.57];
+  const PHI = [1.1,1.95,0.78,2.25,1.45,1.82,2.68,1.25,0.55,2.0,0.92,2.42,1.58,1.32,2.37,1.33,0.85,1.75,2.15,1.65], TH = [0.5,2.05,3.65,4.7,5.7,0.95,2.85,4.05,1.65,3.3,5.15,1.32,4.55,3.0,6.11,1.57,2.4,3.85,0.25,2.4];
   const planets = PROJECTS.map((d, i) => {
     const phi = PHI[i] !== undefined ? PHI[i] : (0.6 + ((i * 1.618033) % 1) * 1.9), th = TH[i] !== undefined ? TH[i] : (((i * 2.399963) % (Math.PI * 2))), pr = R + 0.35;
     const el = document.createElement('div'); el.className = 'planet-label'; el.textContent = d.title;
     document.body.appendChild(el);
     const pv = document.createElement('div'); pv.className = 'planet-preview';
-    pv.innerHTML = (d.images.length ? `<img src="${d.images[0]}" alt="${d.title} preview" loading="lazy" />` : '')
+    const pvImg = d.images.length ? `<img src="${d.images[0]}" alt="${d.title} preview" loading="lazy" />`
+      : (d.video ? `<div class="pp-video-badge"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"/></svg><span>Video Demo</span></div>` : '');
+    pv.innerHTML = pvImg
       + `<div class="pp-body"><span class="pp-idx">${d.idx}</span><div class="pp-title">${d.title}</div>`
-      + (d.images.length ? `<div class="pp-desc">${d.desc}</div>` : '') + `</div>`;
+      + (d.images.length || d.video ? `<div class="pp-desc">${d.desc}</div>` : '') + `</div>`;
     document.body.appendChild(pv);
     return { x:Math.sin(phi)*Math.cos(th)*pr, y:Math.cos(phi)*pr, z:Math.sin(phi)*Math.sin(th)*pr, th, data:d, el, pv, sx:0, sy:0, front:false };
   });
@@ -605,63 +705,446 @@
 
   const backdrop = document.getElementById('backdrop'), modal = document.getElementById('modal'), cover = document.getElementById('cover'), mbody = document.getElementById('mbody');
   let activeProject = null, activeImageIndex = 0, modalFromList = false;
+  let activeVideo = null, activeSpeed = 1;
+
+  function formatTime(s) {
+    if (isNaN(s) || s < 0) return '0:00';
+    const mins = Math.floor(s / 60);
+    const secs = Math.floor(s % 60);
+    return mins + ':' + (secs < 10 ? '0' : '') + secs;
+  }
+
+  function renderVideoPlayer(d) {
+    cover.style.minHeight = '';
+    cover.innerHTML = '';
+
+    const container = document.createElement('div');
+    container.className = 'modal-video-container';
+
+    const video = document.createElement('video');
+    video.className = 'modal-video';
+    video.playsInline = true;
+    video.preload = 'auto';
+    video.src = typeof d.video === 'string' ? d.video : d.video.src;
+    activeVideo = video;
+
+    const unmuteBadge = document.createElement('button');
+    unmuteBadge.className = 'video-unmute-badge';
+    unmuteBadge.style.display = 'none';
+    unmuteBadge.type = 'button';
+    unmuteBadge.innerHTML = '<svg viewBox="0 0 24 24"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg> Click to unmute';
+    unmuteBadge.addEventListener('click', () => {
+      video.muted = false;
+      unmuteBadge.style.display = 'none';
+      updateVolumeIcon();
+    });
+
+    const controls = document.createElement('div');
+    controls.className = 'video-controls';
+
+    const progressWrap = document.createElement('div');
+    progressWrap.className = 'video-progress-wrap';
+
+    const progressBuffered = document.createElement('div');
+    progressBuffered.className = 'video-progress-buffered';
+
+    const progressBar = document.createElement('div');
+    progressBar.className = 'video-progress-bar';
+
+    const progressPlayhead = document.createElement('div');
+    progressPlayhead.className = 'video-progress-playhead';
+
+    const seekTooltip = document.createElement('div');
+    seekTooltip.className = 'video-seek-tooltip';
+    seekTooltip.textContent = '0:00';
+
+    progressWrap.appendChild(progressBuffered);
+    progressWrap.appendChild(progressBar);
+    progressWrap.appendChild(progressPlayhead);
+    progressWrap.appendChild(seekTooltip);
+
+    const timestamps = d.timestamps || (d.video && d.video.timestamps) || [];
+    function renderTimestampMarkers() {
+      if (!video.duration || !timestamps.length) return;
+      progressWrap.querySelectorAll('.video-timestamp-marker').forEach(m => m.remove());
+      timestamps.forEach(ts => {
+        const marker = document.createElement('div');
+        marker.className = 'video-timestamp-marker';
+        marker.style.left = (ts.time / video.duration * 100) + '%';
+        marker.title = ts.label || formatTime(ts.time);
+        progressWrap.appendChild(marker);
+      });
+    }
+
+    let isSeeking = false;
+    function seekToEvent(e) {
+      const rect = progressWrap.getBoundingClientRect();
+      const pos = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+      if (video.duration) {
+        video.currentTime = pos * video.duration;
+      }
+      progressBar.style.width = (pos * 100) + '%';
+      progressPlayhead.style.left = (pos * 100) + '%';
+    }
+
+    progressWrap.addEventListener('pointerdown', e => {
+      isSeeking = true;
+      progressWrap.setPointerCapture(e.pointerId);
+      seekToEvent(e);
+    });
+    progressWrap.addEventListener('pointermove', e => {
+      const rect = progressWrap.getBoundingClientRect();
+      const pos = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+      seekTooltip.style.left = (pos * 100) + '%';
+      if (video.duration) {
+        seekTooltip.textContent = formatTime(pos * video.duration);
+      }
+      if (isSeeking) seekToEvent(e);
+    });
+    function stopSeek(e) {
+      if (isSeeking) {
+        isSeeking = false;
+        if (e && e.pointerId !== undefined && progressWrap.hasPointerCapture(e.pointerId)) {
+          progressWrap.releasePointerCapture(e.pointerId);
+        }
+      }
+    }
+    progressWrap.addEventListener('pointerup', stopSeek);
+    progressWrap.addEventListener('pointercancel', stopSeek);
+
+    const controlsRow = document.createElement('div');
+    controlsRow.className = 'video-controls-row';
+
+    const controlsLeft = document.createElement('div');
+    controlsLeft.className = 'video-controls-left';
+
+    const playBtn = document.createElement('button');
+    playBtn.className = 'video-btn';
+    playBtn.type = 'button';
+    playBtn.setAttribute('aria-label', 'Play or pause');
+    const playIcon = '<svg viewBox="0 0 24 24"><polygon points="6 4 20 12 6 20 6 4"/></svg>';
+    const pauseIcon = '<svg viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
+    playBtn.innerHTML = pauseIcon;
+
+    function togglePlay() {
+      if (video.paused || video.ended) {
+        video.play();
+      } else {
+        video.pause();
+      }
+    }
+    playBtn.addEventListener('click', togglePlay);
+    video.addEventListener('click', togglePlay);
+
+    video.addEventListener('play', () => { playBtn.innerHTML = pauseIcon; });
+    video.addEventListener('pause', () => { playBtn.innerHTML = playIcon; });
+
+    const timeDisplay = document.createElement('div');
+    timeDisplay.className = 'video-time';
+    timeDisplay.textContent = '0:00 / 0:00';
+
+    controlsLeft.appendChild(playBtn);
+    controlsLeft.appendChild(timeDisplay);
+
+    const controlsRight = document.createElement('div');
+    controlsRight.className = 'video-controls-right';
+
+    const speedWrap = document.createElement('div');
+    speedWrap.className = 'video-speed-wrap';
+
+    const speedBtn = document.createElement('button');
+    speedBtn.className = 'video-speed-btn';
+    speedBtn.type = 'button';
+    speedBtn.textContent = activeSpeed + 'x';
+    speedBtn.title = 'Playback speed';
+
+    const speedMenu = document.createElement('div');
+    speedMenu.className = 'video-speed-menu';
+    const speeds = [0.75, 1, 1.25, 1.5, 2];
+    speeds.forEach(sp => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.dataset.speed = sp;
+      b.textContent = sp + 'x';
+      if (sp === activeSpeed) b.className = 'active';
+      b.addEventListener('click', (e) => {
+        e.stopPropagation();
+        setPlaybackSpeed(sp);
+        speedMenu.classList.remove('open');
+      });
+      speedMenu.appendChild(b);
+    });
+
+    function setPlaybackSpeed(speed) {
+      activeSpeed = speed;
+      video.playbackRate = speed;
+      speedBtn.textContent = speed + 'x';
+      speedMenu.querySelectorAll('button').forEach(b => {
+        b.classList.toggle('active', parseFloat(b.dataset.speed) === speed);
+      });
+    }
+
+    speedBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      speedMenu.classList.toggle('open');
+    });
+
+    const closeSpeedMenu = (e) => {
+      if (!speedWrap.contains(e.target)) speedMenu.classList.remove('open');
+    };
+    document.addEventListener('click', closeSpeedMenu);
+
+    speedWrap.appendChild(speedBtn);
+    speedWrap.appendChild(speedMenu);
+
+    const volBtn = document.createElement('button');
+    volBtn.className = 'video-btn';
+    volBtn.type = 'button';
+    volBtn.setAttribute('aria-label', 'Mute or unmute');
+    const volIcon = '<svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>';
+    const muteIcon = '<svg viewBox="0 0 24 24"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>';
+    function updateVolumeIcon() {
+      volBtn.innerHTML = (video.muted || video.volume === 0) ? muteIcon : volIcon;
+    }
+    updateVolumeIcon();
+    volBtn.addEventListener('click', () => {
+      video.muted = !video.muted;
+      updateVolumeIcon();
+      if (!video.muted) unmuteBadge.style.display = 'none';
+    });
+
+    const fsBtn = document.createElement('button');
+    fsBtn.className = 'video-btn';
+    fsBtn.type = 'button';
+    fsBtn.setAttribute('aria-label', 'Toggle fullscreen');
+    fsBtn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>';
+    fsBtn.addEventListener('click', () => {
+      if (!document.fullscreenElement) {
+        if (container.requestFullscreen) container.requestFullscreen();
+        else if (video.requestFullscreen) video.requestFullscreen();
+      } else {
+        if (document.exitFullscreen) document.exitFullscreen();
+      }
+    });
+
+    controlsRight.appendChild(speedWrap);
+    controlsRight.appendChild(volBtn);
+    controlsRight.appendChild(fsBtn);
+
+    controlsRow.appendChild(controlsLeft);
+    controlsRow.appendChild(controlsRight);
+
+    controls.appendChild(progressWrap);
+    controls.appendChild(controlsRow);
+
+    let timestampsBar = null;
+    let tsChips = [];
+    if (timestamps.length) {
+      timestampsBar = document.createElement('div');
+      timestampsBar.className = 'video-timestamps-bar';
+
+      const tsTitle = document.createElement('span');
+      tsTitle.className = 'video-ts-title';
+      tsTitle.textContent = 'Timestamps';
+
+      const tsList = document.createElement('div');
+      tsList.className = 'video-ts-list';
+
+      timestamps.forEach(ts => {
+        const chip = document.createElement('button');
+        chip.className = 'video-ts-chip';
+        chip.type = 'button';
+        chip.dataset.time = ts.time;
+        const timeStr = formatTime(ts.time);
+        const labelStr = ts.label || timeStr;
+        chip.innerHTML = `<span class="ts-time">${timeStr}</span> <span class="ts-label">${labelStr}</span>`;
+        chip.addEventListener('click', () => {
+          video.currentTime = ts.time;
+          video.play();
+        });
+        tsList.appendChild(chip);
+        tsChips.push({ chip, time: ts.time });
+      });
+
+      timestampsBar.appendChild(tsTitle);
+      timestampsBar.appendChild(tsList);
+    }
+
+    video.addEventListener('loadedmetadata', () => {
+      timeDisplay.textContent = `${formatTime(video.currentTime)} / ${formatTime(video.duration)}`;
+      renderTimestampMarkers();
+    });
+
+    video.addEventListener('timeupdate', () => {
+      if (!isSeeking && video.duration) {
+        const pct = (video.currentTime / video.duration) * 100;
+        progressBar.style.width = pct + '%';
+        progressPlayhead.style.left = pct + '%';
+        timeDisplay.textContent = `${formatTime(video.currentTime)} / ${formatTime(video.duration)}`;
+
+        if (tsChips.length) {
+          let activeIdx = -1;
+          for (let i = 0; i < tsChips.length; i++) {
+            if (video.currentTime >= tsChips[i].time) activeIdx = i;
+          }
+          tsChips.forEach((item, idx) => {
+            item.chip.classList.toggle('active', idx === activeIdx);
+          });
+        }
+      }
+    });
+
+    video.addEventListener('progress', () => {
+      if (video.duration && video.buffered.length > 0) {
+        const bufferedEnd = video.buffered.end(video.buffered.length - 1);
+        progressBuffered.style.width = (bufferedEnd / video.duration * 100) + '%';
+      }
+    });
+
+    container.appendChild(video);
+    container.appendChild(unmuteBadge);
+    container.appendChild(controls);
+    if (timestampsBar) container.appendChild(timestampsBar);
+    cover.appendChild(container);
+
+    video.playbackRate = activeSpeed;
+    const playPromise = video.play();
+    if (playPromise !== undefined) {
+      playPromise.catch(() => {
+        video.muted = true;
+        updateVolumeIcon();
+        unmuteBadge.style.display = 'inline-flex';
+        video.play().catch(() => {});
+      });
+    }
+  }
+
   function openModal(d, fromList = false) {
     modalFromList = !!fromList;
     activeProject = d; activeImageIndex = 0;
-    modal.classList.toggle('text-only', !d.images.length);
+    const hasVideo = !!d.video;
+    const hasImages = d.images && d.images.length > 0;
+    modal.classList.toggle('text-only', !hasImages && !hasVideo);
+
     function fitCover(src, index = activeImageIndex) {
       activeImageIndex = index;
-      const img = new Image();
-      img.id = 'coverImg'; img.alt = d.title + ' preview'; img.src = src;
-      const old = cover.querySelector('#coverImg');
-      if (old) old.replaceWith(img); else cover.appendChild(img);
-      mbody.querySelectorAll('.thumbs img').forEach((o, i) => o.classList.toggle('active', i === activeImageIndex));
-    }
-    if (d.images.length) {
+      if (activeVideo) {
+        activeVideo.pause();
+        activeVideo = null;
+      }
       cover.style.minHeight = '';
       cover.innerHTML = '';
-      if (d.images.length > 1) {
-        const prev = document.createElement('button'); prev.className = 'cover-nav prev'; prev.innerHTML = '&#10094;'; prev.setAttribute('aria-label','Previous image'); prev.addEventListener('click', () => stepModalImage(-1));
-        const next = document.createElement('button'); next.className = 'cover-nav next'; next.innerHTML = '&#10095;'; next.setAttribute('aria-label','Next image'); next.addEventListener('click', () => stepModalImage(1));
+      const totalMedia = (hasVideo ? 1 : 0) + (hasImages ? d.images.length : 0);
+      if (totalMedia > 1) {
+        const prev = document.createElement('button'); prev.className = 'cover-nav prev'; prev.innerHTML = '&#10094;'; prev.setAttribute('aria-label','Previous media'); prev.addEventListener('click', () => stepModalMedia(-1));
+        const next = document.createElement('button'); next.className = 'cover-nav next'; next.innerHTML = '&#10095;'; next.setAttribute('aria-label','Next media'); next.addEventListener('click', () => stepModalMedia(1));
         cover.appendChild(prev); cover.appendChild(next);
       }
+      const img = new Image();
+      img.id = 'coverImg'; img.alt = d.title + ' preview'; img.src = src;
+      cover.appendChild(img);
+      mbody.querySelectorAll('.thumbs [data-media-index]').forEach(o => {
+        o.classList.toggle('active', +o.dataset.mediaIndex === activeImageIndex);
+      });
+    }
+
+    if (hasVideo) {
+      renderVideoPlayer(d);
+    } else if (hasImages) {
       fitCover(d.images[0], 0);
     } else {
       cover.innerHTML = '';
     }
+
     let links = d.links.map(l => `<a class="${l.primary?'link-primary':'link-ghost'}" href="${l.url}" target="_blank" rel="noopener">${l.label} ↗</a>`).join('');
+    
     let thumbs = '';
-    if (d.images.length > 1) {
-      thumbs = `<div class="thumbs">` + d.images.map((src,i)=>`<img src="${src}" data-i="${i}" class="${i===0?'active':''}" alt="${d.title} thumbnail ${i+1}" />`).join('') + `</div>`;
+    const totalMedia = (hasVideo ? 1 : 0) + (hasImages ? d.images.length : 0);
+    if (totalMedia > 1) {
+      let thumbItems = '';
+      if (hasVideo) {
+        thumbItems += `<div class="thumb-video active" data-media-type="video" data-media-index="0" title="Watch Video Demo"><svg viewBox="0 0 24 24"><polygon points="6 4 20 12 6 20 6 4"/></svg></div>`;
+      }
+      if (hasImages) {
+        d.images.forEach((src, i) => {
+          const mIdx = hasVideo ? i + 1 : i;
+          const isAct = (!hasVideo && i === 0) ? ' active' : '';
+          thumbItems += `<img src="${src}" data-media-type="image" data-media-index="${mIdx}" data-img-index="${i}" class="${isAct}" alt="${d.title} thumbnail ${i+1}" />`;
+        });
+      }
+      thumbs = `<div class="thumbs">${thumbItems}</div>`;
     }
+
     mbody.innerHTML = `<div class="idx">PROJECT ${d.idx}</div><h2>${d.title}</h2><p>${d.desc}</p>`+
       `${thumbs}<div class="modal-links">${links}</div>`;
-    if (d.images.length > 1) {
-      mbody.querySelectorAll('.thumbs img').forEach(t => t.addEventListener('click', () => {
-        fitCover(d.images[+t.dataset.i], +t.dataset.i);
+
+    if (totalMedia > 1) {
+      mbody.querySelectorAll('.thumbs [data-media-type]').forEach(t => t.addEventListener('click', () => {
+        if (t.dataset.mediaType === 'video') {
+          activeImageIndex = 0;
+          renderVideoPlayer(d);
+          mbody.querySelectorAll('.thumbs [data-media-index]').forEach(o => o.classList.toggle('active', o === t));
+        } else {
+          fitCover(d.images[+t.dataset.imgIndex], +t.dataset.mediaIndex);
+        }
       }));
     }
+
     backdrop.classList.add('open');
   }
+
   function closeModal() {
-    backdrop.classList.remove('open'); modal.classList.remove('text-only'); activeProject = null; activeImageIndex = 0;
+    if (activeVideo) {
+      activeVideo.pause();
+      activeVideo.currentTime = 0;
+      activeVideo.src = '';
+      activeVideo = null;
+    }
+    backdrop.classList.remove('open');
+    modal.classList.remove('text-only');
+    activeProject = null;
+    activeImageIndex = 0;
     if (modalFromList) { modalFromList = false; openProjectList(); }
   }
-  function stepModalImage(delta) {
-    if (!activeProject || !activeProject.images.length || !backdrop.classList.contains('open')) return;
-    activeImageIndex = (activeImageIndex + delta + activeProject.images.length) % activeProject.images.length;
-    const img = new Image();
-    img.id = 'coverImg'; img.alt = activeProject.title + ' preview'; img.src = activeProject.images[activeImageIndex];
-    const old = cover.querySelector('#coverImg');
-    if (old) old.replaceWith(img); else cover.appendChild(img);
-    mbody.querySelectorAll('.thumbs img').forEach((o, i) => o.classList.toggle('active', i === activeImageIndex));
+
+  function stepModalMedia(delta) {
+    if (!activeProject || !backdrop.classList.contains('open')) return;
+    const hasVideo = !!activeProject.video;
+    const hasImages = activeProject.images && activeProject.images.length > 0;
+    const totalMedia = (hasVideo ? 1 : 0) + (hasImages ? activeProject.images.length : 0);
+    if (totalMedia <= 1) return;
+    activeImageIndex = (activeImageIndex + delta + totalMedia) % totalMedia;
+    if (hasVideo && activeImageIndex === 0) {
+      renderVideoPlayer(activeProject);
+      mbody.querySelectorAll('.thumbs [data-media-index]').forEach(o => o.classList.toggle('active', +o.dataset.mediaIndex === 0));
+    } else {
+      const imgIdx = hasVideo ? activeImageIndex - 1 : activeImageIndex;
+      fitCover(activeProject.images[imgIdx], activeImageIndex);
+    }
   }
+
   document.getElementById('close').addEventListener('click', closeModal);
   backdrop.addEventListener('click', e => { if (e.target === backdrop) closeModal(); });
   addEventListener('keydown', e => {
     if (e.key === 'Escape') { closeModal(); closeProjectList(); }
-    if (e.key === 'ArrowRight') { e.preventDefault(); stepModalImage(1); }
-    if (e.key === 'ArrowLeft') { e.preventDefault(); stepModalImage(-1); }
+    if (e.code === 'Space' && activeVideo && backdrop.classList.contains('open') && document.activeElement.tagName !== 'BUTTON') {
+      e.preventDefault();
+      if (activeVideo.paused) activeVideo.play(); else activeVideo.pause();
+    }
+    if (e.key === 'ArrowRight') {
+      if (activeVideo && backdrop.classList.contains('open')) {
+        activeVideo.currentTime = Math.min(activeVideo.duration, activeVideo.currentTime + 5);
+      } else {
+        e.preventDefault(); stepModalMedia(1);
+      }
+    }
+    if (e.key === 'ArrowLeft') {
+      if (activeVideo && backdrop.classList.contains('open')) {
+        activeVideo.currentTime = Math.max(0, activeVideo.currentTime - 5);
+      } else {
+        e.preventDefault(); stepModalMedia(-1);
+      }
+    }
   });
   </script>
 </body>
