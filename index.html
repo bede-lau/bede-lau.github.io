@@ -237,8 +237,6 @@
   .video-progress-buffered { position:absolute; left:0; top:0; bottom:0; width:0%; background:rgba(255,255,255,0.24); border-radius:4px; pointer-events:none; }
   .video-progress-playhead { position:absolute; left:0%; top:50%; width:12px; height:12px; border-radius:50%; background:#fff; box-shadow:0 0 8px rgba(91,134,224,0.8); transform:translate(-50%, -50%) scale(0); transition:transform 0.15s; pointer-events:none; }
   .video-progress-wrap:hover .video-progress-playhead { transform:translate(-50%, -50%) scale(1); }
-  
-  .video-timestamp-marker { position:absolute; top:-2px; bottom:-2px; width:2px; background:rgba(255,212,133,0.85); z-index:2; pointer-events:none; border-radius:1px; }
 
   .video-seek-tooltip { position:absolute; bottom:16px; transform:translateX(-50%); font-family:"JetBrains Mono",monospace; font-size:10px; padding:2px 6px; border-radius:4px; background:rgba(9,14,32,0.9); color:var(--platinum); border:1px solid var(--line); pointer-events:none; opacity:0; transition:opacity .15s; white-space:nowrap; }
   .video-progress-wrap:hover .video-seek-tooltip { opacity:1; }
@@ -260,23 +258,11 @@
   .video-speed-menu button { font-family:"JetBrains Mono",monospace; font-size:11px; color:var(--modal-copy); background:none; border:none; padding:5px 12px; border-radius:6px; cursor:pointer; text-align:left; transition:background .15s, color .15s; }
   .video-speed-menu button:hover, .video-speed-menu button.active { background:rgba(91,134,224,0.22); color:var(--ice); }
 
-  .video-timestamps-bar { width:100%; padding:8px 14px 10px; display:flex; align-items:center; gap:8px; overflow-x:auto; background:rgba(8,12,28,0.92); border-top:1px solid var(--line); scrollbar-width:thin; }
-  .video-ts-title { font-family:"JetBrains Mono",monospace; font-size:10px; text-transform:uppercase; letter-spacing:0.08em; color:var(--azure); flex:none; }
-  .video-ts-list { display:flex; align-items:center; gap:6px; flex-wrap:nowrap; }
-  .video-ts-chip { font-family:"JetBrains Mono",monospace; font-size:10.5px; padding:3px 9px; border-radius:999px; background:rgba(255,255,255,0.05); border:1px solid var(--line); color:var(--modal-copy); cursor:pointer; white-space:nowrap; transition:all .2s; display:inline-flex; align-items:center; gap:5px; }
-  .video-ts-chip:hover { background:rgba(91,134,224,0.18); border-color:var(--ice); color:var(--platinum); transform:translateY(-1px); }
-  .video-ts-chip.active { background:linear-gradient(135deg, rgba(58,99,201,0.35), rgba(91,134,224,0.25)); border-color:var(--azure); color:var(--ice); font-weight:600; box-shadow:0 0 10px rgba(91,134,224,0.25); }
-  .video-ts-chip .ts-time { color:var(--azure); font-size:10px; }
-  .video-ts-chip.active .ts-time { color:#ffd485; }
-
   .pp-video-badge { width:100%; height:120px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; background:radial-gradient(circle at center, rgba(58,99,201,0.35) 0%, rgba(5,7,15,0.85) 100%); color:var(--ice); font-family:"JetBrains Mono",monospace; font-size:11px; letter-spacing:0.06em; border-radius:16px 16px 0 0; }
   .pp-video-badge svg { width:28px; height:28px; fill:var(--azure); filter:drop-shadow(0 0 8px var(--azure)); }
 
   body[data-theme="light"] .video-controls { background:linear-gradient(0deg, rgba(235,241,255,0.95) 0%, rgba(235,241,255,0.75) 75%, transparent 100%); }
-  body[data-theme="light"] .video-timestamps-bar { background:rgba(240,245,255,0.92); border-color:var(--line); }
   body[data-theme="light"] .video-btn { color:var(--modal-heading); }
-  body[data-theme="light"] .video-ts-chip { background:rgba(65,110,215,0.08); color:var(--modal-copy); }
-  body[data-theme="light"] .video-ts-chip.active { background:rgba(65,110,215,0.18); color:var(--royal); border-color:var(--royal); }
   body[data-theme="light"] .video-speed-menu { background:rgba(255,255,255,0.95); }
   body[data-theme="light"] .video-speed-btn { color:var(--royal); background:rgba(65,110,215,0.12); }
 
@@ -293,8 +279,6 @@
     .info-section { margin:150px 18px 40px; }
     .pp-video-badge { height:66px; }
     .pp-video-badge svg { width:20px; height:20px; }
-    .video-timestamps-bar { padding:6px 10px; }
-    .video-ts-chip { font-size:10px; padding:3px 7px; }
   }
   @media (prefers-reduced-motion:reduce) {
     .bg-wash { animation:none !important; }
@@ -479,12 +463,6 @@
       desc:"Matter Lab is an interactive 3D studio for exploring how metamaterials are designed, built, and used in real-world applications.",
       links:[{label:"Demo video",url:"https://drive.google.com/file/d/1xZW_jI9nOOsrNuoVA2XPthWZJG-qCea_/view?usp=sharing",primary:true},{label:"Live demo",url:"https://matter-lab.bedelau-2025.chatgpt.site/",primary:false}],
       video:"assets/img/matter/matter_demo.mp4",
-      timestamps:[
-        { time: 0, label: "0:00 Intro & Overview" },
-        { time: 30, label: "0:30 Structure & Lattices" },
-        { time: 50, label: "0:50 Deformation Behavior" },
-        { time: 75, label: "1:15 Real-World Applications" }
-      ],
       images:[],
       icon:'<rect x="7" y="7" width="13" height="13" rx="2" fill="none" stroke="#aec6ff" stroke-width="1.8"/><rect x="16" y="16" width="13" height="13" rx="2" fill="none" stroke="#aec6ff" stroke-width="1.8"/><line x1="14" y1="20" x2="20" y2="14" stroke="#aec6ff" stroke-width="1.6" stroke-dasharray="2 2"/><line x1="7" y1="7" x2="16" y2="16" stroke="#aec6ff" stroke-width="1.6"/><line x1="20" y1="7" x2="29" y2="16" stroke="#aec6ff" stroke-width="1.6"/><line x1="7" y1="20" x2="16" y2="29" stroke="#aec6ff" stroke-width="1.6"/><line x1="20" y1="20" x2="29" y2="29" stroke="#aec6ff" stroke-width="1.6"/>' },
     { idx:"10", title:"CanvasCraft", hue:[100,170,245], win:true,
@@ -763,19 +741,6 @@
     progressWrap.appendChild(progressPlayhead);
     progressWrap.appendChild(seekTooltip);
 
-    const timestamps = d.timestamps || (d.video && d.video.timestamps) || [];
-    function renderTimestampMarkers() {
-      if (!video.duration || !timestamps.length) return;
-      progressWrap.querySelectorAll('.video-timestamp-marker').forEach(m => m.remove());
-      timestamps.forEach(ts => {
-        const marker = document.createElement('div');
-        marker.className = 'video-timestamp-marker';
-        marker.style.left = (ts.time / video.duration * 100) + '%';
-        marker.title = ts.label || formatTime(ts.time);
-        progressWrap.appendChild(marker);
-      });
-    }
-
     let isSeeking = false;
     function seekToEvent(e) {
       const rect = progressWrap.getBoundingClientRect();
@@ -937,42 +902,8 @@
     controls.appendChild(progressWrap);
     controls.appendChild(controlsRow);
 
-    let timestampsBar = null;
-    let tsChips = [];
-    if (timestamps.length) {
-      timestampsBar = document.createElement('div');
-      timestampsBar.className = 'video-timestamps-bar';
-
-      const tsTitle = document.createElement('span');
-      tsTitle.className = 'video-ts-title';
-      tsTitle.textContent = 'Timestamps';
-
-      const tsList = document.createElement('div');
-      tsList.className = 'video-ts-list';
-
-      timestamps.forEach(ts => {
-        const chip = document.createElement('button');
-        chip.className = 'video-ts-chip';
-        chip.type = 'button';
-        chip.dataset.time = ts.time;
-        const timeStr = formatTime(ts.time);
-        const labelStr = ts.label || timeStr;
-        chip.innerHTML = `<span class="ts-time">${timeStr}</span> <span class="ts-label">${labelStr}</span>`;
-        chip.addEventListener('click', () => {
-          video.currentTime = ts.time;
-          video.play();
-        });
-        tsList.appendChild(chip);
-        tsChips.push({ chip, time: ts.time });
-      });
-
-      timestampsBar.appendChild(tsTitle);
-      timestampsBar.appendChild(tsList);
-    }
-
     video.addEventListener('loadedmetadata', () => {
       timeDisplay.textContent = `${formatTime(video.currentTime)} / ${formatTime(video.duration)}`;
-      renderTimestampMarkers();
     });
 
     video.addEventListener('timeupdate', () => {
@@ -981,16 +912,6 @@
         progressBar.style.width = pct + '%';
         progressPlayhead.style.left = pct + '%';
         timeDisplay.textContent = `${formatTime(video.currentTime)} / ${formatTime(video.duration)}`;
-
-        if (tsChips.length) {
-          let activeIdx = -1;
-          for (let i = 0; i < tsChips.length; i++) {
-            if (video.currentTime >= tsChips[i].time) activeIdx = i;
-          }
-          tsChips.forEach((item, idx) => {
-            item.chip.classList.toggle('active', idx === activeIdx);
-          });
-        }
       }
     });
 
@@ -1004,7 +925,6 @@
     container.appendChild(video);
     container.appendChild(unmuteBadge);
     container.appendChild(controls);
-    if (timestampsBar) container.appendChild(timestampsBar);
     cover.appendChild(container);
 
     video.playbackRate = activeSpeed;
