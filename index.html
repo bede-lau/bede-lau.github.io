@@ -305,7 +305,7 @@
     </div>
     <!-- <span class="eyebrow">Electrical Engineering MEng · King's College London</span> -->
     <h1><span class="grad">Bede Lau</span></h1>
-    <p class="lede">I build full-stack systems across computer vision, machine learning, and quantitative finance, from multi-agent AI platforms to ERP data pipelines and embedded hardware.</p>
+    <p class="lede">EE student @ KCL. SWE. 9x hackathon winner. Started with computer vision, quantitative finance, multi-agent systems, and ERP data pipelines. Striving to get into avionics, submersibles, robotics, and photonics.</p>
   </header>
 
   <section class="info-section" id="work">
@@ -529,7 +529,7 @@
   // screen-space starfield
   const stars = Array.from({length: innerWidth<720?70:120}, () => ({ x:Math.random(), y:Math.random(), r:Math.random()*1.3+0.3, p:Math.random()*Math.PI*2 }));
 
-  let mx = -9e9, my = -9e9, hover = -1;
+  let mx = -9e9, my = -9e9, hover = -1, lastPointerType = '', isGlobeHovered = false;
   let dragging = false, lastX = 0, lastY = 0, moved = 0, downT = 0;
   let rotY = 0.3, rotX = -0.15, tRotY = 0.3, tRotX = -0.15, spin = reduce ? 0 : 0.0016;
 
@@ -565,6 +565,7 @@
   });
   addEventListener('pointermove', e => {
     mx = e.clientX; my = e.clientY;
+    lastPointerType = e.pointerType;
     if (dragging) {
       const MAX_STEP = 60;
       const dx = Math.max(-MAX_STEP, Math.min(MAX_STEP, e.clientX-lastX));
@@ -573,6 +574,9 @@
       moved += Math.abs(dx)+Math.abs(dy); lastX = e.clientX; lastY = e.clientY;
     }
   });
+  function clearPointer() { mx = -9e9; my = -9e9; lastPointerType = ''; isGlobeHovered = false; }
+  addEventListener('blur', clearPointer);
+  document.documentElement.addEventListener('pointerleave', clearPointer);
   function endDrag(e) {
     const click = moved < 6 && performance.now()-downT < 350;
     dragging = false;
@@ -585,10 +589,13 @@
   let breathe = 0;
   function loop() {
     breathe += 0.01;
-    if (!dragging && !reduce) tRotY += spin;
+    const sc = SCALE * (reduce ? 1 : 1 + Math.sin(breathe*0.6)*0.012);
+    const pointerOverGlobe = lastPointerType !== 'touch' && Math.hypot(mx-cx,my-cy) <= R*sc*1.25;
+    if (pointerOverGlobe && !isGlobeHovered && !dragging) tRotY = rotY;
+    isGlobeHovered = pointerOverGlobe;
+    if (!dragging && !reduce && !isGlobeHovered) tRotY += spin;
     rotY += (tRotY-rotY)*0.07; rotX += (tRotX-rotX)*0.07;
     const sy = Math.sin(rotY), cyr = Math.cos(rotY), sx = Math.sin(rotX), cxr = Math.cos(rotX);
-    const sc = SCALE * (reduce ? 1 : 1 + Math.sin(breathe*0.6)*0.012);
     const pal = palettes[theme];
 
     ctx.clearRect(0,0,W,H);
