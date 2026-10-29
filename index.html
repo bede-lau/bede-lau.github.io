@@ -966,34 +966,37 @@
     }
   }
 
+  function fitCover(src, index = activeImageIndex) {
+    if (!activeProject) return;
+    const d = activeProject;
+    activeImageIndex = index;
+    if (activeVideo) {
+      activeVideo.pause();
+      activeVideo = null;
+    }
+    cover.style.minHeight = '';
+    cover.innerHTML = '';
+    const hasImages = d.images && d.images.length > 0;
+    const totalMedia = (d.video ? 1 : 0) + (hasImages ? d.images.length : 0);
+    if (totalMedia > 1) {
+      const prev = document.createElement('button'); prev.className = 'cover-nav prev'; prev.innerHTML = '&#10094;'; prev.setAttribute('aria-label','Previous media'); prev.addEventListener('click', () => stepModalMedia(-1));
+      const next = document.createElement('button'); next.className = 'cover-nav next'; next.innerHTML = '&#10095;'; next.setAttribute('aria-label','Next media'); next.addEventListener('click', () => stepModalMedia(1));
+      cover.appendChild(prev); cover.appendChild(next);
+    }
+    const img = new Image();
+    img.id = 'coverImg'; img.alt = d.title + ' preview'; img.src = src;
+    cover.appendChild(img);
+    mbody.querySelectorAll('.thumbs [data-media-index]').forEach(o => {
+      o.classList.toggle('active', +o.dataset.mediaIndex === activeImageIndex);
+    });
+  }
+
   function openModal(d, fromList = false) {
     modalFromList = !!fromList;
     activeProject = d; activeImageIndex = 0;
     const hasVideo = !!d.video;
     const hasImages = d.images && d.images.length > 0;
     modal.classList.toggle('text-only', !hasImages && !hasVideo);
-
-    function fitCover(src, index = activeImageIndex) {
-      activeImageIndex = index;
-      if (activeVideo) {
-        activeVideo.pause();
-        activeVideo = null;
-      }
-      cover.style.minHeight = '';
-      cover.innerHTML = '';
-      const totalMedia = (hasVideo ? 1 : 0) + (hasImages ? d.images.length : 0);
-      if (totalMedia > 1) {
-        const prev = document.createElement('button'); prev.className = 'cover-nav prev'; prev.innerHTML = '&#10094;'; prev.setAttribute('aria-label','Previous media'); prev.addEventListener('click', () => stepModalMedia(-1));
-        const next = document.createElement('button'); next.className = 'cover-nav next'; next.innerHTML = '&#10095;'; next.setAttribute('aria-label','Next media'); next.addEventListener('click', () => stepModalMedia(1));
-        cover.appendChild(prev); cover.appendChild(next);
-      }
-      const img = new Image();
-      img.id = 'coverImg'; img.alt = d.title + ' preview'; img.src = src;
-      cover.appendChild(img);
-      mbody.querySelectorAll('.thumbs [data-media-index]').forEach(o => {
-        o.classList.toggle('active', +o.dataset.mediaIndex === activeImageIndex);
-      });
-    }
 
     if (hasVideo) {
       renderVideoPlayer(d);
