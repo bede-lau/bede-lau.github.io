@@ -1,4 +1,19 @@
-# 👨‍💻 Full-stack Engineer
+<h1 align="center">Bede Lau · Portfolio</h1>
+<p align="center"><b>A portfolio of AI, software and interactive systems.</b></p>
+
+## ▍At a glance
+
+```mermaid
+flowchart LR
+ A["Portfolio page"] --> B["Project stories"]
+ B --> C["Demo links"]
+ B --> D["Source repositories"]
+ B --> E["Screenshots and visual assets"]
+```
+
+The site source lives in `index.html`; project imagery is under `assets/`. The background and project notes below reflect the existing repository documentation.
+
+---
 
 ### 🎓 Education
 Cambridge A-Levels @ Taylor's University
