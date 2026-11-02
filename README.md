@@ -15,6 +15,30 @@ The site source lives in `index.html`; project imagery is under `assets/`. The b
 
 ---
 
+## ▍Selected projects
+
+<table>
+<tr>
+<td width="33%"><img src="assets/img/project106/project106_1.png" alt="Project106 portfolio view" /><br /><b>Project106</b> · London housing feasibility</td>
+<td width="33%"><img src="assets/img/fishy/fishy_1.png" alt="Fishy portfolio view" /><br /><b>Fishy</b> · editable aquascape design</td>
+<td width="33%"><img src="assets/img/chrono/chrono_1.png" alt="Chrono portfolio view" /><br /><b>Chrono</b> · interactive quantum-inspired organisms</td>
+</tr>
+</table>
+
+Explore the [live portfolio](https://bede-lau.github.io/) for project context, demos, and source links. These images are portfolio assets and may show earlier builds.
+
+## ▍Run locally
+
+The site is a static HTML page. From the repository root, serve it locally:
+
+```sh
+python3 -m http.server 8000
+```
+
+Open [localhost:8000](http://localhost:8000). The page, styling, and interactive canvas code live in `index.html`; project imagery is in `assets/img/`, and `_config.yml` contains GitHub Pages metadata.
+
+---
+
 ### 🎓 Education
 Cambridge A-Levels @ Taylor's University
 
