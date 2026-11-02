@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/css/project-carousel.css" />
 <style>
   :root {
     color-scheme:dark;
@@ -48,6 +49,9 @@
   body[data-theme="light"] .modal { background:linear-gradient(160deg,rgba(255,255,255,0.98),rgba(241,245,255,0.98)); }
   body[data-theme="light"] .link-primary { color:#f7f9ff; background:linear-gradient(135deg,#345bc4,#6689e5); }
   body[data-theme="light"] .link-ghost { background:rgba(65,110,215,0.08); }
+
+  #lightDroplets { position:fixed; inset:0; width:100%; height:100%; z-index:1; pointer-events:none; opacity:0.18;
+    mask-image:linear-gradient(90deg,rgba(0,0,0,0.12),rgba(0,0,0,0.35) 45%,#000 80%); }
 
   .grain { position:fixed; inset:0; z-index:1; pointer-events:none; opacity:var(--grain-opacity);
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
@@ -123,44 +127,88 @@
   @keyframes fade { to { opacity:1; } }
 
   .project-list-backdrop { position:fixed; inset:0; z-index:90; display:none; align-items:center; justify-content:center;
-    background:rgba(4,7,15,0.58); backdrop-filter:blur(10px); padding:24px; }
+    background:rgba(4,7,15,0.78); backdrop-filter:blur(10px); padding:24px; }
   .project-list-backdrop.open { display:flex; animation:fade 0.24s forwards; }
-  .project-list { width:min(960px,100%); border-radius:22px; padding:28px;
-    background:linear-gradient(160deg,var(--panel),var(--modal-tail)); border:1px solid var(--line);
-    box-shadow:0 32px 100px var(--shadow); position:relative; max-height:min(720px,calc(100vh - 48px)); overflow-y:auto; }
-  .project-list h2 { font-family:"JetBrains Mono",monospace; font-size:12px; letter-spacing:0.18em; text-transform:uppercase;
-    color:var(--azure); margin-bottom:18px; font-weight:500; }
-  .project-list-items { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:28px; }
-  .project-list-col-head { display:flex; align-items:center; gap:10px; margin-bottom:14px; padding-bottom:10px;
-    border-bottom:1px solid var(--line); }
-  .project-list-cat { font-family:"JetBrains Mono",monospace; font-size:11px; letter-spacing:0.18em; text-transform:uppercase;
-    color:var(--azure); font-weight:500; }
-  .project-list-count { font-family:"JetBrains Mono",monospace; font-size:10px; letter-spacing:0.08em; color:var(--ink); opacity:0.7; }
-  .project-list-col-items { display:grid; gap:10px; }
-  .project-list-col-items button { width:100%; border:1px solid rgba(174,198,255,0.16); border-radius:14px; padding:14px 16px;
-    background:rgba(255,255,255,0.035); color:var(--modal-heading); text-align:left; cursor:pointer;
-    font-family:"Space Grotesk",sans-serif; font-size:15px; font-weight:600; transition:transform 0.2s, border-color 0.2s, background 0.2s;
-    display:grid; grid-template-columns:30px 1fr auto; align-items:center; gap:12px; }
-  .project-list-col-items button:hover { transform:translateX(4px); border-color:rgba(174,198,255,0.44); background:rgba(91,134,224,0.12); }
-  .project-list-col-items button.win { border-color:rgba(255,196,99,0.42); background:linear-gradient(100deg,rgba(255,196,99,0.10),rgba(255,255,255,0.035) 60%); }
-  .project-list-col-items button.win:hover { border-color:rgba(255,196,99,0.7); background:linear-gradient(100deg,rgba(255,196,99,0.18),rgba(91,134,224,0.12) 70%); }
-  .project-list-trophy { display:inline-flex; align-items:center; justify-content:center; width:26px; height:26px; flex:none;
-    border-radius:50%; color:#ffd485; background:linear-gradient(135deg,rgba(255,196,99,0.20),rgba(255,170,80,0.06));
-    border:1px solid rgba(255,196,99,0.36); box-shadow:0 0 12px rgba(255,170,80,0.18); }
-  .project-list-trophy svg { width:14px; height:14px; }
-  .project-list-win { font-family:"JetBrains Mono",monospace; font-size:9px; font-weight:500; letter-spacing:0.12em; text-transform:uppercase;
-    display:inline-flex; align-items:center; gap:5px; color:#ffd485;
-    background:linear-gradient(135deg,rgba(255,196,99,0.16),rgba(255,170,80,0.08));
-    border:1px solid rgba(255,196,99,0.32); border-radius:999px; padding:2px 8px 2px 6px; }
-  .project-list-win svg { width:10px; height:10px; }
-  .project-list-legend { margin-top:22px; padding-top:16px; border-top:1px solid var(--line); display:flex; align-items:center;
-    gap:9px; flex-wrap:wrap; font-family:"JetBrains Mono",monospace; font-size:10.5px; letter-spacing:0.04em; color:var(--muted); }
-  .project-list-legend .project-list-win { font-size:9px; padding:2px 8px 2px 6px; }
-  @media (max-width:860px) { .project-list-items { grid-template-columns:1fr 1fr; } }
-  @media (max-width:560px) { .project-list-items { grid-template-columns:1fr; gap:24px; } }
-  .project-list-index { font-family:"JetBrains Mono",monospace; font-size:11px; font-weight:500; letter-spacing:0.08em; color:var(--azure); }
-  .project-list-close { position:absolute; top:16px; right:16px; background:rgba(5,8,18,0.5); border:1px solid var(--line); color:var(--ink);
-    width:34px; height:34px; border-radius:50%; cursor:pointer; font-size:18px; line-height:1; }
+  .project-list { width:min(1220px,100%); max-height:calc(100dvh - 48px); position:relative; isolation:isolate;
+    display:flex; flex-direction:column; overflow:hidden; padding:0 clamp(24px,4vw,52px); border:1px solid var(--line); border-radius:16px;
+    background:radial-gradient(760px 440px at 98% 0%,rgba(39,64,127,0.15),transparent 65%),var(--void); box-shadow:0 32px 100px var(--shadow); }
+  .project-list::before { content:""; position:absolute; z-index:-1; pointer-events:none; width:860px; height:860px;
+    border:1px solid rgba(174,198,255,0.11); border-radius:50%; right:-610px; top:-280px; }
+  .project-list::after { content:""; position:absolute; inset:0; z-index:-1; pointer-events:none; opacity:0.42;
+    background:radial-gradient(circle at 94% 18%,var(--ice) 0 1px,transparent 1.5px),
+      radial-gradient(circle at 96% 66%,var(--ice) 0 1px,transparent 1.5px),
+      radial-gradient(circle at 7% 76%,var(--ice) 0 1px,transparent 1.5px),
+      radial-gradient(circle at 82% 5%,var(--ice) 0 1px,transparent 1.5px); }
+  #projectSpaceField { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index:-1; opacity:0.65; }
+  .project-list-header { display:flex; align-items:center; gap:36px; border-bottom:1px solid var(--line); flex:none; }
+  .project-list h2 { font-family:"JetBrains Mono",monospace; font-size:12px; letter-spacing:0.18em;
+    text-transform:uppercase; color:var(--ink); font-weight:500; }
+  .project-list-tabs { display:flex; gap:28px; }
+  .project-list-tab { position:relative; padding:26px 0; min-height:48px; border:0; background:none; cursor:pointer;
+    font-family:"JetBrains Mono",monospace; font-size:13px; color:var(--muted); transition:color 0.2s; }
+  .project-list-tab span { margin-left:8px; font-size:11px; }
+  .project-list-tab[aria-selected="true"] { color:var(--ice); }
+  .project-list-tab::after { content:""; position:absolute; bottom:0; left:0; right:0; height:2px; background:var(--azure);
+    transform:scaleX(0); transition:transform 0.2s; }
+  .project-list-tab[aria-selected="true"]::after { transform:scaleX(1); }
+  .project-list-tab:hover { color:var(--ink); }
+  .project-list-close { margin-left:auto; flex:none; width:44px; height:44px; border:0; background:none;
+    color:var(--ice); cursor:pointer; font-size:28px; font-weight:400; }
+  .project-list-items { overflow-y:auto; overscroll-behavior:contain; scrollbar-width:thin; scrollbar-color:var(--azure) transparent; padding:0 12px 20px 0; }
+  .project-list-panel[hidden] { display:none; }
+  .project-list-panel { max-width:1020px; width:100%; margin:0 auto; animation:archiveEnter 0.22s ease-out; }
+  .project-list-row { width:100%; position:relative; display:grid; grid-template-columns:280px minmax(0,1fr) 34px; gap:30px; align-items:center;
+    margin:0 -12px; padding:18px 12px; border:0; border-bottom:1px solid var(--line); background:transparent; text-align:left; color:var(--modal-heading);
+    cursor:pointer; font-family:inherit; transition:background 0.18s ease-out, border-color 0.18s ease-out; }
+  .project-list-row:last-child { border-bottom:0; }
+  .project-list-preview { display:flex; align-items:center; justify-content:center; width:100%; aspect-ratio:16/9;
+    background:linear-gradient(145deg,rgba(20,31,60,0.94),rgba(8,13,29,0.96)); border:1px solid rgba(174,198,255,0.2); border-radius:8px; overflow:hidden;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,0.05); transition:border-color 0.18s ease-out, transform 0.18s ease-out; }
+  .project-list-preview img,.project-list-preview video { display:block; width:100%; height:100%; object-fit:contain; object-position:center; }
+  .project-list-preview svg { width:68px; height:68px; }
+  .project-list-copy { display:block; min-width:0; }
+  .project-list-index { display:block; margin-bottom:9px; font:11px "JetBrains Mono",monospace; letter-spacing:0.12em; color:var(--azure); }
+  .project-list-titleline { display:flex; align-items:center; gap:10px; min-width:0; flex-wrap:wrap; }
+  .project-list-name { font-family:"Space Grotesk",sans-serif; font-size:clamp(20px,2vw,25px); font-weight:600; line-height:1.2; }
+  .project-list-summary { display:block; margin-top:8px; font-size:14px; line-height:1.5; color:var(--modal-copy);
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .project-list-win { display:inline-flex; align-items:center; gap:5px; min-height:23px; padding:3px 8px 3px 6px; border:1px solid rgba(255,196,99,0.38);
+    border-radius:999px; background:rgba(255,196,99,0.08); color:#ffd485; font:9px "JetBrains Mono",monospace; letter-spacing:0.08em; text-transform:uppercase; white-space:nowrap; }
+  .project-list-win svg { width:13px; height:13px; flex:none; }
+  .project-list-arrow { color:var(--ice); font-size:25px; transition:transform 0.2s; }
+  .project-list-row:hover { background:linear-gradient(90deg,rgba(91,134,224,0.08),transparent 70%); border-color:rgba(174,198,255,0.28); }
+  .project-list-row:hover .project-list-preview { border-color:rgba(174,198,255,0.5); transform:translateY(-1px); }
+  .project-list-row:hover .project-list-name { color:var(--ice); }
+  .project-list-row:hover .project-list-arrow { transform:translate(2px,-2px); }
+  .project-list :focus-visible { outline:2px solid var(--ice); outline-offset:-2px; border-radius:4px; }
+  @keyframes archiveEnter { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
+  @media (max-width:700px) {
+    .project-list-backdrop { padding:12px; }
+    .project-list { padding:0 20px; max-height:calc(100dvh - 24px); }
+    .project-list-header { display:grid; grid-template-columns:1fr auto; gap:0; padding-top:12px; }
+    .project-list-tabs { grid-row:2; grid-column:1/-1; justify-content:space-between; gap:12px; }
+    .project-list-tab { padding:18px 0; font-size:12px; }
+    .project-list-tab span { margin-left:4px; font-size:10px; }
+    .project-list-close { grid-row:1; grid-column:2; }
+    .project-list-items { padding-right:0; }
+    .project-list-row { grid-template-columns:124px minmax(0,1fr); gap:18px; margin:0; padding:16px 0; }
+    .project-list-name { font-size:16px; }
+    .project-list-index { margin-bottom:6px; font-size:10px; }
+    .project-list-summary { font-size:12px; margin-top:6px; }
+    .project-list-arrow { display:none; }
+    .project-list-win { min-height:21px; padding:3px 7px 3px 5px; font-size:8px; }
+    .project-list-win svg { width:12px; height:12px; }
+  }
+  @media (max-width:380px) {
+    .project-list { padding:0 14px; }
+    .project-list-row { grid-template-columns:100px minmax(0,1fr); gap:12px; }
+    .project-list-name { font-size:14px; }
+  }
+  @media (prefers-reduced-motion:reduce) {
+    .project-list-backdrop.open,.project-list-panel { animation:none; }
+    .project-list-tab,.project-list-tab::after,.project-list-arrow,.project-list-row,.project-list-preview { transition:none; }
+    .project-list-row:hover .project-list-arrow { transform:none; }
+  }
 
   .modal-backdrop { position:fixed; inset:0; z-index:100; display:none; align-items:center; justify-content:center;
     background:rgba(4,7,15,0.66); backdrop-filter:blur(10px); padding:24px; }
@@ -288,6 +336,7 @@
 </head>
 <body>
   <div class="bg-wash"></div>
+  <canvas id="lightDroplets" aria-hidden="true"></canvas>
   <canvas id="scene"></canvas>
   <div class="sphere-title" id="sphereTitle">My Projects</div>
   <div class="grain"></div>
@@ -305,7 +354,7 @@
     </div>
     <!-- <span class="eyebrow">Electrical Engineering MEng · King's College London</span> -->
     <h1><span class="grad">Bede Lau</span></h1>
-    <p class="lede">EE student @ KCL. SWE. 9x hackathon winner. Started with computer vision, quantitative finance, multi-agent systems, and ERP data pipelines. Geting into avionics, submersibles, robotics, and photonics.</p>
+    <p class="lede">EE student @ KCL. SWE. 11x hackathon winner. Started with computer vision, quantitative finance, multi-agent systems, and ERP data pipelines. Getting into avionics, submersibles, robotics, and photonics.</p>
   </header>
 
   <section class="info-section" id="work">
@@ -336,25 +385,26 @@
 
   <div class="project-list-backdrop" id="projectListBackdrop" aria-hidden="true">
     <div class="project-list" role="dialog" aria-modal="true" aria-labelledby="projectListTitle">
-      <button class="project-list-close" id="projectListClose" aria-label="Close project list">&times;</button>
-      <h2 id="projectListTitle">Project List</h2>
-      <div class="project-list-items" id="projectListItems">
-        <div class="project-list-col">
-          <div class="project-list-col-head"><span class="project-list-cat">Software</span><span class="project-list-count" id="swCount"></span></div>
-          <div class="project-list-col-items" id="projectListSoftware"></div>
+      <canvas id="projectSpaceField" aria-hidden="true"></canvas>
+      <div class="project-list-header">
+        <h2 id="projectListTitle">Projects</h2>
+        <div class="project-list-tabs" role="tablist" aria-label="Project categories">
+          <button type="button" class="project-list-tab" id="tab-sw" role="tab" aria-selected="true" aria-controls="panel-sw" data-category="sw">Software <span id="swCount"></span></button>
+          <button type="button" class="project-list-tab" id="tab-hw" role="tab" aria-selected="false" aria-controls="panel-hw" tabindex="-1" data-category="hw">Hardware <span id="hwCount"></span></button>
+          <button type="button" class="project-list-tab" id="tab-design" role="tab" aria-selected="false" aria-controls="panel-design" tabindex="-1" data-category="design">Design <span id="designCount"></span></button>
         </div>
-        <div class="project-list-col">
-          <div class="project-list-col-head"><span class="project-list-cat">Hardware</span><span class="project-list-count" id="hwCount"></span></div>
-          <div class="project-list-col-items" id="projectListHardware"></div>
-        </div>
-        <div class="project-list-col">
-          <div class="project-list-col-head"><span class="project-list-cat">Design</span><span class="project-list-count" id="designCount"></span></div>
-          <div class="project-list-col-items" id="projectListDesign"></div>
-        </div>
+        <button type="button" class="project-list-close" id="projectListClose" aria-label="Close project list">&times;</button>
       </div>
-      <div class="project-list-legend">
-        <span class="project-list-win"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9a6 6 0 0 0 12 0V4H6v5Z" stroke="#ffd485" stroke-width="1.8"/><path d="M9 4V2M15 4V2M6 6H3v1a3 3 0 0 0 3 3M18 6h3v1a3 3 0 0 1-3 3M9 21h6M12 15v6" stroke="#ffd485" stroke-width="1.8" stroke-linecap="round"/></svg>Hackathon Win</span>
-        <span>Tagged projects won a hackathon.</span>
+      <div class="project-list-items" id="projectListItems">
+        <div class="project-list-panel" id="panel-sw" role="tabpanel" aria-labelledby="tab-sw">
+          <div id="projectListSoftware"></div>
+        </div>
+        <div class="project-list-panel" id="panel-hw" role="tabpanel" aria-labelledby="tab-hw" hidden>
+          <div id="projectListHardware"></div>
+        </div>
+        <div class="project-list-panel" id="panel-design" role="tabpanel" aria-labelledby="tab-design" hidden>
+          <div id="projectListDesign"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -367,129 +417,131 @@
     </div>
   </div>
 
+  <script src="assets/js/light-droplets.js"></script>
+  <script src="assets/js/project-carousel.js"></script>
   <script>
   const PROJECTS = [
-    { idx:"01", title:"PasarAI: Voice-First Margin Copilot", hue:[205,140,245], win:true,
+    { idx:"01", title:"PasarAI: Voice-First Margin Copilot", summary:"Voice-first margin copilot.", hue:[205,140,245], win:true,
       desc:"A multilingual, voice-first daily margin copilot for Malaysian food businesses. It turns Telegram text, voice, and receipts into a merchant-confirmed ledger, then surfaces traceable gross-margin insights and read-only price or volume scenarios.",
       links:[{label:"Demo Video",url:"https://www.loom.com/share/70c7234b4b104fed9018b8f2cce67773",primary:true},{label:"View repo",url:"https://github.com/bede-lau/PasarAI",primary:false}],
       images:["assets/img/pasarai/pasarai_1.png","assets/img/pasarai/pasarai_2.png","assets/img/pasarai/pasarai_3.png","assets/img/pasarai/pasarai_4.png"],
       icon:'<rect x="6" y="19" width="6" height="9" rx="1.5" fill="none" stroke="#aec6ff" stroke-width="1.8"/><rect x="15" y="13" width="6" height="15" rx="1.5" fill="none" stroke="#aec6ff" stroke-width="1.8"/><rect x="24" y="8" width="6" height="20" rx="1.5" fill="none" stroke="#aec6ff" stroke-width="1.8"/><path d="M6 14 C10 8, 16 8, 18 12" fill="none" stroke="#aec6ff" stroke-width="1.6" stroke-linecap="round"/><path d="M16 9 v3 h3" fill="none" stroke="#aec6ff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>' },
-    { idx:"02", title:"Quantitative Portfolio Allocation Model", hue:[120,160,235],
+    { idx:"02", title:"Quantitative Portfolio Allocation Model", summary:"Factor-based portfolio allocation.", hue:[120,160,235],
       desc:"A quantitative portfolio allocation model leveraging Fama-French factors, K-means clustering, and 15 years of S&P 500 data with technical indicators.",
       links:[{label:"View repo",url:"https://github.com/bede-lau/Algorithmic_Trading_Strategies",primary:true}],
       images:[],
       icon:'<path d="M4 28 L14 16 L20 22 L30 8" fill="none" stroke="#aec6ff" stroke-width="2"/><circle cx="14" cy="16" r="2.5" fill="#aec6ff"/><circle cx="20" cy="22" r="2.5" fill="#aec6ff"/><circle cx="30" cy="8" r="2.5" fill="#aec6ff"/>' },
-    { idx:"03", title:"One-Prompt to Launch a Business", hue:[140,175,240],
+    { idx:"03", title:"One-Prompt to Launch a Business", summary:"A business launched from one prompt.", hue:[140,175,240],
       desc:"A SaaS platform that turns a single prompt into a launched business using a 7-agent AI orchestration system. (Live demo may take ~30 seconds to wake up.)",
       links:[{label:"Live demo",url:"https://olvon-riyf.onrender.com/",primary:true}],
       images:["assets/img/one_prompt_business/business_1.png","assets/img/one_prompt_business/business_2.png"],
       icon:'<circle cx="18" cy="18" r="4" fill="#aec6ff"/><circle cx="6" cy="10" r="2.5" fill="#aec6ff"/><circle cx="30" cy="10" r="2.5" fill="#aec6ff"/><circle cx="6" cy="26" r="2.5" fill="#aec6ff"/><circle cx="30" cy="26" r="2.5" fill="#aec6ff"/><g stroke="#aec6ff" stroke-width="1.4" opacity="0.7"><line x1="14.5" y1="15.5" x2="7.5" y2="11"/><line x1="21.5" y1="15.5" x2="28.5" y2="11"/><line x1="14.5" y1="20.5" x2="7.5" y2="25"/><line x1="21.5" y1="20.5" x2="28.5" y2="25"/></g>' },
-    { idx:"01", title:"Olvon: Virtual Try-On Web App", hue:[160,190,245], cat:"design",
+    { idx:"01", title:"Olvon: Virtual Try-On Web App", summary:"Virtual try-on for the web.", hue:[160,190,245], cat:"design",
       desc:"A virtual try-on web application built alongside a 3D-animated company website under the Olvon brand.",
       links:[{label:"Web app",url:"https://olvon-webapp.vercel.app/",primary:true},{label:"Website",url:"https://olvon.site/",primary:false}],
       images:["assets/img/olvon_webapp/feed_1.png","assets/img/olvon_webapp/dressing_room.png","assets/img/olvon_website/website_1.png","assets/img/olvon_website/website_2.png"],
       icon:'<rect x="11" y="6" width="14" height="24" rx="3" fill="none" stroke="#aec6ff" stroke-width="2"/><circle cx="18" cy="13" r="3" fill="#aec6ff"/><path d="M13 26 C15 21, 21 21, 23 26" fill="none" stroke="#aec6ff" stroke-width="1.6"/>' },
-    { idx:"02", title:"Virtual Try-On Mobile App", hue:[150,180,245], cat:"design",
-      desc:"A mobile e-commerce app centered on virtual try-on, featuring user onboarding flows, secure Google/email authentication, database integration, and an interactive TikTok-style feed.",
-      links:[],
-      images:["assets/img/olvon_mobile/mobile_2.png","assets/img/olvon_mobile/mobile_3.png","assets/img/olvon_mobile/mobile_4.png","assets/img/olvon_mobile/mobile_5.png","assets/img/olvon_mobile/mobile_6.png"],
-      icon:'<rect x="12" y="5" width="12" height="26" rx="3" fill="none" stroke="#aec6ff" stroke-width="2"/><line x1="16" y1="28" x2="20" y2="28" stroke="#aec6ff" stroke-width="2"/><path d="M18 11 l3 4 -3 4 -3 -4 z" fill="#aec6ff"/>' },
-    { idx:"01", title:"Automated Water-Cooling System", hue:[175,200,250], cat:"hw",
+    { idx:"01", title:"Automated Water-Cooling System", summary:"Automated Peltier water cooling.", hue:[175,200,250], cat:"hw",
       desc:"An automated water-cooling system integrating a canister filter, TEC-12706 Peltier module, W1209 thermoelectric controller, and 12V fan assembly for efficient heat dissipation.",
       links:[],
       images:["assets/img/cooler/cooler_1.jpeg","assets/img/cooler/cooler_2.jpeg","assets/img/cooler/cooler_3.jpeg","assets/img/cooler/cooler_4.jpeg"],
       icon:'<circle cx="18" cy="18" r="11" fill="none" stroke="#aec6ff" stroke-width="2"/><g stroke="#aec6ff" stroke-width="2"><line x1="18" y1="18" x2="18" y2="9"/><line x1="18" y1="18" x2="25" y2="22"/><line x1="18" y1="18" x2="12" y2="23"/></g><circle cx="18" cy="18" r="2" fill="#aec6ff"/>' },
-    { idx:"04", title:"SitePilot: Telegram AI Ops Agent", hue:[130,170,245], win:true,
+    { idx:"04", title:"SitePilot: Telegram AI Ops Agent", summary:"Solar operations through Telegram.", hue:[130,170,245], win:true,
       desc:"A Telegram AI operations agent for solar site inspections and procurement. It turns messages into AI-generated inspection reports, invoice drafts, vendor RFQs, quote comparisons, and purchase-order approvals.",
       links:[{label:"Demo Video",url:"https://x.com/bdislau_/status/2068692101286797731",primary:true},{label:"View repo",url:"https://github.com/bede-lau/SitePilot",primary:false}],
       images:["assets/img/sitepilot/sitepilot_1.png","assets/img/sitepilot/sitepilot_2.png","assets/img/sitepilot/sitepilot_3.png","assets/img/sitepilot/sitepilot_4.png","assets/img/sitepilot/sitepilot_5.png"],
       icon:'<rect x="7" y="7" width="22" height="22" rx="5" fill="none" stroke="#aec6ff" stroke-width="2"/><path d="M11 20 L16 15 L20 19 L26 12" fill="none" stroke="#aec6ff" stroke-width="1.8"/><circle cx="12" cy="24" r="1.8" fill="#aec6ff"/><circle cx="18" cy="24" r="1.8" fill="#aec6ff"/><circle cx="24" cy="24" r="1.8" fill="#aec6ff"/>' },
-    { idx:"05", title:"Mini-Doc: Audit-Ready Document Intelligence", hue:[105,160,255],
+    { idx:"05", title:"Mini-Doc: Audit-Ready Document Intelligence", summary:"Document answers with citations.", hue:[105,160,255],
       desc:"A local document intelligence app built with FastAPI, Next.js, and RAG to parse PDFs, answer questions with page-level citations, and generate compliance reports.",
       links:[{label:"Demo video",url:"https://drive.google.com/file/d/18eWRwotbx96IEXOf9whBC4phcTqSm8Wa/view?usp=drive_link",primary:true},{label:"View repo",url:"https://github.com/bede-lau/Mini-Doc",primary:false}],
       images:["assets/img/mini_doc/doc1.png","assets/img/mini_doc/doc2.png","assets/img/mini_doc/doc3.png"],
       icon:'<rect x="9" y="5" width="18" height="26" rx="3" fill="none" stroke="#aec6ff" stroke-width="2"/><path d="M14 12 H22 M14 17 H22 M14 22 H19" fill="none" stroke="#aec6ff" stroke-width="1.7" stroke-linecap="round"/><path d="M19 26 L21.5 28.5 L26 23.5" fill="none" stroke="#aec6ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>' },
-    { idx:"06", title:"AquaBro: Fault-Tolerant Aquaculture Monitoring", hue:[70,190,225],
+    { idx:"06", title:"AquaBro: Fault-Tolerant Aquaculture Monitoring", summary:"Live aquaculture risk monitoring.", hue:[70,190,225],
       desc:"A multi-agent aquaculture monitoring system built with FastAPI, React, and PostgreSQL to validate sensor data, detect water-quality risks, and manage alerts and hardware from a live dashboard.",
       links:[{label:"Demo video",url:"https://drive.google.com/file/d/1f4TTddwHZW1kMrrnafA2QWoeEsFALPfw/view?usp=sharing",primary:true},{label:"View repo",url:"https://github.com/bede-lau/AquaBro",primary:false}],
       images:["assets/img/aquabro/aqua1.png","assets/img/aquabro/aqua2.png","assets/img/aquabro/image.png"],
       icon:'<path d="M5 18 C10 10, 20 9, 27 16 C29 18, 31 18, 33 15 C32 21, 29 23, 26 21 C18 27, 10 25, 5 18 Z" fill="none" stroke="#aec6ff" stroke-width="1.8" stroke-linejoin="round"/><circle cx="13" cy="16" r="1.6" fill="#aec6ff"/><path d="M18 13 C20 16, 20 20, 18 23" fill="none" stroke="#aec6ff" stroke-width="1.4"/>' },
-    { idx:"02", title:"Aura Desk Lamp", hue:[190,120,245], cat:"hw",
+    { idx:"02", title:"Aura Desk Lamp", summary:"Ambient light, powered by ESP32.", hue:[190,120,245], cat:"hw",
       desc:"An ESP32-powered desk lamp with three button-controlled modes: LDR Light Mode shifts between purple and amber based on room brightness, Manual Color Mode cycles through fixed colors, and Breathing Mode creates a slow pulsing animation.",
       links:[{label:"Demo video",url:"https://www.instagram.com/p/DaqFlJ5KTko/",primary:true}],
       images:["assets/img/aura_desk_lamp/aura1.png","assets/img/aura_desk_lamp/aura2.jpeg","assets/img/aura_desk_lamp/aura3.jpeg"],
       icon:'<path d="M12 15 H24 L28 25 H8 Z" fill="none" stroke="#aec6ff" stroke-width="1.8" stroke-linejoin="round"/><path d="M18 15 V8 M13 8 H23" fill="none" stroke="#aec6ff" stroke-width="2" stroke-linecap="round"/><path d="M13 28 H23" fill="none" stroke="#aec6ff" stroke-width="2" stroke-linecap="round"/><path d="M12 26 C14 22, 22 22, 24 26" fill="none" stroke="#aec6ff" stroke-width="1.4" opacity="0.8"/>' },
-    { idx:"07", title:"RockedIn", hue:[175,145,235], win:true,
+    { idx:"07", title:"RockedIn", summary:"LinkedIn for rocks.", hue:[175,145,235], win:true,
       desc:"LinkedIn for rocks.",
       links:[{label:"Live demo",url:"https://rockedin.onrender.com/",primary:true},{label:"View repo",url:"https://github.com/bede-lau/rockedin",primary:false}],
       images:["assets/img/rockedin/rockedin_1.png","assets/img/rockedin/rockedin_2.png","assets/img/rockedin/rockedin_3.png"],
       icon:'<path d="M9 27 L6 17 L13 7 L25 8 L31 18 L26 28 Z" fill="none" stroke="#aec6ff" stroke-width="1.8" stroke-linejoin="round"/><path d="M13 7 L17 18 L31 18 M6 17 L17 18 L26 28 M25 8 L17 18" fill="none" stroke="#aec6ff" stroke-width="1.5" stroke-linejoin="round"/>' },
-    { idx:"08", title:"AccessPath: Autonomous Critical-Journey QA Workspace", hue:[80,190,225],
+    { idx:"08", title:"AccessPath: Autonomous Critical-Journey QA Workspace", summary:"Autonomous critical-journey testing.", hue:[80,190,225],
       desc:"An autonomous critical-journey QA workspace for web applications, with accessibility as its flagship specialist. It connects a staging URL, source snapshot, and plain-English objective into a Proof Thread of observed behavior, scoped repair, and verified evidence.",
       links:[{label:"Demo video",url:"https://x.com/bdislau_/status/2083934108426592286?s=20",primary:true},{label:"View repo",url:"https://github.com/bede-lau/AccessPath",primary:false}],
       images:["assets/img/accesspath/accesspath_1.png","assets/img/accesspath/accesspath_2.png","assets/img/accesspath/accesspath_3.png","assets/img/accesspath/accesspath_4.png"],
       icon:'<path d="M8 9 H28 M8 18 H21 M8 27 H17" fill="none" stroke="#aec6ff" stroke-width="1.9" stroke-linecap="round"/><circle cx="27" cy="24" r="5" fill="none" stroke="#aec6ff" stroke-width="1.8"/><path d="M23.5 24 L26 26.5 L30.5 21.5" fill="none" stroke="#aec6ff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>' },
-    { idx:"03", title:"Jarvis V1", hue:[185,165,235], cat:"hw",
+    { idx:"03", title:"Jarvis V1", summary:"A personal desktop assistant.", hue:[185,165,235], cat:"hw",
       desc:"An ESP32-based voice companion with an animated OLED face, microphone, speaker, wake word, privacy controls, memory, weather, timers, and volume commands.",
       links:[{label:"Demo video",url:"https://www.instagram.com/p/Dbe76-XKOJo/",primary:true}],
       images:["assets/img/jarvis_v1/jarvis_v1_pic.jpeg"],
       icon:'<rect x="7" y="9" width="22" height="19" rx="5" fill="none" stroke="#aec6ff" stroke-width="1.8"/><circle cx="14" cy="18" r="1.7" fill="#aec6ff"/><circle cx="22" cy="18" r="1.7" fill="#aec6ff"/><path d="M13 23 H23 M18 9 V5 M14 5 H22" fill="none" stroke="#aec6ff" stroke-width="1.7" stroke-linecap="round"/>' },
-    { idx:"09", title:"CareAxiom: Medical Desert Planner", hue:[115,195,215], win:true,
+    { idx:"09", title:"CareAxiom: Medical Desert Planner", summary:"Planning care for underserved areas.", hue:[115,195,215], win:true,
       desc:"An evidence-grounded Medical Desert Planner for identifying underserved healthcare areas and guiding intervention decisions.",
       links:[{label:"Demo video",url:"https://www.loom.com/share/3ae835153ef94de6b92f9c75393cd331",primary:true},{label:"View repo",url:"https://github.com/bede-lau/CareAxiom",primary:false}],
       images:["assets/img/careaxiom/careaxiom_1.png","assets/img/careaxiom/careaxiom_2.png"],
       icon:'<path d="M18 31 C24 24 28 20 28 14 A10 10 0 1 0 8 14 C8 20 12 24 18 31 Z" fill="none" stroke="#aec6ff" stroke-width="1.8" stroke-linejoin="round"/><path d="M18 10 V18 M14 14 H22" fill="none" stroke="#aec6ff" stroke-width="1.8" stroke-linecap="round"/>' },
-    { idx:"03", title:"ThinkOrca: Launch & Strategy Simulator", hue:[140,185,250], cat:"design",
+    { idx:"02", title:"ThinkOrca: Launch & Strategy Simulator", summary:"Simulate a launch before publishing.", hue:[140,185,250], cat:"design",
       desc:"A launch simulation and GTM workspace that indexes brand voice, tests content against synthetic audience personas to diagnose positioning gaps, and automates multi-platform publishing.",
       links:[{label:"Website",url:"https://thinkorca.site/",primary:true}],
       images:["assets/img/thinkorca/thinkorca_1.png","assets/img/thinkorca/thinkorca_2.png","assets/img/thinkorca/thinkorca_3.png"],
       icon:'<circle cx="18" cy="18" r="11" fill="none" stroke="#aec6ff" stroke-width="1.8"/><path d="M12 18 C12 14.5, 14.5 12, 18 12 C21.5 12, 24 14.5, 24 18 C24 21.5, 21.5 24, 18 24" fill="none" stroke="#aec6ff" stroke-width="1.8" stroke-linecap="round"/><circle cx="18" cy="18" r="2" fill="#aec6ff"/><path d="M18 7 V11 M18 25 V29 M7 18 H11 M25 18 H29" stroke="#aec6ff" stroke-width="1.6" stroke-linecap="round"/>' },
-    { idx:"04", title:"Autosubmissionproduct", hue:[95,150,245], cat:"design",
+    { idx:"03", title:"Autosubmissionproduct", summary:"One link, 50 directory submissions.", hue:[95,150,245], cat:"design",
       desc:"A done-for-you directory submission platform that lists products across 50 startup and SaaS directories with a single link, providing a live tracking dashboard with timestamped proof for every submission.",
       links:[{label:"Website",url:"https://autosubmitproduct.com/",primary:true}],
       images:["assets/img/autosubmitproduct/autosubmitproduct_1.png","assets/img/autosubmitproduct/autosubmitproduct_2.png","assets/img/autosubmitproduct/autosubmitproduct_3.png"],
       icon:'<rect x="7" y="6" width="22" height="24" rx="4" fill="none" stroke="#aec6ff" stroke-width="1.8"/><path d="M12 12 H24 M12 17 H24 M12 22 H19" stroke="#aec6ff" stroke-width="1.6" stroke-linecap="round"/><circle cx="23" cy="22" r="3.5" fill="none" stroke="#aec6ff" stroke-width="1.6"/><path d="M21.5 22 L22.5 23 L24.5 21" fill="none" stroke="#aec6ff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>' },
-    { idx:"04", title:"Dum-E", hue:[170,140,245], cat:"hw",
+    { idx:"04", title:"Dum-E", summary:"A joystick-controlled robotic arm.", hue:[170,140,245], cat:"hw",
       desc:"A joystick-controlled robotic arm built with an ESP32 DevKit, two analog joysticks, and four SG90 servos. The servos control the arm’s base rotation, shoulder, elbow, and clamp, allowing the user to move the arm and open or close the gripper manually.",
       links:[{label:"Demo video",url:"https://www.instagram.com/p/Dc1Sy42KIjM/",primary:true}],
       images:["assets/img/dum_e/dum_e_1.jpeg","assets/img/dum_e/dum_e_2.jpeg","assets/img/dum_e/dum_e_3.jpeg"],
       icon:'<path d="M7 27 H29 M18 27 V20 M14 20 H22" fill="none" stroke="#aec6ff" stroke-width="2" stroke-linecap="round"/><circle cx="18" cy="17" r="3" fill="none" stroke="#aec6ff" stroke-width="1.8"/><path d="M18 14 L12 8 L8 12" fill="none" stroke="#aec6ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 8 L22 5 L26 8" fill="none" stroke="#aec6ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M26 8 L24 12 M28 10 L27 13" fill="none" stroke="#aec6ff" stroke-width="1.6" stroke-linecap="round"/>' },
-    { idx:"05", title:"Infrared Sensor Car", hue:[150,165,240], cat:"hw",
+    { idx:"05", title:"Infrared Sensor Car", summary:"An infrared line-following robot.", hue:[150,165,240], cat:"hw",
       desc:"A Raspberry Pi Pico–controlled two-wheel robot that uses two IR sensors to follow black tape, correct its direction, and execute programmed 90° left and right turns.",
       links:[{label:"Demo video",url:"https://www.instagram.com/p/DdcyAwyk8Wf/",primary:true}],
       images:["assets/img/infrared_sensor_car/infrared_car_1.jpeg","assets/img/infrared_sensor_car/infrared_car_2.jpeg","assets/img/infrared_sensor_car/infrared_car_3.jpeg","assets/img/infrared_sensor_car/infrared_car_4.jpeg"],
       icon:'<rect x="8" y="10" width="20" height="13" rx="3" fill="none" stroke="#aec6ff" stroke-width="1.8"/><circle cx="12" cy="24" r="3" fill="none" stroke="#aec6ff" stroke-width="1.8"/><circle cx="24" cy="24" r="3" fill="none" stroke="#aec6ff" stroke-width="1.8"/><path d="M13 10 V6 M23 10 V6" fill="none" stroke="#aec6ff" stroke-width="1.8" stroke-linecap="round"/><circle cx="13" cy="5" r="1.5" fill="#aec6ff"/><circle cx="23" cy="5" r="1.5" fill="#aec6ff"/><path d="M15 16 H21" stroke="#aec6ff" stroke-width="1.6" stroke-linecap="round"/>' },
-    { idx:"05", title:"Matter.", hue:[125,185,250], cat:"design", win:true,
+    { idx:"04", title:"Matter.", summary:"Explore metamaterials in 3D.", hue:[125,185,250], cat:"design", win:true,
       desc:"Matter Lab is an interactive 3D studio for exploring how metamaterials are designed, built, and used in real-world applications.",
-      links:[{label:"Demo video",url:"https://drive.google.com/file/d/1xZW_jI9nOOsrNuoVA2XPthWZJG-qCea_/view?usp=sharing",primary:true},{label:"Live demo",url:"https://matter-lab.bedelau-2025.chatgpt.site/",primary:false}],
+      links:[{label:"Demo video",url:"https://drive.google.com/file/d/1xZW_jI9nOOsrNuoVA2XPthWZJG-qCea_/view?usp=sharing",primary:true},{label:"Live demo",url:"https://matter-lab.bedelau-2025.chatgpt.site/",primary:false},{label:"View repo",url:"https://github.com/bede-lau/matter",primary:false}],
       video:"assets/img/matter/matter_demo.mp4",
       images:[],
       icon:'<rect x="7" y="7" width="13" height="13" rx="2" fill="none" stroke="#aec6ff" stroke-width="1.8"/><rect x="16" y="16" width="13" height="13" rx="2" fill="none" stroke="#aec6ff" stroke-width="1.8"/><line x1="14" y1="20" x2="20" y2="14" stroke="#aec6ff" stroke-width="1.6" stroke-dasharray="2 2"/><line x1="7" y1="7" x2="16" y2="16" stroke="#aec6ff" stroke-width="1.6"/><line x1="20" y1="7" x2="29" y2="16" stroke="#aec6ff" stroke-width="1.6"/><line x1="7" y1="20" x2="16" y2="29" stroke="#aec6ff" stroke-width="1.6"/><line x1="20" y1="20" x2="29" y2="29" stroke="#aec6ff" stroke-width="1.6"/>' },
-    { idx:"10", title:"CanvasCraft", hue:[100,170,245], win:true,
+    { idx:"10", title:"CanvasCraft", summary:"Sketches into interactive prototypes.", hue:[100,170,245], win:true,
       desc:"CanvasCraft is an AI-assisted product-prototyping studio that transforms rough canvas sketches, notes, and wireframes into three distinct, live, and interactive frontend prototype branches.",
-      links:[{label:"Demo video",url:"https://drive.google.com/file/d/1td3Ll6jzmtjNgJOszk-uiGFnJSDL8Mk3/view?usp=sharing",primary:true}],
+      links:[{label:"Demo video",url:"https://drive.google.com/file/d/1td3Ll6jzmtjNgJOszk-uiGFnJSDL8Mk3/view?usp=sharing",primary:true},{label:"View repo",url:"https://github.com/bede-lau/CanvasCraft",primary:false}],
       images:["assets/img/canvascraft/canvascraft_1.jpeg","assets/img/canvascraft/canvascraft_2.jpeg","assets/img/canvascraft/canvascraft_3.jpeg"],
       icon:'<rect x="5" y="6" width="13" height="13" rx="2.5" fill="none" stroke="#aec6ff" stroke-width="1.8"/><path d="M8 11 H15 M8 14 H12" stroke="#aec6ff" stroke-width="1.6" stroke-linecap="round"/><path d="M18 12.5 H23 C25 12.5 25 8 27 8 H29 M23 12.5 H29 M23 12.5 C25 12.5 25 17 27 17 H29" fill="none" stroke="#aec6ff" stroke-width="1.7" stroke-linecap="round"/><circle cx="29" cy="8" r="1.5" fill="#aec6ff"/><circle cx="29" cy="12.5" r="1.5" fill="#aec6ff"/><circle cx="29" cy="17" r="1.5" fill="#aec6ff"/>' },
-    { idx:"11", title:"Project106", hue:[125,175,240], win:true,
+    { idx:"11", title:"Project106", summary:"Explore housing feasibility in London.", hue:[125,175,240], win:true,
       desc:"A London housing feasibility tool that screens proposed schemes for planning approval and Section 106 outcomes using project details and site context.",
       links:[{label:"Demo video",url:"https://www.loom.com/share/5cb75915249f4ad8b1064fe97d11ca4f",primary:true},{label:"Live demo",url:"https://proposal106-submission.vercel.app/",primary:false},{label:"View repo",url:"https://github.com/bede-lau/affordablehousing",primary:false}],
       images:["assets/img/project106/project106_1.png","assets/img/project106/project106_2.png","assets/img/project106/project106_3.png"],
       icon:'<path d="M7 29 V15 L16 9 V29 M16 29 V6 H29 V29 Z" fill="none" stroke="#aec6ff" stroke-width="1.8" stroke-linejoin="round"/><path d="M11 19 H12 M11 23 H12 M21 11 H24 M21 16 H24 M21 21 H24 M12 29 V25 H16" fill="none" stroke="#aec6ff" stroke-width="1.6" stroke-linecap="round"/>' },
-    { idx:"06", title:"Fishy", hue:[75,185,220], cat:"design",
+    { idx:"05", title:"Fishy", summary:"Design editable 3D aquascapes.", hue:[75,185,220], cat:"design",
       desc:"A visual aquascape studio that turns aquarium references into editable 3D layouts, with an interactive Three.js editor and Blender export.",
       links:[{label:"Demo video",url:"https://drive.google.com/file/d/1AmrI8BghdZkgqzCr3zFUzQXc9Pv1_VfF/view?usp=drive_link",primary:true},{label:"Live demo",url:"https://fishy-aquascape-studio.bedelau-2025.chatgpt.site/",primary:false},{label:"View repo",url:"https://github.com/jabuar-exe/fishy",primary:false}],
       images:["assets/img/fishy/fishy_1.png","assets/img/fishy/fishy_2.png","assets/img/fishy/fishy_3.png"],
       icon:'<path d="M5 18 C10 11, 20 11, 27 18 C20 25, 10 25, 5 18 Z" fill="none" stroke="#aec6ff" stroke-width="1.8" stroke-linejoin="round"/><path d="M27 18 L33 13 V23 Z" fill="none" stroke="#aec6ff" stroke-width="1.8" stroke-linejoin="round"/><circle cx="12" cy="17" r="1.4" fill="#aec6ff"/>' },
-    { idx:"07", title:"Chrono", hue:[190,150,245], cat:"design", win:true,
+    { idx:"06", title:"Chrono", summary:"Grow interactive quantum organisms.", hue:[190,150,245], cat:"design", win:true,
       desc:"A browser-based quantum organism studio that grows interactive 3D specimens through chained image, evolution, and custom-audio stages.",
       links:[{label:"Demo video",url:"https://drive.google.com/file/d/1uHQx4QbwbKx8fav6-tA2hX6BNf9JHHwM/view?usp=sharing",primary:true},{label:"Live demo",url:"https://chrono.bedelau59.chatgpt.site/",primary:false},{label:"View repo",url:"https://github.com/bede-lau/chrono",primary:false}],
       images:["assets/img/chrono/chrono_2.png","assets/img/chrono/chrono_3.png","assets/img/chrono/chrono_1.png"],
       icon:'<circle cx="18" cy="18" r="10.5" fill="none" stroke="#aec6ff" stroke-width="1.8"/><ellipse cx="18" cy="18" rx="4.5" ry="10.5" fill="none" stroke="#aec6ff" stroke-width="1.5"/><path d="M18 12 V18 L23 21" fill="none" stroke="#aec6ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>' },
-    { idx:"12", title:"Cottrell", hue:[142,110,250],
+    { idx:"12", title:"Cottrell", summary:"Battery microscopy with traceable insights.", hue:[142,110,250],
       desc:"A materials-science workspace for inspecting battery-electrode microscopy images through segmentation, batch classification, human review, and stakeholder traceability.",
-      links:[{label:"Live demo",url:"https://cottrell-material-intelligence.bedelau59.chatgpt.site/",primary:true}],
+      links:[{label:"Live demo",url:"https://cottrell-material-intelligence.bedelau59.chatgpt.site/",primary:true},{label:"View repo",url:"https://github.com/Cottrell-LockedIn/AIxScience",primary:false}],
       images:["assets/img/cottrell/cottrell-live-analysis.png","assets/img/cottrell/cottrell-segmentation.png","assets/img/cottrell/cottrell-stakeholders.png","assets/img/cottrell/cottrell-model-accuracy.png"],
       icon:'<path d="M18 4 L29 10 V26 L18 32 L7 26 V10 Z" fill="none" stroke="#aec6ff" stroke-width="2" stroke-linejoin="round"/><circle cx="14" cy="14" r="1.4" fill="#aec6ff"/><circle cx="22" cy="14" r="1.4" fill="#aec6ff"/><circle cx="18" cy="21" r="1.4" fill="#aec6ff"/><circle cx="13" cy="25" r="1.2" fill="#aec6ff"/><circle cx="23" cy="25" r="1.2" fill="#aec6ff"/>' },
+    { idx:"13", title:"Morpheus", summary:"Room scans into robot-ready worlds.", hue:[105,200,180], win:true,
+      desc:"A robotics workspace that turns room scans into 3D environments, matches objects to simulation assets, and compares planned robot tasks.",
+      links:[{label:"Demo video",url:"https://www.loom.com/share/2dd768629b574ca18a298bec5986ecfe",primary:true},{label:"View repo",url:"https://github.com/bede-lau/Morpheus",primary:false}],
+      images:["assets/img/morpheus/01-scan.jpg","assets/img/morpheus/03-luna.jpg","assets/img/morpheus/05-carry.jpg"],
+      icon:'<rect x="7" y="9" width="22" height="18" rx="4" fill="none" stroke="#aec6ff" stroke-width="1.8"/><circle cx="14" cy="18" r="1.8" fill="#aec6ff"/><circle cx="22" cy="18" r="1.8" fill="#aec6ff"/><path d="M14 23 H22 M18 9 V5 M14 5 H22" fill="none" stroke="#aec6ff" stroke-width="1.7" stroke-linecap="round"/>' },
   ];
 
   const reduce = matchMedia('(prefers-reduced-motion:reduce)').matches;
@@ -680,32 +732,100 @@
   const projectListBackdrop = document.getElementById('projectListBackdrop');
   const projectListClose = document.getElementById('projectListClose');
   const projectListItems = document.getElementById('projectListItems');
-  // Projects display section-local indexes in the same order as their category list.
-  // data-project-index keeps the original PROJECTS index so the correct project opens.
-  const renderCat = (cat) => {
-    const projects = PROJECTS.map((p, index) => ({ p, index }))
-      .filter(x => (x.p.cat || 'sw') === cat);
-    return projects.map(x => `<button type="button" data-project-index="${x.index}"${x.p.win ? ' class="win"' : ''}><span class="project-list-index">${String(x.p.idx).padStart(2, '0')}</span><span>${x.p.title}</span>${x.p.win ? '<span class="project-list-trophy" title="Hackathon Win"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9a6 6 0 0 0 12 0V4H6v5Z" stroke="currentColor" stroke-width="1.8"/><path d="M9 4V2M15 4V2M6 6H3v1a3 3 0 0 0 3 3M18 6h3v1a3 3 0 0 1-3 3M9 21h6M12 15v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>' : ''}</button>`).join('');
-  };
-  const swList = PROJECTS.filter(p => (p.cat || 'sw') === 'sw');
-  const hwList = PROJECTS.filter(p => p.cat === 'hw');
-  const designList = PROJECTS.filter(p => p.cat === 'design');
-  document.getElementById('projectListSoftware').innerHTML = renderCat('sw');
-  document.getElementById('projectListHardware').innerHTML = renderCat('hw');
-  document.getElementById('projectListDesign').innerHTML = renderCat('design');
-  document.getElementById('swCount').textContent = String(swList.length).padStart(2, '0') + ' projects';
-  document.getElementById('hwCount').textContent = String(hwList.length).padStart(2, '0') + ' projects';
-  document.getElementById('designCount').textContent = String(designList.length).padStart(2, '0') + ' projects';
-  function openProjectList() { projectListBackdrop.classList.add('open'); projectListBackdrop.setAttribute('aria-hidden','false'); }
-  function closeProjectList() { projectListBackdrop.classList.remove('open'); projectListBackdrop.setAttribute('aria-hidden','true'); }
-  projectListButton.addEventListener('click', openProjectList);
-  projectListClose.addEventListener('click', closeProjectList);
+  const projectTabs = [...document.querySelectorAll('.project-list-tab')];
+  const trophy = '<span class="project-list-win project-list-trophy" title="Hackathon win"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9a6 6 0 0 0 12 0V4H6v5Z" stroke="currentColor" stroke-width="1.8"/><path d="M6 6H3v1a3 3 0 0 0 3 3M18 6h3v1a3 3 0 0 1-3 3M9 21h6M12 15v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>Hackathon win</span></span>';
+  const escapeHTML = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  let lastProjectRow = null;
+  let projectCarousel = null;
+  // Original PROJECTS indexes are retained so a filtered row opens the right details.
+  function renderCat(cat) {
+    return PROJECTS.map((p, index) => ({p, index})).filter(({p}) => (p.cat || 'sw') === cat).map(({p, index}) => {
+      const preview = p.images.length
+        ? `<img src="${escapeHTML(p.images[0])}" alt="" loading="lazy" decoding="async">`
+        : p.video ? `<video src="${escapeHTML(typeof p.video === 'string' ? p.video : p.video.src)}#t=0.1" muted playsinline preload="metadata" aria-hidden="true"></video>`
+        : `<svg viewBox="0 0 36 36" aria-hidden="true">${p.icon}</svg>`;
+      return `<button type="button" class="project-list-row" data-project-index="${index}" aria-label="${escapeHTML(p.title)}${p.win ? ', Hackathon winner' : ''}">
+        <span class="project-list-preview" aria-hidden="true">${preview}</span>
+        <span class="project-list-copy"><span class="project-list-index">${escapeHTML(p.idx)}</span><span class="project-list-titleline"><span class="project-list-name">${escapeHTML(p.title.split(':')[0])}</span>${p.win ? trophy : ''}</span><span class="project-list-summary">${escapeHTML(p.summary)}</span></span>
+        <span class="project-list-arrow" aria-hidden="true">↗</span></button>`;
+    }).join('');
+  }
+  for (const [cat, name, listId, countId] of [
+    ['sw','Software','projectListSoftware','swCount'], ['hw','Hardware','projectListHardware','hwCount'], ['design','Design','projectListDesign','designCount']
+  ]) {
+    const count = PROJECTS.filter(p => (p.cat || 'sw') === cat).length;
+    document.getElementById(listId).innerHTML = renderCat(cat);
+    document.getElementById(countId).textContent = count;
+  }
+  function selectProjectCategory(cat) {
+    projectCarousel?.destroy();
+    projectCarousel = null;
+    lastProjectRow = null;
+    // Hide the previous panel synchronously before revealing the next one.
+    document.querySelectorAll('.project-list-panel').forEach(panel => { panel.hidden = true; });
+    projectTabs.forEach(tab => {
+      const selected = tab.dataset.category === cat;
+      tab.setAttribute('aria-selected', String(selected));
+      tab.tabIndex = selected ? 0 : -1;
+    });
+    document.getElementById('panel-' + cat).hidden = false;
+    projectListItems.scrollTop = 0;
+    const host = document.getElementById({sw:'projectListSoftware',hw:'projectListHardware',design:'projectListDesign'}[cat]);
+    if (typeof window.createProjectCarousel === 'function') {
+      const projects = PROJECTS.map((project, originalIndex) => ({...project, originalIndex}))
+        .filter(project => (project.cat || 'sw') === cat);
+      projectCarousel = window.createProjectCarousel(host, projects, {
+        onSelect: project => {
+          lastProjectRow = host.querySelector('[data-carousel-open]') || projectTabs.find(tab => tab.dataset.category === cat);
+          closeProjectList(false);
+          openModal(PROJECTS[project.originalIndex], true);
+          document.getElementById('close').focus();
+        }
+      });
+    } else { host.innerHTML = renderCat(cat); }
+  }
+  projectTabs.forEach((tab, index) => {
+    tab.addEventListener('click', () => selectProjectCategory(tab.dataset.category));
+    tab.addEventListener('keydown', e => {
+      let next;
+      if (e.key === 'ArrowRight') next = (index + 1) % projectTabs.length;
+      if (e.key === 'ArrowLeft') next = (index + projectTabs.length - 1) % projectTabs.length;
+      if (e.key === 'Home') next = 0;
+      if (e.key === 'End') next = projectTabs.length - 1;
+      if (next === undefined) return;
+      e.preventDefault(); e.stopPropagation();
+      selectProjectCategory(projectTabs[next].dataset.category);
+      projectTabs[next].focus();
+    });
+  });
+  function openProjectList(reset = true) {
+    projectListBackdrop.classList.add('open'); projectListBackdrop.setAttribute('aria-hidden','false');
+    if (reset) { selectProjectCategory('sw'); lastProjectRow = null; }
+    projectCarousel?.resume();
+    (lastProjectRow || projectTabs.find(tab => tab.getAttribute('aria-selected') === 'true')).focus();
+  }
+  function closeProjectList(restoreFocus = true) {
+    projectCarousel?.pause();
+    projectListBackdrop.classList.remove('open'); projectListBackdrop.setAttribute('aria-hidden','true');
+    if (restoreFocus) projectListButton.focus();
+  }
+  projectListButton.addEventListener('click', () => openProjectList());
+  projectListClose.addEventListener('click', () => closeProjectList());
   projectListBackdrop.addEventListener('click', e => { if (e.target === projectListBackdrop) closeProjectList(); });
+  projectListBackdrop.addEventListener('keydown', e => {
+    if (e.key !== 'Tab') return;
+    const controls = [...projectListBackdrop.querySelectorAll('button')].filter(button => button.tabIndex >= 0 && !button.closest('[hidden]'));
+    const first = controls[0], last = controls[controls.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  });
   projectListItems.addEventListener('click', e => {
-    const item = e.target.closest('[data-project-index]');
+    const item = e.target.closest('.project-list-row[data-project-index]');
     if (!item) return;
-    closeProjectList();
+    lastProjectRow = item;
+    closeProjectList(false);
     openModal(PROJECTS[+item.dataset.projectIndex], true);
+    document.getElementById('close').focus();
   });
 
   const backdrop = document.getElementById('backdrop'), modal = document.getElementById('modal'), cover = document.getElementById('cover'), mbody = document.getElementById('mbody');
@@ -1054,7 +1174,7 @@
     modal.classList.remove('text-only');
     activeProject = null;
     activeImageIndex = 0;
-    if (modalFromList) { modalFromList = false; openProjectList(); }
+    if (modalFromList) { modalFromList = false; openProjectList(false); }
   }
 
   function stepModalMedia(delta) {
