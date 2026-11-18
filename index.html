@@ -415,7 +415,7 @@
   <script src="assets/js/project-carousel.js"></script>
   <script>
   const PROJECTS = [
-    { idx:"01", title:"PasarAI: Voice-First Margin Copilot", summary:"Voice-first margin copilot.", hue:[205,140,245], award:{ result:"Overall Champion", event:"Codex Community Hackathon Kuala Lumpur 2026" },
+    { idx:"01", title:"PasarAI: Voice-First Margin Copilot", summary:"Voice-first margin copilot.", hue:[205,140,245], award:{ result:"Overall Champion", event:"Codex Community Hackathon Kuala Lumpur 2026", logo:"pasarai.svg" },
       desc:"A multilingual, voice-first daily margin copilot for Malaysian food businesses. It turns Telegram text, voice, and receipts into a merchant-confirmed ledger, then surfaces traceable gross-margin insights and read-only price or volume scenarios.",
       links:[{label:"Demo Video",url:"https://www.loom.com/share/70c7234b4b104fed9018b8f2cce67773",primary:true},{label:"View repo",url:"https://github.com/bede-lau/PasarAI",primary:false}],
       images:["assets/img/pasarai/pasarai_1.png","assets/img/pasarai/pasarai_2.png","assets/img/pasarai/pasarai_3.png","assets/img/pasarai/pasarai_4.png"],
@@ -475,7 +475,7 @@
       links:[{label:"Demo video",url:"https://www.instagram.com/p/Dbe76-XKOJo/",primary:true}],
       images:["assets/img/jarvis_v1/jarvis_v1_pic.jpeg"],
       icon:'<rect x="7" y="9" width="22" height="19" rx="5" fill="none" stroke="#aec6ff" stroke-width="1.8"/><circle cx="14" cy="18" r="1.7" fill="#aec6ff"/><circle cx="22" cy="18" r="1.7" fill="#aec6ff"/><path d="M13 23 H23 M18 9 V5 M14 5 H22" fill="none" stroke="#aec6ff" stroke-width="1.7" stroke-linecap="round"/>' },
-    { idx:"09", title:"CareAxiom: Medical Desert Planner", summary:"Planning care for underserved areas.", hue:[115,195,215], award:{ result:"3rd Place · Databricks Challenge", event:"6th Hack-Nation Global AI Hackathon" },
+    { idx:"09", title:"CareAxiom: Medical Desert Planner", summary:"Planning care for underserved areas.", hue:[115,195,215], award:{ result:"3rd Place · Databricks Challenge", event:"6th Hack-Nation Global AI Hackathon", logo:"careaxiom.png" },
       desc:"An evidence-grounded Medical Desert Planner for identifying underserved healthcare areas and guiding intervention decisions.",
       links:[{label:"Demo video",url:"https://www.loom.com/share/3ae835153ef94de6b92f9c75393cd331",primary:true},{label:"View repo",url:"https://github.com/bede-lau/CareAxiom",primary:false}],
       images:["assets/img/careaxiom/careaxiom_1.png","assets/img/careaxiom/careaxiom_2.png"],
@@ -511,7 +511,7 @@
       links:[{label:"Demo video",url:"https://drive.google.com/file/d/1td3Ll6jzmtjNgJOszk-uiGFnJSDL8Mk3/view?usp=sharing",primary:true},{label:"View repo",url:"https://github.com/bede-lau/CanvasCraft",primary:false}],
       images:["assets/img/canvascraft/canvascraft_1.jpeg","assets/img/canvascraft/canvascraft_2.jpeg","assets/img/canvascraft/canvascraft_3.jpeg"],
       icon:'<rect x="5" y="6" width="13" height="13" rx="2.5" fill="none" stroke="#aec6ff" stroke-width="1.8"/><path d="M8 11 H15 M8 14 H12" stroke="#aec6ff" stroke-width="1.6" stroke-linecap="round"/><path d="M18 12.5 H23 C25 12.5 25 8 27 8 H29 M23 12.5 H29 M23 12.5 C25 12.5 25 17 27 17 H29" fill="none" stroke="#aec6ff" stroke-width="1.7" stroke-linecap="round"/><circle cx="29" cy="8" r="1.5" fill="#aec6ff"/><circle cx="29" cy="12.5" r="1.5" fill="#aec6ff"/><circle cx="29" cy="17" r="1.5" fill="#aec6ff"/>' },
-    { idx:"11", title:"Project106", summary:"Explore housing feasibility in London.", hue:[125,175,240], award:{ result:"2nd Place", event:"London House Data Hackathon" },
+    { idx:"11", title:"Project106", summary:"Explore housing feasibility in London.", hue:[125,175,240], award:{ result:"2nd Place", event:"London House Data Hackathon", logo:"project106.svg" },
       desc:"A London housing feasibility tool that screens proposed schemes for planning approval and Section 106 outcomes using project details and site context.",
       links:[{label:"Demo video",url:"https://www.loom.com/share/5cb75915249f4ad8b1064fe97d11ca4f",primary:true},{label:"Live demo",url:"https://proposal106-submission.vercel.app/",primary:false},{label:"View repo",url:"https://github.com/bede-lau/affordablehousing",primary:false}],
       images:["assets/img/project106/project106_1.png","assets/img/project106/project106_2.png","assets/img/project106/project106_3.png"],
@@ -541,7 +541,8 @@
       award:{ result:"3rd Place", event:"VAST Data Builders Challenge London", logo:"scene2real.svg" },
       desc:"A prototype that turns warehouse-fire footage into operator-reviewed incident evidence, rehearses a robot response in MuJoCo, and records the outcome in an incident worksheet.",
       links:[{label:"View repo",url:"https://github.com/bede-lau/Scene2Real",primary:true}],
-      images:["assets/img/scene2real/overview.png","assets/img/scene2real/worksheet.png"],
+      images:["assets/img/scene2real/g1-warehouse-fire.png","assets/img/scene2real/g1-side-view.png","assets/img/scene2real/worksheet.png"],
+      imageAlt:["Unitree G1 holds an extinguisher beside a simulated warehouse fire","Side view of the Unitree G1 and the burning target in the browser rehearsal","Scene2Real incident worksheet"],
       icon:'<path d="M6 13V6h7m10 0h7v7m0 10v7h-7m-10 0H6v-7m7-8 5-3 5 3v6l-5 3-5-3z" fill="none" stroke="#aec6ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>' },
   ];
 
@@ -1135,7 +1136,9 @@
       cover.appendChild(prev); cover.appendChild(next);
     }
     const img = new Image();
-    img.id = 'coverImg'; img.alt = d.title + ' preview'; img.src = src;
+    img.id = 'coverImg';
+    img.alt = d.imageAlt?.[d.images.indexOf(src)] || d.title + ' preview';
+    img.src = src;
     cover.appendChild(img);
     updateMediaSelection();
   }

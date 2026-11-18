@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 38 38">
+  <!-- PasarAI BrandMark uses Lucide ShoppingBasket.
+ISC License
+
+Copyright (c) 2026 Lucide Icons and Contributors
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+  -->
+  <circle cx="19" cy="19" r="19" fill="oklch(0.42 0.14 28)"/>
+  <g transform="translate(9.5 9.5) scale(.79166667)" fill="none" stroke="oklch(0.985 0.012 86)"
+     stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m15 11-1 9"/>
+    <path d="m19 11-4-7"/>
+    <path d="M2 11h20"/>
+    <path d="m3.5 11 1.6 7.4a2 2 0 0 0 2 1.6h9.8a2 2 0 0 0 2-1.6l1.7-7.4"/>
+    <path d="M4.5 15.5h15"/>
+    <path d="m5 11 4-7"/>
+    <path d="m9 11 1 9"/>
+  </g>
+</svg>
