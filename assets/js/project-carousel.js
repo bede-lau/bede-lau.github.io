@@ -46,42 +46,43 @@
     root.setAttribute('aria-label', options.label || 'Project carousel');
     root.tabIndex = 0;
 
-    // Show every winner up front, independently of the image currently in view.
-    var awards = document.createElement('section');
-    awards.className = 'project-carousel-awards';
-    awards.setAttribute('aria-label', 'Hackathon-winning projects');
-    var awardHeading = document.createElement('h3');
-    var winners = items.map(function (project, index) { return { project:project, index:index }; })
-      .filter(function (entry) { return entry.project.win; });
-    awardHeading.innerHTML = trophySVG + '<span>Hackathon winners</span>';
-    var awardCount = document.createElement('span');
-    awardCount.className = 'project-carousel-award-count';
-    awardCount.textContent = String(winners.length);
-    awardHeading.appendChild(awardCount);
-    awards.appendChild(awardHeading);
     var winnerButtons = [];
+    var winners = items.map(function (project, index) { return { project:project, index:index }; })
+      .filter(function (entry) { return entry.project.award; });
     if (winners.length) {
+      var awards = document.createElement('section');
+      awards.className = 'project-carousel-awards';
+      awards.setAttribute('aria-label', 'Hackathon-winning projects');
+      var awardHeading = document.createElement('h3');
+      awardHeading.innerHTML = trophySVG + '<span>Hackathon winners</span>';
+      var awardCount = document.createElement('span');
+      awardCount.className = 'project-carousel-award-count';
+      awardCount.textContent = String(winners.length);
+      awardHeading.appendChild(awardCount);
+      awards.appendChild(awardHeading);
       var awardList = document.createElement('ul');
       winners.forEach(function (entry) {
         var item = document.createElement('li');
         var button = document.createElement('button');
+        var name = document.createElement('span');
+        name.textContent = entry.project.title.split(':')[0];
         button.type = 'button';
         button.className = 'project-carousel-winner';
         button.dataset.winnerIndex = String(entry.index);
-        button.textContent = entry.project.title.split(':')[0];
-        button.setAttribute('aria-label', 'Show hackathon winner: ' + entry.project.title);
+        if (options.awardMark) button.insertAdjacentHTML('beforeend', options.awardMark(entry.project));
+        button.appendChild(name);
+        var label = options.awardLabel ? options.awardLabel(entry.project) : entry.project.award.result;
+        button.title = label;
+        button.setAttribute('aria-label', 'Show ' + name.textContent + ' · ' + label);
         button.setAttribute('aria-pressed', 'false');
         button.addEventListener('click', function () { moveTo(entry.index, false); });
         winnerButtons.push(button);
-        item.appendChild(button); awardList.appendChild(item);
+        item.appendChild(button);
+        awardList.appendChild(item);
       });
       awards.appendChild(awardList);
-    } else {
-      var noWins = document.createElement('p');
-      noWins.textContent = 'No hackathon wins tagged in this category.';
-      awards.appendChild(noWins);
+      root.appendChild(awards);
     }
-    root.appendChild(awards);
 
     var stage = document.createElement('div');
     stage.className = 'project-carousel-stage';
@@ -194,14 +195,9 @@
       meta.textContent = String(activeIndex + 1).padStart(2, '0') + ' / ' + String(count).padStart(2, '0');
       title.textContent = project.title || 'Untitled project';
       summary.textContent = projectSummary(project);
-      var existingBadge = titleLine.querySelector('.project-carousel-win');
-      if (existingBadge) existingBadge.remove();
-      if (project.win) {
-        var badge = document.createElement('span');
-        badge.className = 'project-carousel-win';
-        badge.innerHTML = trophySVG + '<span>Hackathon win</span>';
-        titleLine.appendChild(badge);
-      }
+      var existingAward = titleLine.querySelector('.project-award');
+      if (existingAward) existingAward.remove();
+      if (project.award && options.renderAward) titleLine.insertAdjacentHTML('beforeend', options.renderAward(project));
       counter.textContent = String(activeIndex + 1).padStart(2, '0') + ' / ' + String(count).padStart(2, '0');
       open.setAttribute('aria-label', 'Open ' + (project.title || 'project'));
     }

@@ -4,6 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Bede Lau</title>
+<meta name="description" content="Bede Lau. Electrical engineering at King’s College London, software engineering, and 12x hackathon wins." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -47,7 +48,6 @@
   body[data-theme="light"] nav.scrolled { background:linear-gradient(160deg,rgba(255,255,255,0.86),rgba(237,243,255,0.74)); border-color:rgba(65,110,215,0.2); }
   body[data-theme="light"] .modal-backdrop { background:rgba(232,238,252,0.66); }
   body[data-theme="light"] .modal { background:linear-gradient(160deg,rgba(255,255,255,0.98),rgba(241,245,255,0.98)); }
-  body[data-theme="light"] .link-primary { color:#f7f9ff; background:linear-gradient(135deg,#345bc4,#6689e5); }
   body[data-theme="light"] .link-ghost { background:rgba(65,110,215,0.08); }
 
   #lightDroplets { position:fixed; inset:0; width:100%; height:100%; z-index:1; pointer-events:none; opacity:0.18;
@@ -172,9 +172,6 @@
   .project-list-name { font-family:"Space Grotesk",sans-serif; font-size:clamp(20px,2vw,25px); font-weight:600; line-height:1.2; }
   .project-list-summary { display:block; margin-top:8px; font-size:14px; line-height:1.5; color:var(--modal-copy);
     white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-  .project-list-win { display:inline-flex; align-items:center; gap:5px; min-height:23px; padding:3px 8px 3px 6px; border:1px solid rgba(255,196,99,0.38);
-    border-radius:999px; background:rgba(255,196,99,0.08); color:#ffd485; font:9px "JetBrains Mono",monospace; letter-spacing:0.08em; text-transform:uppercase; white-space:nowrap; }
-  .project-list-win svg { width:13px; height:13px; flex:none; }
   .project-list-arrow { color:var(--ice); font-size:25px; transition:transform 0.2s; }
   .project-list-row:hover { background:linear-gradient(90deg,rgba(91,134,224,0.08),transparent 70%); border-color:rgba(174,198,255,0.28); }
   .project-list-row:hover .project-list-preview { border-color:rgba(174,198,255,0.5); transform:translateY(-1px); }
@@ -196,8 +193,6 @@
     .project-list-index { margin-bottom:6px; font-size:10px; }
     .project-list-summary { font-size:12px; margin-top:6px; }
     .project-list-arrow { display:none; }
-    .project-list-win { min-height:21px; padding:3px 7px 3px 5px; font-size:8px; }
-    .project-list-win svg { width:12px; height:12px; }
   }
   @media (max-width:380px) {
     .project-list { padding:0 14px; }
@@ -237,14 +232,13 @@
   .tags { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:18px; }
   .tags span { font-family:"JetBrains Mono",monospace; font-size:11px; color:var(--ice); padding:5px 11px; border-radius:7px; background:rgba(91,134,224,0.1); border:1px solid var(--line); }
   .thumbs { display:flex; gap:8px; margin-bottom:22px; flex-wrap:wrap; }
-  .thumbs img, .thumbs .thumb-video { width:56px; height:42px; object-fit:cover; border-radius:7px; border:1px solid var(--line); cursor:pointer; opacity:0.6; transition:opacity 0.2s,border-color 0.2s; }
-  .thumbs img:hover, .thumbs img.active, .thumbs .thumb-video:hover, .thumbs .thumb-video.active { opacity:1; border-color:var(--ice); }
+  .thumb-media { padding:0; background:transparent; overflow:hidden; }
+  .thumb-media img { display:block; width:100%; height:100%; object-fit:cover; }
+  .thumb-media:focus-visible { outline:2px solid var(--category-light); outline-offset:3px; }
+  .thumbs .thumb-media { width:56px; height:42px; object-fit:cover; border-radius:7px; border:1px solid var(--line); cursor:pointer; opacity:0.6; transition:opacity 0.2s,border-color 0.2s; }
+  .thumbs .thumb-media:hover, .thumbs .thumb-media.active { opacity:1; border-color:var(--ice); }
   .thumbs .thumb-video { display:flex; align-items:center; justify-content:center; background:rgba(91,134,224,0.15); color:var(--ice); }
   .thumbs .thumb-video svg { width:18px; height:18px; fill:currentColor; }
-  .modal-links { display:flex; flex-wrap:wrap; gap:12px; margin-top:auto; }
-  .modal-links a { font-family:"Space Grotesk",sans-serif; font-weight:600; font-size:13.5px; text-decoration:none; padding:11px 20px; border-radius:10px; display:inline-flex; align-items:center; gap:8px; }
-  .link-primary { color:#08122c; background:linear-gradient(135deg,var(--azure),var(--ice)); }
-  .link-ghost { color:var(--ink); background:rgba(255,255,255,0.05); border:1px solid var(--line); }
   .modal-close { position:absolute; top:16px; right:18px; z-index:2; background:rgba(5,8,18,0.5); border:1px solid var(--line); color:var(--ink);
     width:34px; height:34px; border-radius:50%; cursor:pointer; font-size:18px; line-height:1; }
   .modal-close:hover { background:rgba(91,134,224,0.2); }
@@ -354,7 +348,7 @@
     </div>
     <!-- <span class="eyebrow">Electrical Engineering MEng · King's College London</span> -->
     <h1><span class="grad">Bede Lau</span></h1>
-    <p class="lede">EE student @ KCL. SWE. 11x hackathon winner. Started with computer vision, quantitative finance, multi-agent systems, and ERP data pipelines. Getting into avionics, submersibles, robotics, and photonics.</p>
+    <p class="lede">EE student @ KCL. SWE. 12x hackathon wins. Started with computer vision, quantitative finance, multi-agent systems, and ERP data pipelines. Getting into avionics, submersibles, robotics, and photonics.</p>
   </header>
 
   <section class="info-section" id="work">
@@ -410,7 +404,7 @@
   </div>
 
   <div class="modal-backdrop" id="backdrop">
-    <div class="modal" id="modal">
+    <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="projectDetailTitle">
       <button class="modal-close" id="close" aria-label="Close">×</button>
       <div class="modal-cover" id="cover"></div>
       <div class="modal-body" id="mbody"></div>
@@ -421,7 +415,7 @@
   <script src="assets/js/project-carousel.js"></script>
   <script>
   const PROJECTS = [
-    { idx:"01", title:"PasarAI: Voice-First Margin Copilot", summary:"Voice-first margin copilot.", hue:[205,140,245], win:true,
+    { idx:"01", title:"PasarAI: Voice-First Margin Copilot", summary:"Voice-first margin copilot.", hue:[205,140,245], award:{ result:"Overall Champion", event:"Codex Community Hackathon Kuala Lumpur 2026" },
       desc:"A multilingual, voice-first daily margin copilot for Malaysian food businesses. It turns Telegram text, voice, and receipts into a merchant-confirmed ledger, then surfaces traceable gross-margin insights and read-only price or volume scenarios.",
       links:[{label:"Demo Video",url:"https://www.loom.com/share/70c7234b4b104fed9018b8f2cce67773",primary:true},{label:"View repo",url:"https://github.com/bede-lau/PasarAI",primary:false}],
       images:["assets/img/pasarai/pasarai_1.png","assets/img/pasarai/pasarai_2.png","assets/img/pasarai/pasarai_3.png","assets/img/pasarai/pasarai_4.png"],
@@ -446,7 +440,7 @@
       links:[],
       images:["assets/img/cooler/cooler_1.jpeg","assets/img/cooler/cooler_2.jpeg","assets/img/cooler/cooler_3.jpeg","assets/img/cooler/cooler_4.jpeg"],
       icon:'<circle cx="18" cy="18" r="11" fill="none" stroke="#aec6ff" stroke-width="2"/><g stroke="#aec6ff" stroke-width="2"><line x1="18" y1="18" x2="18" y2="9"/><line x1="18" y1="18" x2="25" y2="22"/><line x1="18" y1="18" x2="12" y2="23"/></g><circle cx="18" cy="18" r="2" fill="#aec6ff"/>' },
-    { idx:"04", title:"SitePilot: Telegram AI Ops Agent", summary:"Solar operations through Telegram.", hue:[130,170,245], win:true,
+    { idx:"04", title:"SitePilot: Telegram AI Ops Agent", summary:"Solar operations through Telegram.", hue:[130,170,245], award:{ result:"1st Place", event:"KrackedDevs Vibe-a-thon 2026", logo:"sitepilot.svg" },
       desc:"A Telegram AI operations agent for solar site inspections and procurement. It turns messages into AI-generated inspection reports, invoice drafts, vendor RFQs, quote comparisons, and purchase-order approvals.",
       links:[{label:"Demo Video",url:"https://x.com/bdislau_/status/2068692101286797731",primary:true},{label:"View repo",url:"https://github.com/bede-lau/SitePilot",primary:false}],
       images:["assets/img/sitepilot/sitepilot_1.png","assets/img/sitepilot/sitepilot_2.png","assets/img/sitepilot/sitepilot_3.png","assets/img/sitepilot/sitepilot_4.png","assets/img/sitepilot/sitepilot_5.png"],
@@ -466,7 +460,7 @@
       links:[{label:"Demo video",url:"https://www.instagram.com/p/DaqFlJ5KTko/",primary:true}],
       images:["assets/img/aura_desk_lamp/aura1.png","assets/img/aura_desk_lamp/aura2.jpeg","assets/img/aura_desk_lamp/aura3.jpeg"],
       icon:'<path d="M12 15 H24 L28 25 H8 Z" fill="none" stroke="#aec6ff" stroke-width="1.8" stroke-linejoin="round"/><path d="M18 15 V8 M13 8 H23" fill="none" stroke="#aec6ff" stroke-width="2" stroke-linecap="round"/><path d="M13 28 H23" fill="none" stroke="#aec6ff" stroke-width="2" stroke-linecap="round"/><path d="M12 26 C14 22, 22 22, 24 26" fill="none" stroke="#aec6ff" stroke-width="1.4" opacity="0.8"/>' },
-    { idx:"07", title:"RockedIn", summary:"LinkedIn for rocks.", hue:[175,145,235], win:true,
+    { idx:"07", title:"RockedIn", summary:"LinkedIn for rocks.", hue:[175,145,235], award:{ result:"3rd Place", event:"Qwen Brainrot Hackathon, Kuala Lumpur", logo:"rockedin.png" },
       desc:"LinkedIn for rocks.",
       links:[{label:"Live demo",url:"https://rockedin.onrender.com/",primary:true},{label:"View repo",url:"https://github.com/bede-lau/rockedin",primary:false}],
       images:["assets/img/rockedin/rockedin_1.png","assets/img/rockedin/rockedin_2.png","assets/img/rockedin/rockedin_3.png"],
@@ -481,7 +475,7 @@
       links:[{label:"Demo video",url:"https://www.instagram.com/p/Dbe76-XKOJo/",primary:true}],
       images:["assets/img/jarvis_v1/jarvis_v1_pic.jpeg"],
       icon:'<rect x="7" y="9" width="22" height="19" rx="5" fill="none" stroke="#aec6ff" stroke-width="1.8"/><circle cx="14" cy="18" r="1.7" fill="#aec6ff"/><circle cx="22" cy="18" r="1.7" fill="#aec6ff"/><path d="M13 23 H23 M18 9 V5 M14 5 H22" fill="none" stroke="#aec6ff" stroke-width="1.7" stroke-linecap="round"/>' },
-    { idx:"09", title:"CareAxiom: Medical Desert Planner", summary:"Planning care for underserved areas.", hue:[115,195,215], win:true,
+    { idx:"09", title:"CareAxiom: Medical Desert Planner", summary:"Planning care for underserved areas.", hue:[115,195,215], award:{ result:"3rd Place · Databricks Challenge", event:"6th Hack-Nation Global AI Hackathon" },
       desc:"An evidence-grounded Medical Desert Planner for identifying underserved healthcare areas and guiding intervention decisions.",
       links:[{label:"Demo video",url:"https://www.loom.com/share/3ae835153ef94de6b92f9c75393cd331",primary:true},{label:"View repo",url:"https://github.com/bede-lau/CareAxiom",primary:false}],
       images:["assets/img/careaxiom/careaxiom_1.png","assets/img/careaxiom/careaxiom_2.png"],
@@ -506,18 +500,18 @@
       links:[{label:"Demo video",url:"https://www.instagram.com/p/DdcyAwyk8Wf/",primary:true}],
       images:["assets/img/infrared_sensor_car/infrared_car_1.jpeg","assets/img/infrared_sensor_car/infrared_car_2.jpeg","assets/img/infrared_sensor_car/infrared_car_3.jpeg","assets/img/infrared_sensor_car/infrared_car_4.jpeg"],
       icon:'<rect x="8" y="10" width="20" height="13" rx="3" fill="none" stroke="#aec6ff" stroke-width="1.8"/><circle cx="12" cy="24" r="3" fill="none" stroke="#aec6ff" stroke-width="1.8"/><circle cx="24" cy="24" r="3" fill="none" stroke="#aec6ff" stroke-width="1.8"/><path d="M13 10 V6 M23 10 V6" fill="none" stroke="#aec6ff" stroke-width="1.8" stroke-linecap="round"/><circle cx="13" cy="5" r="1.5" fill="#aec6ff"/><circle cx="23" cy="5" r="1.5" fill="#aec6ff"/><path d="M15 16 H21" stroke="#aec6ff" stroke-width="1.6" stroke-linecap="round"/>' },
-    { idx:"04", title:"Matter.", summary:"Explore metamaterials in 3D.", hue:[125,185,250], cat:"design", win:true,
+    { idx:"04", title:"Matter.", summary:"Explore metamaterials in 3D.", hue:[125,185,250], cat:"design", award:{ result:"1st Place · Best Astra Build", event:"Astra Commons: Kuala Lumpur", logo:"matter.svg" },
       desc:"Matter Lab is an interactive 3D studio for exploring how metamaterials are designed, built, and used in real-world applications.",
       links:[{label:"Demo video",url:"https://drive.google.com/file/d/1xZW_jI9nOOsrNuoVA2XPthWZJG-qCea_/view?usp=sharing",primary:true},{label:"Live demo",url:"https://matter-lab.bedelau-2025.chatgpt.site/",primary:false},{label:"View repo",url:"https://github.com/bede-lau/matter",primary:false}],
       video:"assets/img/matter/matter_demo.mp4",
       images:[],
       icon:'<rect x="7" y="7" width="13" height="13" rx="2" fill="none" stroke="#aec6ff" stroke-width="1.8"/><rect x="16" y="16" width="13" height="13" rx="2" fill="none" stroke="#aec6ff" stroke-width="1.8"/><line x1="14" y1="20" x2="20" y2="14" stroke="#aec6ff" stroke-width="1.6" stroke-dasharray="2 2"/><line x1="7" y1="7" x2="16" y2="16" stroke="#aec6ff" stroke-width="1.6"/><line x1="20" y1="7" x2="29" y2="16" stroke="#aec6ff" stroke-width="1.6"/><line x1="7" y1="20" x2="16" y2="29" stroke="#aec6ff" stroke-width="1.6"/><line x1="20" y1="20" x2="29" y2="29" stroke="#aec6ff" stroke-width="1.6"/>' },
-    { idx:"10", title:"CanvasCraft", summary:"Sketches into interactive prototypes.", hue:[100,170,245], win:true,
+    { idx:"10", title:"CanvasCraft", summary:"Sketches into interactive prototypes.", hue:[100,170,245], award:{ result:"2nd Place", event:"Daytona HackSprint Singapore", logo:"canvascraft.png" },
       desc:"CanvasCraft is an AI-assisted product-prototyping studio that transforms rough canvas sketches, notes, and wireframes into three distinct, live, and interactive frontend prototype branches.",
       links:[{label:"Demo video",url:"https://drive.google.com/file/d/1td3Ll6jzmtjNgJOszk-uiGFnJSDL8Mk3/view?usp=sharing",primary:true},{label:"View repo",url:"https://github.com/bede-lau/CanvasCraft",primary:false}],
       images:["assets/img/canvascraft/canvascraft_1.jpeg","assets/img/canvascraft/canvascraft_2.jpeg","assets/img/canvascraft/canvascraft_3.jpeg"],
       icon:'<rect x="5" y="6" width="13" height="13" rx="2.5" fill="none" stroke="#aec6ff" stroke-width="1.8"/><path d="M8 11 H15 M8 14 H12" stroke="#aec6ff" stroke-width="1.6" stroke-linecap="round"/><path d="M18 12.5 H23 C25 12.5 25 8 27 8 H29 M23 12.5 H29 M23 12.5 C25 12.5 25 17 27 17 H29" fill="none" stroke="#aec6ff" stroke-width="1.7" stroke-linecap="round"/><circle cx="29" cy="8" r="1.5" fill="#aec6ff"/><circle cx="29" cy="12.5" r="1.5" fill="#aec6ff"/><circle cx="29" cy="17" r="1.5" fill="#aec6ff"/>' },
-    { idx:"11", title:"Project106", summary:"Explore housing feasibility in London.", hue:[125,175,240], win:true,
+    { idx:"11", title:"Project106", summary:"Explore housing feasibility in London.", hue:[125,175,240], award:{ result:"2nd Place", event:"London House Data Hackathon" },
       desc:"A London housing feasibility tool that screens proposed schemes for planning approval and Section 106 outcomes using project details and site context.",
       links:[{label:"Demo video",url:"https://www.loom.com/share/5cb75915249f4ad8b1064fe97d11ca4f",primary:true},{label:"Live demo",url:"https://proposal106-submission.vercel.app/",primary:false},{label:"View repo",url:"https://github.com/bede-lau/affordablehousing",primary:false}],
       images:["assets/img/project106/project106_1.png","assets/img/project106/project106_2.png","assets/img/project106/project106_3.png"],
@@ -527,7 +521,7 @@
       links:[{label:"Demo video",url:"https://drive.google.com/file/d/1AmrI8BghdZkgqzCr3zFUzQXc9Pv1_VfF/view?usp=drive_link",primary:true},{label:"Live demo",url:"https://fishy-aquascape-studio.bedelau-2025.chatgpt.site/",primary:false},{label:"View repo",url:"https://github.com/jabuar-exe/fishy",primary:false}],
       images:["assets/img/fishy/fishy_1.png","assets/img/fishy/fishy_2.png","assets/img/fishy/fishy_3.png"],
       icon:'<path d="M5 18 C10 11, 20 11, 27 18 C20 25, 10 25, 5 18 Z" fill="none" stroke="#aec6ff" stroke-width="1.8" stroke-linejoin="round"/><path d="M27 18 L33 13 V23 Z" fill="none" stroke="#aec6ff" stroke-width="1.8" stroke-linejoin="round"/><circle cx="12" cy="17" r="1.4" fill="#aec6ff"/>' },
-    { idx:"06", title:"Chrono", summary:"Grow interactive quantum organisms.", hue:[190,150,245], cat:"design", win:true,
+    { idx:"06", title:"Chrono", summary:"Grow interactive quantum organisms.", hue:[190,150,245], cat:"design", award:{ result:"Daisy Chain Challenge Winner", event:"Moth Hack 2026", logo:"chrono.svg" },
       desc:"A browser-based quantum organism studio that grows interactive 3D specimens through chained image, evolution, and custom-audio stages.",
       links:[{label:"Demo video",url:"https://drive.google.com/file/d/1uHQx4QbwbKx8fav6-tA2hX6BNf9JHHwM/view?usp=sharing",primary:true},{label:"Live demo",url:"https://chrono.bedelau59.chatgpt.site/",primary:false},{label:"View repo",url:"https://github.com/bede-lau/chrono",primary:false}],
       images:["assets/img/chrono/chrono_2.png","assets/img/chrono/chrono_3.png","assets/img/chrono/chrono_1.png"],
@@ -537,11 +531,18 @@
       links:[{label:"Live demo",url:"https://cottrell-material-intelligence.bedelau59.chatgpt.site/",primary:true},{label:"View repo",url:"https://github.com/Cottrell-LockedIn/AIxScience",primary:false}],
       images:["assets/img/cottrell/cottrell-live-analysis.png","assets/img/cottrell/cottrell-segmentation.png","assets/img/cottrell/cottrell-stakeholders.png","assets/img/cottrell/cottrell-model-accuracy.png"],
       icon:'<path d="M18 4 L29 10 V26 L18 32 L7 26 V10 Z" fill="none" stroke="#aec6ff" stroke-width="2" stroke-linejoin="round"/><circle cx="14" cy="14" r="1.4" fill="#aec6ff"/><circle cx="22" cy="14" r="1.4" fill="#aec6ff"/><circle cx="18" cy="21" r="1.4" fill="#aec6ff"/><circle cx="13" cy="25" r="1.2" fill="#aec6ff"/><circle cx="23" cy="25" r="1.2" fill="#aec6ff"/>' },
-    { idx:"13", title:"Morpheus", summary:"Room scans into robot-ready worlds.", hue:[105,200,180], win:true,
+    { idx:"13", title:"Morpheus", summary:"Room scans into robot-ready worlds.", hue:[105,200,180], award:{ result:"1st Place", event:"OpenAI DevDay Exchange Community Hackathon, London", logo:"morpheus.svg" },
       desc:"A robotics workspace that turns room scans into 3D environments, matches objects to simulation assets, and compares planned robot tasks.",
       links:[{label:"Demo video",url:"https://www.loom.com/share/2dd768629b574ca18a298bec5986ecfe",primary:true},{label:"View repo",url:"https://github.com/bede-lau/Morpheus",primary:false}],
       images:["assets/img/morpheus/01-scan.jpg","assets/img/morpheus/03-luna.jpg","assets/img/morpheus/05-carry.jpg"],
       icon:'<rect x="7" y="9" width="22" height="18" rx="4" fill="none" stroke="#aec6ff" stroke-width="1.8"/><circle cx="14" cy="18" r="1.8" fill="#aec6ff"/><circle cx="22" cy="18" r="1.8" fill="#aec6ff"/><path d="M14 23 H22 M18 9 V5 M14 5 H22" fill="none" stroke="#aec6ff" stroke-width="1.7" stroke-linecap="round"/>' },
+
+    { idx:"14", title:"Scene2Real", summary:"Turn incident footage into a robot rehearsal.", hue:[102,217,242],
+      award:{ result:"3rd Place", event:"VAST Data Builders Challenge London", logo:"scene2real.svg" },
+      desc:"A prototype that turns warehouse-fire footage into operator-reviewed incident evidence, rehearses a robot response in MuJoCo, and records the outcome in an incident worksheet.",
+      links:[{label:"View repo",url:"https://github.com/bede-lau/Scene2Real",primary:true}],
+      images:["assets/img/scene2real/overview.png","assets/img/scene2real/worksheet.png"],
+      icon:'<path d="M6 13V6h7m10 0h7v7m0 10v7h-7m-10 0H6v-7m7-8 5-3 5 3v6l-5 3-5-3z" fill="none" stroke="#aec6ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>' },
   ];
 
   const reduce = matchMedia('(prefers-reduced-motion:reduce)').matches;
@@ -733,8 +734,35 @@
   const projectListClose = document.getElementById('projectListClose');
   const projectListItems = document.getElementById('projectListItems');
   const projectTabs = [...document.querySelectorAll('.project-list-tab')];
-  const trophy = '<span class="project-list-win project-list-trophy" title="Hackathon win"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9a6 6 0 0 0 12 0V4H6v5Z" stroke="currentColor" stroke-width="1.8"/><path d="M6 6H3v1a3 3 0 0 0 3 3M18 6h3v1a3 3 0 0 1-3 3M9 21h6M12 15v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>Hackathon win</span></span>';
   const escapeHTML = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const awardLabel = project => `${project.award.result} · ${project.award.event}`;
+  function awardMark(project) {
+    const logo = project.award.logo;
+    return logo
+      ? `<img class="award-mark${logo === 'rockedin.png' ? ' award-mark-wide' : ''}" src="assets/img/marks/${escapeHTML(logo)}" alt="">`
+      : `<svg class="award-mark" viewBox="0 0 36 36" aria-hidden="true">${project.icon}</svg>`;
+  }
+  function renderAward(project) {
+    if (!project.award) return '';
+    return `<span class="project-award">${awardMark(project)}<span class="project-award-copy"><strong>${escapeHTML(project.award.result)}</strong><span>${escapeHTML(project.award.event)}</span></span></span>`;
+  }
+
+  const actionIcons = {
+    video: '<path d="m9 5 11 7-11 7V5Z"/>',
+    demo: '<rect x="3" y="4" width="18" height="16" rx="3"/><path d="M3 9h18m-14-2h.01m3 0h.01"/>',
+    repo: '<path d="m8 7-5 5 5 5m8-10 5 5-5 5m-3-13-2 16"/>',
+    external: '<path d="M7 17 17 7m-8 0h8v8"/>'
+  };
+  function renderProjectAction(link) {
+    const kind = /repo|source/i.test(link.label) ? 'repo'
+      : /video/i.test(link.label) ? 'video'
+      : /demo|live|website/i.test(link.label) ? 'demo' : 'external';
+    return `<a class="project-action${link.primary ? ' project-action-primary' : ''}" data-kind="${kind}"
+      href="${escapeHTML(link.url)}" target="_blank" rel="noopener">
+      <span class="project-action-icon"><svg viewBox="0 0 24 24" aria-hidden="true">${actionIcons[kind]}</svg></span>
+      <span>${escapeHTML(link.label)}</span>
+      <svg class="project-action-arrow" viewBox="0 0 24 24" aria-hidden="true">${actionIcons.external}</svg></a>`;
+  }
   let lastProjectRow = null;
   let projectCarousel = null;
   // Original PROJECTS indexes are retained so a filtered row opens the right details.
@@ -744,9 +772,9 @@
         ? `<img src="${escapeHTML(p.images[0])}" alt="" loading="lazy" decoding="async">`
         : p.video ? `<video src="${escapeHTML(typeof p.video === 'string' ? p.video : p.video.src)}#t=0.1" muted playsinline preload="metadata" aria-hidden="true"></video>`
         : `<svg viewBox="0 0 36 36" aria-hidden="true">${p.icon}</svg>`;
-      return `<button type="button" class="project-list-row" data-project-index="${index}" aria-label="${escapeHTML(p.title)}${p.win ? ', Hackathon winner' : ''}">
+      return `<button type="button" class="project-list-row" data-project-index="${index}" aria-label="${escapeHTML(p.title)}${p.award ? ', ' + escapeHTML(awardLabel(p)) : ''}">
         <span class="project-list-preview" aria-hidden="true">${preview}</span>
-        <span class="project-list-copy"><span class="project-list-index">${escapeHTML(p.idx)}</span><span class="project-list-titleline"><span class="project-list-name">${escapeHTML(p.title.split(':')[0])}</span>${p.win ? trophy : ''}</span><span class="project-list-summary">${escapeHTML(p.summary)}</span></span>
+        <span class="project-list-copy"><span class="project-list-index">${escapeHTML(p.idx)}</span><span class="project-list-titleline"><span class="project-list-name">${escapeHTML(p.title.split(':')[0])}</span>${renderAward(p)}</span><span class="project-list-summary">${escapeHTML(p.summary)}</span></span>
         <span class="project-list-arrow" aria-hidden="true">↗</span></button>`;
     }).join('');
   }
@@ -769,12 +797,14 @@
       tab.tabIndex = selected ? 0 : -1;
     });
     document.getElementById('panel-' + cat).hidden = false;
+    projectListBackdrop.querySelector('.project-list').dataset.category = cat;
     projectListItems.scrollTop = 0;
     const host = document.getElementById({sw:'projectListSoftware',hw:'projectListHardware',design:'projectListDesign'}[cat]);
     if (typeof window.createProjectCarousel === 'function') {
       const projects = PROJECTS.map((project, originalIndex) => ({...project, originalIndex}))
         .filter(project => (project.cat || 'sw') === cat);
       projectCarousel = window.createProjectCarousel(host, projects, {
+        renderAward, awardMark, awardLabel,
         onSelect: project => {
           lastProjectRow = host.querySelector('[data-carousel-open]') || projectTabs.find(tab => tab.dataset.category === cat);
           closeProjectList(false);
@@ -831,6 +861,7 @@
   const backdrop = document.getElementById('backdrop'), modal = document.getElementById('modal'), cover = document.getElementById('cover'), mbody = document.getElementById('mbody');
   let activeProject = null, activeImageIndex = 0, modalFromList = false;
   let activeVideo = null, activeSpeed = 1;
+  let detailOpener = null;
 
   function formatTime(s) {
     if (isNaN(s) || s < 0) return '0:00';
@@ -1106,13 +1137,21 @@
     const img = new Image();
     img.id = 'coverImg'; img.alt = d.title + ' preview'; img.src = src;
     cover.appendChild(img);
-    mbody.querySelectorAll('.thumbs [data-media-index]').forEach(o => {
-      o.classList.toggle('active', +o.dataset.mediaIndex === activeImageIndex);
+    updateMediaSelection();
+  }
+
+  function updateMediaSelection() {
+    mbody.querySelectorAll('.thumbs [data-media-index]').forEach(thumb => {
+      const selected = Number(thumb.dataset.mediaIndex) === activeImageIndex;
+      thumb.classList.toggle('active', selected);
+      thumb.setAttribute('aria-pressed', String(selected));
     });
   }
 
   function openModal(d, fromList = false) {
     modalFromList = !!fromList;
+    detailOpener = document.activeElement;
+    modal.dataset.category = d.cat || 'sw';
     activeProject = d; activeImageIndex = 0;
     const hasVideo = !!d.video;
     const hasImages = d.images && d.images.length > 0;
@@ -1126,34 +1165,34 @@
       cover.innerHTML = '';
     }
 
-    let links = d.links.map(l => `<a class="${l.primary?'link-primary':'link-ghost'}" href="${l.url}" target="_blank" rel="noopener">${l.label} ↗</a>`).join('');
-    
+    const links = d.links.map(renderProjectAction).join('');
+
     let thumbs = '';
     const totalMedia = (hasVideo ? 1 : 0) + (hasImages ? d.images.length : 0);
     if (totalMedia > 1) {
       let thumbItems = '';
       if (hasVideo) {
-        thumbItems += `<div class="thumb-video active" data-media-type="video" data-media-index="0" title="Watch Video Demo"><svg viewBox="0 0 24 24"><polygon points="6 4 20 12 6 20 6 4"/></svg></div>`;
+        thumbItems += `<button type="button" class="thumb-media thumb-video active" data-media-type="video" data-media-index="0" aria-label="Show demo video" aria-pressed="true"><svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="6 4 20 12 6 20 6 4"/></svg></button>`;
       }
       if (hasImages) {
         d.images.forEach((src, i) => {
           const mIdx = hasVideo ? i + 1 : i;
           const isAct = (!hasVideo && i === 0) ? ' active' : '';
-          thumbItems += `<img src="${src}" data-media-type="image" data-media-index="${mIdx}" data-img-index="${i}" class="${isAct}" alt="${d.title} thumbnail ${i+1}" />`;
+          thumbItems += `<button type="button" data-media-type="image" data-media-index="${mIdx}" data-img-index="${i}" class="thumb-media${isAct}" aria-label="Show image ${i+1}" aria-pressed="${Boolean(isAct)}"><img src="${escapeHTML(src)}" alt="" /></button>`;
         });
       }
       thumbs = `<div class="thumbs">${thumbItems}</div>`;
     }
 
-    mbody.innerHTML = `<div class="idx">PROJECT ${d.idx}</div><h2>${d.title}</h2><p>${d.desc}</p>`+
-      `${thumbs}<div class="modal-links">${links}</div>`;
+    mbody.innerHTML = `<div class="idx">PROJECT ${d.idx}</div><h2 id="projectDetailTitle">${escapeHTML(d.title)}</h2><p>${escapeHTML(d.desc)}</p>`+
+      `${thumbs}${renderAward(d)}<div class="modal-links">${links}</div>`;
 
     if (totalMedia > 1) {
       mbody.querySelectorAll('.thumbs [data-media-type]').forEach(t => t.addEventListener('click', () => {
         if (t.dataset.mediaType === 'video') {
           activeImageIndex = 0;
           renderVideoPlayer(d);
-          mbody.querySelectorAll('.thumbs [data-media-index]').forEach(o => o.classList.toggle('active', o === t));
+          updateMediaSelection();
         } else {
           fitCover(d.images[+t.dataset.imgIndex], +t.dataset.mediaIndex);
         }
@@ -1161,6 +1200,7 @@
     }
 
     backdrop.classList.add('open');
+    document.getElementById('close').focus();
   }
 
   function closeModal() {
@@ -1175,6 +1215,8 @@
     activeProject = null;
     activeImageIndex = 0;
     if (modalFromList) { modalFromList = false; openProjectList(false); }
+    else if (detailOpener instanceof HTMLElement) detailOpener.focus();
+    detailOpener = null;
   }
 
   function stepModalMedia(delta) {
@@ -1186,7 +1228,7 @@
     activeImageIndex = (activeImageIndex + delta + totalMedia) % totalMedia;
     if (hasVideo && activeImageIndex === 0) {
       renderVideoPlayer(activeProject);
-      mbody.querySelectorAll('.thumbs [data-media-index]').forEach(o => o.classList.toggle('active', +o.dataset.mediaIndex === 0));
+      updateMediaSelection();
     } else {
       const imgIdx = hasVideo ? activeImageIndex - 1 : activeImageIndex;
       fitCover(activeProject.images[imgIdx], activeImageIndex);
@@ -1196,8 +1238,21 @@
   document.getElementById('close').addEventListener('click', closeModal);
   backdrop.addEventListener('click', e => { if (e.target === backdrop) closeModal(); });
   addEventListener('keydown', e => {
-    if (e.key === 'Escape') { closeModal(); closeProjectList(); }
-    if (e.code === 'Space' && activeVideo && backdrop.classList.contains('open') && document.activeElement.tagName !== 'BUTTON') {
+    const detailOpen = backdrop.classList.contains('open');
+    if (e.key === 'Escape') {
+      if (detailOpen) closeModal();
+      else if (projectListBackdrop.classList.contains('open')) closeProjectList();
+      return;
+    }
+    if (!detailOpen) return;
+    if (e.key === 'Tab') {
+      const controls = [...modal.querySelectorAll('button:not([disabled]), a[href], input:not([disabled]), [tabindex="0"]')]
+        .filter(control => control.tabIndex >= 0 && control.getClientRects().length);
+      const first = controls[0], last = controls.at(-1);
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last?.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first?.focus(); }
+    }
+    if (e.code === 'Space' && activeVideo && backdrop.classList.contains('open') && !document.activeElement.closest('button, a, input, select, textarea')) {
       e.preventDefault();
       if (activeVideo.paused) activeVideo.play(); else activeVideo.pause();
     }
