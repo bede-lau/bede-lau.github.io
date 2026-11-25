@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="1024" height="1024" role="img" aria-labelledby="title">
+  <title id="title">Bede Lau eclipse mark</title>
+  <!-- The far arc disappears behind the unlit face. -->
+  <g transform="rotate(-32 64 64)">
+    <ellipse cx="64" cy="64" rx="58" ry="14" fill="none" stroke="#ecab78" stroke-width="3.8"/>
+    <circle cx="64" cy="64" r="39" fill="#111831"/>
+    <path d="M79 28a39 39 0 0 0-21 75c-17-14-23-29-20-44 3-15 16-27 41-31Z" fill="#e7f2ff"/>
+    <path d="M6 64c0 6 26 10 58 10s58-4 58-10c0 11-26 17-58 17S6 75 6 64Z" fill="#ffb981"/>
+  </g>
+</svg>
