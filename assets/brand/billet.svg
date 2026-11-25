@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 128 128" width="1024" height="1024" role="img" aria-labelledby="title">
+  <title id="title">Bede Lau, sculpted B</title>
+  <defs>
+    <path id="body" fill-rule="evenodd" d="M15 8H57Q83 8 83 32Q83 44 71 52Q90 57 90 75Q90 104 59 104H15Q12 104 12 101V11Q12 8 15 8ZM32 26V46H53Q64 46 64 35Q64 26 54 26ZM32 64V86H56Q69 86 69 75Q69 64 56 64Z"/>
+    <linearGradient id="face" x1=".09" y1=".04" x2=".93" y2=".98" gradientUnits="objectBoundingBox">
+      <stop stop-color="#fcfcff"/><stop offset=".26" stop-color="#c7dbf7"/><stop offset=".48" stop-color="#849bbd"/><stop offset=".66" stop-color="#d3e3f6"/><stop offset="1" stop-color="#91abd2"/>
+    </linearGradient>
+    <linearGradient id="wall">
+      <stop stop-color="#526e98"/><stop offset=".22" stop-color="#29354f"/><stop offset=".57" stop-color="#1b253d"/><stop offset=".8" stop-color="#5d7799"/><stop offset="1" stop-color="#33425f"/>
+    </linearGradient>
+    <linearGradient id="seam"><stop stop-color="#a3684c"/><stop offset=".34" stop-color="#d89767"/><stop offset=".66" stop-color="#ffe1a7"/><stop offset="1" stop-color="#bc744c"/></linearGradient>
+    <linearGradient id="edge" x2=".8" y2=".9"><stop stop-color="white"/><stop offset=".44" stop-color="#aec2dc"/><stop offset=".7" stop-color="#475977"/><stop offset="1" stop-color="#f2f5ff"/></linearGradient>
+  </defs>
+  <g transform="matrix(.97 -.26 .055 .91 1 26)">
+    <!-- Offset cross-sections describe the thick shell and its copper inlay. -->
+    <g fill="url(#wall)" stroke="url(#wall)" stroke-width="1.8" stroke-linejoin="round">
+      <use xlink:href="#body" x="18" y="14"/><use xlink:href="#body" x="16" y="12.5"/><use xlink:href="#body" x="14" y="11"/>
+      <use xlink:href="#body" x="12" y="9.5"/><use xlink:href="#body" x="10" y="8"/>
+    </g>
+    <g fill="url(#seam)" stroke="url(#seam)" stroke-width="1.6">
+      <use xlink:href="#body" x="9" y="7"/><use xlink:href="#body" x="7.5" y="6"/>
+    </g>
+    <g fill="url(#wall)" stroke="url(#wall)" stroke-width="1.6">
+      <use xlink:href="#body" x="6" y="4.8"/><use xlink:href="#body" x="4.5" y="3.6"/><use xlink:href="#body" x="3" y="2.4"/><use xlink:href="#body" x="1.5" y="1.2"/>
+    </g>
+    <use xlink:href="#body" fill="url(#face)" stroke="url(#edge)" stroke-width="2.4" stroke-linejoin="round"/>
+  </g>
+</svg>
