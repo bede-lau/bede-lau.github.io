@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" role="img" aria-labelledby="title">
+  <title id="title">Bede Lau orbital B</title>
+  <rect width="128" height="128" rx="28" fill="#0b1227"/>
+  <g transform="translate(12 0) skewX(-10)">
+    <path fill="#e7edff" d="M31 24h29c21 0 34 7 34 20 0 10-9 17-22 21 7-6 10-12 9-18-1-8-10-12-23-12H44v51L31 99z"/>
+    <path fill="#92b6ff" d="M47 64c13-6 24-8 35-5 11 3 17 10 17 19 0 16-16 27-43 27H31l13-13h14c18 0 28-5 28-14 0-10-14-16-39-14z"/>
+  </g>
+  <path fill="#ffd18b" d="m94 45 3.2 8.8 8.8 3.2-8.8 3.2L94 69l-3.2-8.8L82 57l8.8-3.2z"/>
+</svg>
